@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'm1ta.dart';  // Import LearningTaWidget
+import 'package:audioplayers/audioplayers.dart';
+import 'm1alif.dart';  // Import LearningAlifWidget for previous page
 
 class LearningBaWidget extends StatefulWidget {
   const LearningBaWidget({super.key});
@@ -18,7 +21,6 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
 
   int selectedIndex = 1; // Index for the BottomNavigationBar
 
-  // Function to handle bottom navigation
   void onTabTapped(int index) {
     setState(() {
       selectedIndex = index;
@@ -109,6 +111,7 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Fast Rewind Button to navigate to LearningAlifWidget (previous page)
                       IconButton(
                         icon: Icon(
                           Icons.fast_rewind,
@@ -116,9 +119,16 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Rewind button pressed');
+                          // Navigate to LearningAlifWidget (previous page)
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningAlifWidget(),
+                            ),
+                          );
                         },
                       ),
+                      // Fast Forward Button to navigate to LearningTaWidget (next page)
                       IconButton(
                         icon: Icon(
                           Icons.fast_forward,
@@ -126,7 +136,13 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Fast Forward button pressed');
+                          // Navigate to LearningTaWidget (next page)
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningTaWidget(),
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -168,7 +184,7 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                         child: Text(
-                          'Coba Ucapkan Huruf Hijaiyah!',
+                          'Coba Ucapkan Huruf \n  Hijaiyah!',
                           style: GoogleFonts.inter(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,

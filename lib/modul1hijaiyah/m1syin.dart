@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'm1sin.dart';
+import 'm1shod.dart';
 
 class LearningSyinWidget extends StatefulWidget {
   const LearningSyinWidget({super.key});
@@ -116,7 +118,12 @@ class _LearningSyinWidgetState extends State<LearningSyinWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Rewind button pressed');
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningSinWidget(),
+                            ),
+                          );
                         },
                       ),
                       IconButton(
@@ -126,7 +133,12 @@ class _LearningSyinWidgetState extends State<LearningSyinWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Fast Forward button pressed');
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningShodWidget(),
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -168,7 +180,7 @@ class _LearningSyinWidgetState extends State<LearningSyinWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                         child: Text(
-                          'Coba Ucapkan Huruf Hijaiyah!',
+                          'Coba Ucapkan Huruf \n Hijaiyah!',
                           style: GoogleFonts.inter(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,

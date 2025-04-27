@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'm1ba.dart';  // Import LearningBaWidget
+import 'package:audioplayers/audioplayers.dart'; // Import audioplayers package
 
 class LearningAlifWidget extends StatefulWidget {
   const LearningAlifWidget({super.key});
@@ -17,12 +19,29 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
   final FocusNode _textFieldFocusNode = FocusNode();
 
   int selectedIndex = 1; // Index for the BottomNavigationBar
+  AudioPlayer _audioPlayer = AudioPlayer(); // Initialize the audio player
+  bool _isPlaying = false; // Track audio playing state
 
   // Function to handle bottom navigation
   void onTabTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
+
+    // Navigate to the corresponding screen
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, '/home');
+        break;
+      case 1:
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/progress');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/account');
+        break;
+    }
   }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -31,7 +50,20 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
   void dispose() {
     _textController.dispose();
     _textFieldFocusNode.dispose();
+    _audioPlayer.dispose();
     super.dispose();
+  }
+
+  // Function to play/pause audio
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await _audioPlayer.pause();
+    } else {
+      await _audioPlayer.play(AssetSource('assets/audios/alif_1.wav'));
+    }
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
   }
 
   @override
@@ -51,11 +83,13 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                // Row for Back and Volume Buttons
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(15, 47, 15, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Back Button
                       IconButton(
                         icon: Icon(
                           Icons.arrow_back_ios_rounded,
@@ -66,20 +100,19 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                           Navigator.pop(context); // Go back to the previous screen
                         },
                       ),
+                      // Volume Button (Play/Pause Audio)
                       IconButton(
                         icon: FaIcon(
-                          FontAwesomeIcons.volumeUp,
+                          _isPlaying ? FontAwesomeIcons.volumeUp : FontAwesomeIcons.volumeOff,
                           color: Colors.black,
                           size: 30,
                         ),
-                        onPressed: () {
-                          print('Play audio');
-                          // TODO: Add play audio functionality here
-                        },
+                        onPressed: _playPauseAudio,
                       ),
                     ],
                   ),
                 ),
+                // Level Header and Description
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                   child: Column(
@@ -104,11 +137,13 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                     ],
                   ),
                 ),
+                // Rewind and Fast Forward Buttons
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(60, 35, 60, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Rewind Button
                       IconButton(
                         icon: Icon(
                           Icons.fast_rewind,
@@ -117,8 +152,10 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                         ),
                         onPressed: () {
                           print('Rewind button pressed');
+                          // Go back to previous level (LearningBaWidget)
                         },
                       ),
+                      // Fast Forward Button
                       IconButton(
                         icon: Icon(
                           Icons.fast_forward,
@@ -126,12 +163,16 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Fast Forward button pressed');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => LearningBaWidget()), // Navigate to next level (Ba)
+                          );
                         },
                       ),
                     ],
                   ),
                 ),
+                // Card for Alif Image
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                   child: Container(
@@ -151,6 +192,7 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                     ),
                   ),
                 ),
+                // Mic Button for Feedback
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(60, 15, 60, 0),
                   child: Row(
@@ -168,7 +210,7 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                         child: Text(
-                          'Coba Ucapkan Huruf Hijaiyah!',
+                          'Coba Ucapkan Huruf \n Hijaiyah!',
                           style: GoogleFonts.inter(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -178,12 +220,13 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                     ],
                   ),
                 ),
+                // AI Feedback Input
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(50, 15, 50, 0),
                   child: Row(
                     children: [
                       Text(
-                        'Feedback AI:',
+                        'Feedback AI: ',
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

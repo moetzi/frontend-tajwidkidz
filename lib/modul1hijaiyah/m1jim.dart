@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'm1tsa.dart';  // Import LearningTaWidget (previous material)
+import 'm1ha.dart';  // Import LearningHaWidget (next material)
 
 class LearningJimWidget extends StatefulWidget {
   const LearningJimWidget({super.key});
@@ -56,6 +58,7 @@ class _LearningJimWidgetState extends State<LearningJimWidget> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Back Button
                       IconButton(
                         icon: Icon(
                           Icons.arrow_back_ios_rounded,
@@ -66,6 +69,7 @@ class _LearningJimWidgetState extends State<LearningJimWidget> {
                           Navigator.pop(context); // Go back to the previous screen
                         },
                       ),
+                      // Volume Button (for playing audio)
                       IconButton(
                         icon: FaIcon(
                           FontAwesomeIcons.volumeUp,
@@ -109,6 +113,7 @@ class _LearningJimWidgetState extends State<LearningJimWidget> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Fast Rewind Button to navigate to LearningTaWidget (previous level)
                       IconButton(
                         icon: Icon(
                           Icons.fast_rewind,
@@ -116,9 +121,16 @@ class _LearningJimWidgetState extends State<LearningJimWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Rewind button pressed');
+                          // Navigate to LearningTaWidget (previous level)
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningTsaWidget(),
+                            ),
+                          );
                         },
                       ),
+                      // Fast Forward Button to navigate to LearningHaWidget (next level)
                       IconButton(
                         icon: Icon(
                           Icons.fast_forward,
@@ -126,7 +138,13 @@ class _LearningJimWidgetState extends State<LearningJimWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Fast Forward button pressed');
+                          // Navigate to LearningHaWidget (next level)
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningHaWidget(), // Replace with actual widget for next material
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -143,7 +161,7 @@ class _LearningJimWidgetState extends State<LearningJimWidget> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.asset(
-                        'assets/images/Card Ha.png',
+                        'assets/images/Card Jim.png',
                         width: 333.9,
                         height: 207.2,
                         fit: BoxFit.cover,
@@ -168,7 +186,7 @@ class _LearningJimWidgetState extends State<LearningJimWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                         child: Text(
-                          'Coba Ucapkan Huruf Hijaiyah!',
+                          'Coba Ucapkan Huruf \n  Hijaiyah!',
                           style: GoogleFonts.inter(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -183,7 +201,7 @@ class _LearningJimWidgetState extends State<LearningJimWidget> {
                   child: Row(
                     children: [
                       Text(
-                        'Feedback AI:',
+                        'Feedback AI: ',
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

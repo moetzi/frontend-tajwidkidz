@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'm1jim.dart';  // Import LearningJimWidget (previous material)
+import 'm1kho.dart';  // Import LearningKhoWidget (next material)
 
 class LearningHaWidget extends StatefulWidget {
   const LearningHaWidget({super.key});
@@ -109,6 +111,7 @@ class _LearningHaWidgetState extends State<LearningHaWidget> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Fast Rewind Button to navigate to LearningJimWidget (previous level)
                       IconButton(
                         icon: Icon(
                           Icons.fast_rewind,
@@ -116,9 +119,16 @@ class _LearningHaWidgetState extends State<LearningHaWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Rewind button pressed');
+                          // Navigate to LearningJimWidget (previous level)
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningJimWidget(),
+                            ),
+                          );
                         },
                       ),
+                      // Fast Forward Button to navigate to LearningKhoWidget (next level)
                       IconButton(
                         icon: Icon(
                           Icons.fast_forward,
@@ -126,7 +136,13 @@ class _LearningHaWidgetState extends State<LearningHaWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Fast Forward button pressed');
+                          // Navigate to LearningKhoWidget (next level)
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningKhoWidget(),
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -168,7 +184,7 @@ class _LearningHaWidgetState extends State<LearningHaWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                         child: Text(
-                          'Coba Ucapkan Huruf Hijaiyah!',
+                          'Coba Ucapkan Huruf \n Hijaiyah!',
                           style: GoogleFonts.inter(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -183,7 +199,7 @@ class _LearningHaWidgetState extends State<LearningHaWidget> {
                   child: Row(
                     children: [
                       Text(
-                        'Feedback AI:',
+                        'Feedback AI: ',
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

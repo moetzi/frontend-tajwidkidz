@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'signup.dart';
+import 'homepage.dart'; // Import HomePage
 
 class LoginModel with ChangeNotifier {
   TextEditingController textController1 = TextEditingController();
@@ -8,6 +10,14 @@ class LoginModel with ChangeNotifier {
 
   TextEditingController textController2 = TextEditingController();
   FocusNode textFieldFocusNode2 = FocusNode();
+
+  bool isPasswordVisible = false; // Track password visibility
+
+  // Method to toggle password visibility
+  void togglePasswordVisibility() {
+    isPasswordVisible = !isPasswordVisible;
+    notifyListeners(); // Notify listeners when password visibility changes
+  }
 
   // Method to dispose controllers if needed, can be called from outside
   void disposeControllers() {
@@ -164,7 +174,7 @@ class LoginWidget extends StatelessWidget {
                                     controller: model.textController2,
                                     focusNode: model.textFieldFocusNode2,
                                     autofocus: false,
-                                    obscureText: false,
+                                    obscureText: !model.isPasswordVisible, // Toggle visibility
                                     decoration: InputDecoration(
                                       isDense: true,
                                       labelStyle: TextStyle(
@@ -192,12 +202,14 @@ class LoginWidget extends StatelessWidget {
                                 ),
                                 child: IconButton(
                                   icon: Icon(
-                                    Icons.visibility_off_outlined,
+                                    model.isPasswordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
                                     color: Colors.black,
                                     size: 24,
                                   ),
                                   onPressed: () {
-                                    print('IconButton pressed ...');
+                                    model.togglePasswordVisibility(); // Toggle password visibility
                                   },
                                 ),
                               ),
@@ -226,7 +238,12 @@ class LoginWidget extends StatelessWidget {
                           height: MediaQuery.of(context).size.height * 0.06,
                           child: ElevatedButton(
                             onPressed: () {
-                              print('Button pressed ...');
+                              // Perform login logic here
+                              // Navigate to Home page after successful login
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => HomePageWidget()),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xFF037A16),
@@ -259,12 +276,21 @@ class LoginWidget extends StatelessWidget {
                             ),
                             Align(
                               alignment: AlignmentDirectional(0, 0),
-                              child: Text(
-                                ' Sign Up',
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
+                              child: TextButton(
+                                onPressed: () {
+                                  // Navigate to Sign Up page
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => SignupWidget()),
+                                  );
+                                },
+                                child: Text(
+                                  ' Sign Up',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                             ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'm1dal.dart';  // Import LearningKhoWidget (previous level)
+import 'm1ra.dart';   // Import LearningRaWidget (next level)
 
 class LearningDzalWidget extends StatefulWidget {
   const LearningDzalWidget({super.key});
@@ -56,6 +58,7 @@ class _LearningDzalWidgetState extends State<LearningDzalWidget> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Back Button - Navigate to the Home page
                       IconButton(
                         icon: Icon(
                           Icons.arrow_back_ios_rounded,
@@ -63,9 +66,10 @@ class _LearningDzalWidgetState extends State<LearningDzalWidget> {
                           size: 30,
                         ),
                         onPressed: () {
-                          Navigator.pop(context); // Go back to the previous screen
+                          Navigator.pushReplacementNamed(context, '/learning'); // Go to Home
                         },
                       ),
+                      // Volume Button - for playing audio
                       IconButton(
                         icon: FaIcon(
                           FontAwesomeIcons.volumeUp,
@@ -109,6 +113,7 @@ class _LearningDzalWidgetState extends State<LearningDzalWidget> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Fast Rewind Button - Navigate to LearningKhoWidget (previous level)
                       IconButton(
                         icon: Icon(
                           Icons.fast_rewind,
@@ -116,9 +121,15 @@ class _LearningDzalWidgetState extends State<LearningDzalWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Rewind button pressed');
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningDalWidget(), // Previous level
+                            ),
+                          );
                         },
                       ),
+                      // Fast Forward Button - Navigate to LearningRaWidget (next level)
                       IconButton(
                         icon: Icon(
                           Icons.fast_forward,
@@ -126,7 +137,12 @@ class _LearningDzalWidgetState extends State<LearningDzalWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Fast Forward button pressed');
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningRaWidget(), // Next level
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -168,7 +184,7 @@ class _LearningDzalWidgetState extends State<LearningDzalWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                         child: Text(
-                          'Coba Ucapkan Huruf Hijaiyah!',
+                          'Coba Ucapkan Huruf \n  Hijaiyah!',
                           style: GoogleFonts.inter(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -183,7 +199,7 @@ class _LearningDzalWidgetState extends State<LearningDzalWidget> {
                   child: Row(
                     children: [
                       Text(
-                        'Feedback AI:',
+                        'Feedback AI: ',
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

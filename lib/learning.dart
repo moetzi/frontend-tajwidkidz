@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'modul1hijaiyah/m1alif.dart';
+import 'Modul5_SurahTajwid/tampilanawal.dart';
+import 'Modul2harakat/m2fathah.dart';
 
 // Halaman Level 1
 class Level1Page extends StatelessWidget {
@@ -12,7 +15,7 @@ class Level1Page extends StatelessWidget {
         title: Text('Level 1'),
       ),
       body: Center(
-        child: Text('Halaman Level 1'),
+        child: Text('Halaman Level 1: Belajar Mengenal Huruf Hijaiyah'),
       ),
     );
   }
@@ -27,7 +30,7 @@ class Level2Page extends StatelessWidget {
         title: Text('Level 2'),
       ),
       body: Center(
-        child: Text('Halaman Level 2'),
+        child: Text('Halaman Level 2: Belajar Mengenal Harakat'),
       ),
     );
   }
@@ -42,7 +45,7 @@ class Level3Page extends StatelessWidget {
         title: Text('Level 3'),
       ),
       body: Center(
-        child: Text('Halaman Level 3'),
+        child: Text('Halaman Level 3: Belajar Mengenal Huruf Hijaiyah (Ba Bi Bu)'),
       ),
     );
   }
@@ -57,7 +60,7 @@ class Level4Page extends StatelessWidget {
         title: Text('Level 4'),
       ),
       body: Center(
-        child: Text('Halaman Level 4'),
+        child: Text('Halaman Level 4: Belajar Mengenal Tajwid'),
       ),
     );
   }
@@ -72,7 +75,7 @@ class Level5Page extends StatelessWidget {
         title: Text('Level 5'),
       ),
       body: Center(
-        child: Text('Halaman Level 5'),
+        child: Text('Halaman Level 5: Belajar Membaca Surah dengan Tajwid'),
       ),
     );
   }
@@ -119,14 +122,13 @@ class _LearningWidgetState extends State<LearningWidget> {
                 // Level 1
                 GestureDetector(
                   onTap: () {
-                    // Navigasi ke halaman Level 1
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Level1Page()),
+                      MaterialPageRoute(builder: (context) => LearningAlifWidget()),
                     );
                   },
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(10, 25, 10, 10),
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 10),
                     child: Container(
                       width: MediaQuery.sizeOf(context).width * 3.43,
                       height: MediaQuery.sizeOf(context).height * 0.35,
@@ -180,17 +182,17 @@ class _LearningWidgetState extends State<LearningWidget> {
                                 Align(
                                   alignment: AlignmentDirectional(-1, 1),
                                   child: LinearPercentIndicator(
-                                    percent: 0.5,
+                                    percent: 0.4,
                                     width: MediaQuery.sizeOf(context).width * 0.9,
-                                    lineHeight: 25,
+                                    lineHeight: 20,
                                     animation: true,
                                     animateFromLastPercent: true,
                                     progressColor: Color(0xFF037A16),
-                                    backgroundColor: Colors.black,
+                                    backgroundColor: Colors.deepOrange,
                                     center: Text(
                                       '50%',
                                       style: GoogleFonts.inter(
-                                        fontSize: 20,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -209,10 +211,9 @@ class _LearningWidgetState extends State<LearningWidget> {
                 // Level 2
                 GestureDetector(
                   onTap: () {
-                    // Navigasi ke halaman Level 1
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Level2Page()),
+                      MaterialPageRoute(builder: (context) => LearningFathahWidget()),
                     );
                   },
                   child: Padding(
@@ -270,17 +271,17 @@ class _LearningWidgetState extends State<LearningWidget> {
                                 Align(
                                   alignment: AlignmentDirectional(-1, 1),
                                   child: LinearPercentIndicator(
-                                    percent: 0.5,
+                                    percent: 0.4,
                                     width: MediaQuery.sizeOf(context).width * 0.9,
-                                    lineHeight: 25,
+                                    lineHeight: 20,
                                     animation: true,
                                     animateFromLastPercent: true,
                                     progressColor: Color(0xFF037A16),
-                                    backgroundColor: Colors.black,
+                                    backgroundColor: Colors.deepOrange,
                                     center: Text(
                                       '50%',
                                       style: GoogleFonts.inter(
-                                        fontSize: 20,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -295,10 +296,10 @@ class _LearningWidgetState extends State<LearningWidget> {
                     ),
                   ),
                 ),
+
                 // Level 3
                 GestureDetector(
                   onTap: () {
-                    // Navigasi ke halaman Level 1
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Level3Page()),
@@ -359,17 +360,17 @@ class _LearningWidgetState extends State<LearningWidget> {
                                 Align(
                                   alignment: AlignmentDirectional(-1, 1),
                                   child: LinearPercentIndicator(
-                                    percent: 0.5,
+                                    percent: 0.4,
                                     width: MediaQuery.sizeOf(context).width * 0.9,
-                                    lineHeight: 25,
+                                    lineHeight: 20,
                                     animation: true,
                                     animateFromLastPercent: true,
                                     progressColor: Color(0xFF037A16),
-                                    backgroundColor: Colors.black,
+                                    backgroundColor: Colors.deepOrange,
                                     center: Text(
                                       '50%',
                                       style: GoogleFonts.inter(
-                                        fontSize: 20,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -446,17 +447,17 @@ class _LearningWidgetState extends State<LearningWidget> {
                                 Align(
                                   alignment: AlignmentDirectional(-1, 1),
                                   child: LinearPercentIndicator(
-                                    percent: 0.5,
+                                    percent: 0.4,
                                     width: MediaQuery.sizeOf(context).width * 0.9,
-                                    lineHeight: 25,
+                                    lineHeight: 20,
                                     animation: true,
                                     animateFromLastPercent: true,
                                     progressColor: Color(0xFF037A16),
-                                    backgroundColor: Colors.black,
+                                    backgroundColor: Colors.deepOrange,
                                     center: Text(
                                       '50%',
                                       style: GoogleFonts.inter(
-                                        fontSize: 20,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -471,13 +472,12 @@ class _LearningWidgetState extends State<LearningWidget> {
                     ),
                   ),
                 ),
-
                 // Level 5
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Level5Page()),
+                      MaterialPageRoute(builder: (context) => LearningtampilanSplashWidget()),
                     );
                   },
                   child: Padding(
@@ -533,17 +533,17 @@ class _LearningWidgetState extends State<LearningWidget> {
                                 Align(
                                   alignment: AlignmentDirectional(-1, 1),
                                   child: LinearPercentIndicator(
-                                    percent: 0.5,
+                                    percent: 0.4,
                                     width: MediaQuery.sizeOf(context).width * 0.9,
-                                    lineHeight: 25,
+                                    lineHeight: 20,
                                     animation: true,
                                     animateFromLastPercent: true,
                                     progressColor: Color(0xFF037A16),
-                                    backgroundColor: Colors.black,
+                                    backgroundColor: Colors.deepOrange,
                                     center: Text(
                                       '50%',
                                       style: GoogleFonts.inter(
-                                        fontSize: 20,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -561,42 +561,6 @@ class _LearningWidgetState extends State<LearningWidget> {
               ],
             ),
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Color(0xFFFAFDCB),
-          type: BottomNavigationBarType.fixed,
-          currentIndex: selectedIndex,
-          onTap: onTabTapped,
-          selectedItemColor: Color(0xFF037A16),
-          unselectedItemColor: Colors.black,
-          selectedLabelStyle: TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          unselectedLabelStyle: TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          items: const [
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu_book, size: 30),
-              label: 'Learning',
-            ),
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.chartBar, size: 30),
-              label: 'Progress',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined, size: 30),
-              label: 'Account',
-            ),
-          ],
         ),
       ),
     );
@@ -616,6 +580,7 @@ void main() {
         '/level3': (context) => Level3Page(),
         '/level4': (context) => Level4Page(),
         '/level5': (context) => Level5Page(),
+        '/m1alif': (context) => LearningAlifWidget()
       },
     ),
   );

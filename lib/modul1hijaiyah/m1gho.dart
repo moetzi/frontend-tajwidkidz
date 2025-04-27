@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'm1ain.dart';
+import 'm1fa.dart';
 
 class LearningGhoWidget extends StatefulWidget {
   const LearningGhoWidget({super.key});
@@ -116,7 +118,12 @@ class _LearningGhoWidgetState extends State<LearningGhoWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Rewind button pressed');
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningAinWidget(),
+                            ),
+                          );
                         },
                       ),
                       IconButton(
@@ -126,7 +133,12 @@ class _LearningGhoWidgetState extends State<LearningGhoWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Fast Forward button pressed');
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningFaWidget(),
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -168,7 +180,7 @@ class _LearningGhoWidgetState extends State<LearningGhoWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                         child: Text(
-                          'Coba Ucapkan Huruf Hijaiyah!',
+                          'Coba Ucapkan Huruf \n Hijaiyah!',
                           style: GoogleFonts.inter(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,

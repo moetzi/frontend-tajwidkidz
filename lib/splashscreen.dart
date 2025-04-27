@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'homepage.dart';
+import 'login.dart';
 
 class SplashScreenModel {
   void dispose() {}
@@ -28,7 +28,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
     Future.delayed(const Duration(seconds: 5)).then((_) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const HomePageWidget(),
+          builder: (context) => const LoginWidget(),
         ),
       );
     });

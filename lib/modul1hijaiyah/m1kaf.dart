@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'm1qof.dart';
+import 'm1lam.dart';
 
 class LearningKafWidget extends StatefulWidget {
   const LearningKafWidget({super.key});
@@ -94,7 +96,7 @@ class _LearningKafWidgetState extends State<LearningKafWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                         child: Text(
-                          'Pengenalan Huruf Hijaiyah',
+                          'Pengenalan Huruf \n Hijaiyah',
                           style: GoogleFonts.inter(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -116,7 +118,12 @@ class _LearningKafWidgetState extends State<LearningKafWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Rewind button pressed');
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningQofWidget(),
+                            ),
+                          );
                         },
                       ),
                       IconButton(
@@ -126,7 +133,12 @@ class _LearningKafWidgetState extends State<LearningKafWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Fast Forward button pressed');
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningLamWidget(),
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -168,7 +180,7 @@ class _LearningKafWidgetState extends State<LearningKafWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                         child: Text(
-                          'Coba Ucapkan Huruf Hijaiyah!',
+                          'Coba Ucapkan Huruf \n Hijaiyah!',
                           style: GoogleFonts.inter(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,

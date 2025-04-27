@@ -30,18 +30,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  audioplayers: ^6.4.0
   auto_size_text: 3.0.0
   cached_network_image: 3.4.1
   cached_network_image_platform_interface: 4.1.1
   cached_network_image_web: 1.3.1
   collection: ^1.19.1
-  flutter_animate: 4.5.0
-  flutter_cache_manager: 3.4.1
-  font_awesome_flutter: 10.7.0
+  flutter_animate: ^4.5.2
+  flutter_cache_manager: ^3.4.1
+  flutter_sound: ^9.28.0
+  font_awesome_flutter: ^10.8.0
   from_css_color: 2.0.0
-  go_router: 12.1.3
-  google_fonts: 6.1.0
-  intl: ^0.19.0
+  go_router: ^15.1.2
+  google_fonts: ^6.2.1
+  intl: ^0.20.2
   json_path: ^0.7.5
   page_transition: ^2.2.1
   path_provider: ^2.1.5
@@ -51,7 +53,9 @@ dependencies:
   path_provider_platform_interface: 2.1.2
   path_provider_windows: 2.3.0
   percent_indicator: ^4.2.2
+  permission_handler: ^12.0.0+1
   provider: ^6.1.4
+  record: ^6.0.0
   shared_preferences: ^2.5.3
   shared_preferences_android: ^2.4.10
   shared_preferences_foundation: ^2.5.4
@@ -100,6 +104,8 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/audios/
+    - assets/audios/alif_1.wav
 #    - assets/videos/
 #    - assets/audios/
 #    - assets/rive_animations/

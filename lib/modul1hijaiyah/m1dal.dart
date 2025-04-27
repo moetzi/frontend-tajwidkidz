@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'm1kho.dart';  // Import LearningKhoWidget (previous level)
+import 'm1dzal.dart'; // Import LearningDzalWidget (next level)
 
 class LearningDalWidget extends StatefulWidget {
   const LearningDalWidget({super.key});
@@ -109,6 +111,7 @@ class _LearningDalWidgetState extends State<LearningDalWidget> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Fast Rewind Button to navigate to LearningKhoWidget (previous level)
                       IconButton(
                         icon: Icon(
                           Icons.fast_rewind,
@@ -116,9 +119,16 @@ class _LearningDalWidgetState extends State<LearningDalWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Rewind button pressed');
+                          // Navigate to LearningKhoWidget (previous level)
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningKhoWidget(),
+                            ),
+                          );
                         },
                       ),
+                      // Fast Forward Button to navigate to LearningDzalWidget (next level)
                       IconButton(
                         icon: Icon(
                           Icons.fast_forward,
@@ -126,7 +136,13 @@ class _LearningDalWidgetState extends State<LearningDalWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Fast Forward button pressed');
+                          // Navigate to LearningDzalWidget (next level)
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningDzalWidget(),
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -168,7 +184,7 @@ class _LearningDalWidgetState extends State<LearningDalWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                         child: Text(
-                          'Coba Ucapkan Huruf Hijaiyah!',
+                          'Coba Ucapkan Huruf \n Hijaiyah!',
                           style: GoogleFonts.inter(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -183,7 +199,7 @@ class _LearningDalWidgetState extends State<LearningDalWidget> {
                   child: Row(
                     children: [
                       Text(
-                        'Feedback AI:',
+                        'Feedback AI: ',
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

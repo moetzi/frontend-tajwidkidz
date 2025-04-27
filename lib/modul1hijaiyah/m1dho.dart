@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'm1shod.dart';
+import  'm1tho.dart';
 class LearningDhoWidget extends StatefulWidget {
   const LearningDhoWidget({super.key});
 
@@ -116,7 +117,12 @@ class _LearningDhoWidgetState extends State<LearningDhoWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Rewind button pressed');
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningShodWidget(),
+                            ),
+                          );
                         },
                       ),
                       IconButton(
@@ -126,7 +132,12 @@ class _LearningDhoWidgetState extends State<LearningDhoWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Fast Forward button pressed');
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningThoWidget(),
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -168,7 +179,7 @@ class _LearningDhoWidgetState extends State<LearningDhoWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                         child: Text(
-                          'Coba Ucapkan Huruf Hijaiyah!',
+                          'Coba Ucapkan Huruf \n Hijaiyah!',
                           style: GoogleFonts.inter(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'm1ta.dart';  // Import LearningBaWidget for previous level (fast rewind)
+import 'm1jim.dart';  // Import LearningJaWidget for next level (fast forward)
+import 'package:audioplayers/audioplayers.dart';
 
 class LearningTsaWidget extends StatefulWidget {
   const LearningTsaWidget({super.key});
@@ -109,6 +112,7 @@ class _LearningTsaWidgetState extends State<LearningTsaWidget> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Fast Rewind Button to navigate to LearningBaWidget (previous level)
                       IconButton(
                         icon: Icon(
                           Icons.fast_rewind,
@@ -116,9 +120,16 @@ class _LearningTsaWidgetState extends State<LearningTsaWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Rewind button pressed');
+                          // Navigate to LearningBaWidget (previous level)
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningTaWidget(),
+                            ),
+                          );
                         },
                       ),
+                      // Fast Forward Button to navigate to LearningJaWidget (next level)
                       IconButton(
                         icon: Icon(
                           Icons.fast_forward,
@@ -126,7 +137,13 @@ class _LearningTsaWidgetState extends State<LearningTsaWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Fast Forward button pressed');
+                          // Navigate to LearningJaWidget (next level)
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningJimWidget(), // Add LearningJaWidget here
+                            ),
+                          );
                         },
                       ),
                     ],
@@ -168,7 +185,7 @@ class _LearningTsaWidgetState extends State<LearningTsaWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                         child: Text(
-                          'Coba Ucapkan Huruf Hijaiyah!',
+                          'Coba Ucapkan Huruf \n Hijaiyah!',
                           style: GoogleFonts.inter(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -183,7 +200,7 @@ class _LearningTsaWidgetState extends State<LearningTsaWidget> {
                   child: Row(
                     children: [
                       Text(
-                        'Feedback AI:',
+                        'Feedback AI: ',
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
