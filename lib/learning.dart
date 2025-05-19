@@ -4,6 +4,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'modul1hijaiyah/m1alif.dart';
 import 'Modul5_SurahTajwid/tampilanawal.dart';
 import 'Modul2harakat/m2fathah.dart';
+import 'Modul3_babibu/AIU.dart';
 
 // Halaman Level 1
 class Level1Page extends StatelessWidget {
@@ -311,7 +312,7 @@ class _LearningWidgetState extends State<LearningWidget> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Level3Page()),
+                      MaterialPageRoute(builder: (context) => LearningAIUWidget()),
                     );
                   },
                   child: Padding(
@@ -503,7 +504,7 @@ class _LearningWidgetState extends State<LearningWidget> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.asset(
-                              'assets/images/level5.png',
+                              'assets/images/Level5.png',
                               width: 369.1,
                               height: 200,
                               fit: BoxFit.cover,

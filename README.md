@@ -19,12 +19,24 @@ samples, guidance on mobile development, and a full API reference.
 # PROTEL
 DEV Mobile APP
 >>>>>>> aa46dc6d1e3099c2d5e7898e14bdd6156a502b5a
+<<<<<<< Updated upstream
 
+=======
+ 
+>>>>>>> Stashed changes
 # FE:
 ## Sistem Tool yang harus terpasang:
 - Flutter SDK : https://docs.flutter.dev/get-started/install
 - Android Studio (untuk emulator dan SDK Android) https://developer.android.com/studio
 
 ### Semua package yang digunakan sudah didefinisikan dalam file `pubspec.yaml`.  
+<<<<<<< Updated upstream
 - flutter pub get : Untuk menginstall semua dependencies tersebut, jalankan perintah berikut di root folder proyek
 - flutter run
+=======
+- flutter pub get : Untuk menginstall semua dependencies tersebut, jalankan perintah berikut di root folder proyek:
+- flutter run
+
+
+
+>>>>>>> Stashed changes
