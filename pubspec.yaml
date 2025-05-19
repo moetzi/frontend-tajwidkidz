@@ -105,7 +105,6 @@ flutter:
   assets:
     - assets/images/
     - assets/audios/
-    - assets/audios/alif_1.wav
 #    - assets/videos/
 #    - assets/audios/
 #    - assets/rive_animations/

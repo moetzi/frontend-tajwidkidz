@@ -93,20 +93,9 @@ import 'Modul5_SurahTajwid/Al-Kausar/Al-Kausar2.dart';
 import 'Modul5_SurahTajwid/Al-Kausar/Al-Kausar3.dart';
 import 'minigame.dart';
 import 'Progress.dart';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import 'Modul3_babibu/AIU.dart';
+import 'Modul3_babibu/Babibu.dart';
+import 'Modul3_babibu/Tatitu.dart';
 
 void main() {
   runApp(const MyApp());
