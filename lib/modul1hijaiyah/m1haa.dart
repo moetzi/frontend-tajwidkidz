@@ -202,7 +202,7 @@ class _LearningHaaWidgetState extends State<LearningHaaWidget> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200,
                           child: TextFormField(
                             controller: _textController,

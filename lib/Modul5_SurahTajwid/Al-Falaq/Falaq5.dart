@@ -234,7 +234,7 @@ class _LearningAlfalaq5WidgetState
                                   ),
                                 ),
                                 Expanded(
-                                  child: Container(
+                                  child: SizedBox(
                                     width: 200,
                                     child: TextFormField(
                                       controller: _textController1,

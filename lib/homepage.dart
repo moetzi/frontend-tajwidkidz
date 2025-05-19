@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'learning.dart'; // Import halaman LearningWidget
 import 'minigame.dart'; // Import halaman MiniGame
 import 'leaderboard.dart'; // Import halaman Leaderboard
-import 'Progress.dart'; // Import halaman ProgressPage
+import 'progress.dart'; // Import halaman ProgressPage
 
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({super.key});
