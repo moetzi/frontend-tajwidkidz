@@ -203,7 +203,6 @@ class _LearningFathahtainWidgetState extends State<LearningFathahtainWidget> {
                                     size: 30,
                                   ),
                                   onPressed: () {
-                                    print('IconButton pressed ...');
                                   },
                                 ),
                                 Padding(
@@ -282,7 +281,7 @@ class _LearningFathahtainWidgetState extends State<LearningFathahtainWidget> {
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
               label: 'Home',
             ),
             BottomNavigationBarItem(

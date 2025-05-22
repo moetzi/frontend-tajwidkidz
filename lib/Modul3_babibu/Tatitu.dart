@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'Babibu.dart';
-import 'Tsatsitsu.dart';
+import 'babibu.dart';
+import 'tsatsitsu.dart';
 
 
 class LearningTaTituWidget extends StatefulWidget {
   const LearningTaTituWidget({super.key});
 
-  static String routeName = 'LearningTatitu';
-  static String routePath = '/learningTatitu';
+  static String routeName = 'Learningtatitu';
+  static String routePath = '/learningtatitu';
 
   @override
   State<LearningTaTituWidget> createState() => _LearningTaTituWidgetState();
@@ -96,7 +96,6 @@ class _LearningTaTituWidgetState extends State<LearningTaTituWidget> {
                                     size: 30,
                                   ),
                                   onPressed: () {
-                                    print('IconButton pressed ...');
                                   },
                                 ),
                               ),
@@ -179,7 +178,7 @@ class _LearningTaTituWidgetState extends State<LearningTaTituWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.9,
-                              height: 300,
+                              height: 320,
                               decoration: BoxDecoration(
                                 color: Theme.of(context).secondaryHeaderColor,
                               ),
@@ -205,7 +204,6 @@ class _LearningTaTituWidgetState extends State<LearningTaTituWidget> {
                                     size: 30,
                                   ),
                                   onPressed: () {
-                                    print('IconButton pressed ...');
                                   },
                                 ),
                                 Padding(
@@ -234,7 +232,7 @@ class _LearningTaTituWidgetState extends State<LearningTaTituWidget> {
                                   ),
                                 ),
                                 Expanded(
-                                  child: Container(
+                                  child:  SizedBox(
                                     width: 200,
                                     child: TextFormField(
                                       controller: _textController,
@@ -284,7 +282,7 @@ class _LearningTaTituWidgetState extends State<LearningTaTituWidget> {
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
               label: 'Home',
             ),
             BottomNavigationBarItem(

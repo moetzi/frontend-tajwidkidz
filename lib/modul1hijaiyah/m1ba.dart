@@ -43,22 +43,22 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Color(0xFFFAFDCB),
+        backgroundColor: const Color(0xFFFAFDCB),
         appBar: AppBar(
-          title: Text('Level 1 Belajar Huruf Hijaiyah'),
-          backgroundColor: Color(0xFF037A16),
+          title: const Text('Level 1 Belajar Huruf Hijaiyah'),
+          backgroundColor: const Color(0xFF037A16),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(15, 47, 15, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(15, 47, 15, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_back_ios_rounded,
                           color: Colors.black,
                           size: 30,
@@ -68,13 +68,12 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
                         },
                       ),
                       IconButton(
-                        icon: FaIcon(
-                          FontAwesomeIcons.volumeUp,
+                        icon: const FaIcon(
+                          FontAwesomeIcons.volumeHigh,
                           color: Colors.black,
                           size: 30,
                         ),
                         onPressed: () {
-                          print('Play audio');
                           // TODO: Add play audio functionality here
                         },
                       ),
@@ -82,7 +81,7 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                   child: Column(
                     children: [
                       Text(
@@ -92,14 +91,12 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                        child: Text(
-                          'Pengenalan Huruf Hijaiyah',
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Pengenalan Huruf Hijaiyah',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ],
@@ -112,7 +109,7 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
                     children: [
                       // Fast Rewind Button to navigate to LearningAlifWidget (previous page)
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.fast_rewind,
                           color: Colors.black,
                           size: 25,
@@ -122,14 +119,14 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LearningAlifWidget(),
+                              builder: (context) => const LearningAlifWidget(),
                             ),
                           );
                         },
                       ),
                       // Fast Forward Button to navigate to LearningTaWidget (next page)
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.fast_forward,
                           color: Colors.black,
                           size: 25,
@@ -139,7 +136,7 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LearningTaWidget(),
+                              builder: (context) => const LearningTaWidget(),
                             ),
                           );
                         },
@@ -148,7 +145,7 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                   child: Container(
                     width: MediaQuery.sizeOf(context).width * 0.9,
                     height: 183.67,
@@ -167,34 +164,32 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(60, 15, 60, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(60, 15, 60, 0),
                   child: Row(
                     children: [
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.mic_sharp,
                           color: Colors.black,
                           size: 30,
                         ),
                         onPressed: () {
-                          print('Mic button pressed');
+                          // TODO: Add mic button functionality here
                         },
                       ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                        child: Text(
-                          'Coba Ucapkan Huruf \n  Hijaiyah!',
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
+                      const SizedBox(width: 5),
+                      Text(
+                        'Coba Ucapkan Huruf \n  Hijaiyah!',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(50, 15, 50, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(50, 15, 50, 0),
                   child: Row(
                     children: [
                       Text(
@@ -219,21 +214,21 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
                                 fontWeight: FontWeight.w600,
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               filled: true,
-                              fillColor: Color(0xFFFAFDCB),
+                              fillColor: const Color(0xFFFAFDCB),
                             ),
                             style: GoogleFonts.inter(
                               fontWeight: FontWeight.w600,
@@ -250,25 +245,25 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Color(0xFFFAFDCB),
+          backgroundColor: const Color(0xFFFAFDCB),
           type: BottomNavigationBarType.fixed,
           currentIndex: selectedIndex,
           onTap: onTabTapped,
-          selectedItemColor: Color(0xFF037A16),
+          selectedItemColor: const Color(0xFF037A16),
           unselectedItemColor: Colors.black,
-          selectedLabelStyle: TextStyle(
+          selectedLabelStyle: const TextStyle(
             fontFamily: 'Inter',
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
-          unselectedLabelStyle: TextStyle(
+          unselectedLabelStyle: const TextStyle(
             fontFamily: 'Inter',
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
               label: 'Home',
             ),
             BottomNavigationBarItem(

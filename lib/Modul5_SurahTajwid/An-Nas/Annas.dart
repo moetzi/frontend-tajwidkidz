@@ -100,12 +100,11 @@ class _LearningAnnasfullWidgetState
                           alignment: AlignmentDirectional(0, 0),
                           child: IconButton(
                             icon: FaIcon(
-                              FontAwesomeIcons.volumeUp,
+                              FontAwesomeIcons.volumeHigh,
                               color: Colors.black,
                               size: 30,
                             ),
                             onPressed: () {
-                              print('Volume button pressed');
                             },
                           ),
                         ),

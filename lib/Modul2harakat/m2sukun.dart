@@ -95,7 +95,6 @@ class _LearningSukunWidgetState extends State<LearningSukunWidget> {
                                     size: 30,
                                   ),
                                   onPressed: () {
-                                    print('IconButton pressed ...');
                                   },
                                 ),
                               ),
@@ -203,7 +202,6 @@ class _LearningSukunWidgetState extends State<LearningSukunWidget> {
                                     size: 30,
                                   ),
                                   onPressed: () {
-                                    print('IconButton pressed ...');
                                   },
                                 ),
                                 Padding(
@@ -282,7 +280,7 @@ class _LearningSukunWidgetState extends State<LearningSukunWidget> {
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
               label: 'Home',
             ),
             BottomNavigationBarItem(

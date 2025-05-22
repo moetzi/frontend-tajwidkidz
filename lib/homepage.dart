@@ -127,7 +127,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             size: 24,
                           ),
                           FaIcon(
-                            FontAwesomeIcons.quran,
+                            FontAwesomeIcons.bookQuran,
                             color: Color(0xFF037A16),
                             size: 60,
                           ),
@@ -348,7 +348,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
               label: 'Home',
             ),
             BottomNavigationBarItem(

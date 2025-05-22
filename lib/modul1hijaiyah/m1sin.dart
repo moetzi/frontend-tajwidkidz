@@ -70,12 +70,11 @@ class _LearningSinWidgetState extends State<LearningSinWidget> {
                       ),
                       IconButton(
                         icon: FaIcon(
-                          FontAwesomeIcons.volumeUp,
+                          FontAwesomeIcons.volumeHigh,
                           color: Colors.black,
                           size: 30,
                         ),
                         onPressed: () {
-                          print('Play audio');
                           // TODO: Add play audio functionality here
                         },
                       ),
@@ -174,7 +173,6 @@ class _LearningSinWidgetState extends State<LearningSinWidget> {
                           size: 30,
                         ),
                         onPressed: () {
-                          print('Mic button pressed');
                         },
                       ),
                       Padding(
@@ -265,7 +263,7 @@ class _LearningSinWidgetState extends State<LearningSinWidget> {
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
               label: 'Home',
             ),
             BottomNavigationBarItem(

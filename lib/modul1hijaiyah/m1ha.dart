@@ -70,12 +70,11 @@ class _LearningHaWidgetState extends State<LearningHaWidget> {
                       ),
                       IconButton(
                         icon: FaIcon(
-                          FontAwesomeIcons.volumeUp,
+                          FontAwesomeIcons.volumeHigh,
                           color: Colors.black,
                           size: 30,
                         ),
                         onPressed: () {
-                          print('Play audio');
                           // TODO: Add play audio functionality here
                         },
                       ),
@@ -178,7 +177,6 @@ class _LearningHaWidgetState extends State<LearningHaWidget> {
                           size: 30,
                         ),
                         onPressed: () {
-                          print('Mic button pressed');
                         },
                       ),
                       Padding(
@@ -269,7 +267,7 @@ class _LearningHaWidgetState extends State<LearningHaWidget> {
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
               label: 'Home',
             ),
             BottomNavigationBarItem(

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'AIU.dart';
-import 'Tatitu.dart';
+import 'aiu.dart';
+import 'tatitu.dart';
 
 
 class LearningBaBiBuWidget extends StatefulWidget {
   const LearningBaBiBuWidget({super.key});
 
-  static String routeName = 'LearningBabibu';
-  static String routePath = '/learningBabibu';
+  static String routeName = 'Learningtatitu';
+  static String routePath = '/learningtatitu';
 
   @override
   State<LearningBaBiBuWidget> createState() => _LearningBaBiBuWidgetState();
@@ -96,7 +96,6 @@ class _LearningBaBiBuWidgetState extends State<LearningBaBiBuWidget> {
                                     size: 30,
                                   ),
                                   onPressed: () {
-                                    print('IconButton pressed ...');
                                   },
                                 ),
                               ),
@@ -205,7 +204,6 @@ class _LearningBaBiBuWidgetState extends State<LearningBaBiBuWidget> {
                                     size: 30,
                                   ),
                                   onPressed: () {
-                                    print('IconButton pressed ...');
                                   },
                                 ),
                                 Padding(
@@ -234,7 +232,7 @@ class _LearningBaBiBuWidgetState extends State<LearningBaBiBuWidget> {
                                   ),
                                 ),
                                 Expanded(
-                                  child: Container(
+                                  child: SizedBox(
                                     width: 200,
                                     child: TextFormField(
                                       controller: _textController,
@@ -284,7 +282,7 @@ class _LearningBaBiBuWidgetState extends State<LearningBaBiBuWidget> {
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
               label: 'Home',
             ),
             BottomNavigationBarItem(

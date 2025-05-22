@@ -5,10 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 // Add imports for the new screens
 import 'Al-Fatihah/Alfatihahome.dart';  // Import Al-Fatihah home widget
 import 'An-Nas/AnnasHome.dart';  // Import An-Nas home widget
-import 'Al-Ihlas/Al-Ikhlashome.dart';  // Import Al-Ikhlas home widget
+import 'Al-Ihlas/al_ikhlashome.dart';  // Import Al-Ikhlas home widget
 import 'Al-Falaq/Falaqhome.dart';  // Import Al-Falaq home widget
-import 'Al-Kausar/Al-Kausarhome.dart';  // Import Al-Kausar home widget
-import 'Al-Kafirun/Al-Kafirunhome.dart';  // Import Al-Kafirun home widget
+import 'Al-Kausar/al_kausarhome.dart';  // Import Al-Kausar home widget
+import 'Al-Kafirun/al_kafirunhome.dart';  // Import Al-Kafirun home widget
 
 class LearningtampilanSplashWidget extends StatefulWidget {
   const LearningtampilanSplashWidget({super.key});
@@ -70,12 +70,11 @@ class _LearningtampilanSplashWidgetState
                             Spacer(),
                             IconButton(
                               icon: FaIcon(
-                                FontAwesomeIcons.volumeUp,
+                                FontAwesomeIcons.volumeHigh,
                                 color: Colors.black,
                                 size: 30,
                               ),
                               onPressed: () {
-                                print('Volume button pressed');
                               },
                             ),
                           ],
@@ -290,7 +289,7 @@ class _LearningtampilanSplashWidgetState
           unselectedItemColor: Colors.black,
           items: const [
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
               label: 'Home',
             ),
             BottomNavigationBarItem(

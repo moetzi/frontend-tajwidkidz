@@ -94,7 +94,6 @@ class _LearningTasydidWidgetState extends State<LearningTasydidWidget> {
                                     size: 30,
                                   ),
                                   onPressed: () {
-                                    print('IconButton pressed ...');
                                   },
                                 ),
                               ),
@@ -158,7 +157,6 @@ class _LearningTasydidWidgetState extends State<LearningTasydidWidget> {
                                   size: 30,
                                 ),
                                 onPressed: () {
-                                  print('IconButton pressed ...');
                                 },
                               ),
                             ),
@@ -197,7 +195,6 @@ class _LearningTasydidWidgetState extends State<LearningTasydidWidget> {
                                     size: 30,
                                   ),
                                   onPressed: () {
-                                    print('IconButton pressed ...');
                                   },
                                 ),
                                 Padding(
@@ -276,7 +273,7 @@ class _LearningTasydidWidgetState extends State<LearningTasydidWidget> {
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
               label: 'Home',
             ),
             BottomNavigationBarItem(

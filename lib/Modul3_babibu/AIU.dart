@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'Babibu.dart';
+import 'babibu.dart';
 
 class LearningAIUWidget extends StatefulWidget {
   const LearningAIUWidget({super.key});
 
-  static String routeName = 'LearningAIU';
-  static String routePath = '/learningAIU';
+  static String routeName = 'Learningaiu';
+  static String routePath = '/learningaiu';
 
   @override
   State<LearningAIUWidget> createState() => _LearningAIUWidgetState();
@@ -71,7 +71,6 @@ class _LearningAIUWidgetState extends State<LearningAIUWidget> {
                       IconButton(
                         icon: const FaIcon(FontAwesomeIcons.volumeHigh, color: Colors.black, size: 30),
                         onPressed: () {
-                          print('Volume pressed');
                         },
                       ),
                     ],
@@ -209,7 +208,7 @@ class _LearningAIUWidgetState extends State<LearningAIUWidget> {
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
               label: 'Home',
             ),
             BottomNavigationBarItem(

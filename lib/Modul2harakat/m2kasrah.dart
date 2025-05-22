@@ -96,7 +96,6 @@ class _LearningKasrahWidgetState extends State<LearningKasrahWidget> {
                                     size: 30,
                                   ),
                                   onPressed: () {
-                                    print('IconButton pressed ...');
                                   },
                                 ),
                               ),
@@ -204,7 +203,6 @@ class _LearningKasrahWidgetState extends State<LearningKasrahWidget> {
                                     size: 30,
                                   ),
                                   onPressed: () {
-                                    print('IconButton pressed ...');
                                   },
                                 ),
                                 Padding(
@@ -283,7 +281,7 @@ class _LearningKasrahWidgetState extends State<LearningKasrahWidget> {
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
               label: 'Home',
             ),
             BottomNavigationBarItem(
