@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'm1ta.dart';  // Import LearningBaWidget for previous level (fast rewind)
 import 'm1jim.dart';  // Import LearningJaWidget for next level (fast forward)
-import 'package:audioplayers/audioplayers.dart';
 
 class LearningTsaWidget extends StatefulWidget {
   const LearningTsaWidget({super.key});
@@ -207,7 +206,7 @@ class _LearningTsaWidgetState extends State<LearningTsaWidget> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200,
                           child: TextFormField(
                             controller: _textController,

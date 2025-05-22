@@ -104,7 +104,7 @@ class LoginWidget extends StatelessWidget {
                         child: Row(
                           children: [
                             Expanded(
-                              child: Container(
+                              child: SizedBox(
                                 width: 200,
                                 child: TextFormField(
                                   controller: model.textController1,
@@ -168,7 +168,7 @@ class LoginWidget extends StatelessWidget {
                           child: Row(
                             children: [
                               Expanded(
-                                child: Container(
+                                child: SizedBox(
                                   width: 200,
                                   child: TextFormField(
                                     controller: model.textController2,

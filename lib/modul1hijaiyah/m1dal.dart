@@ -206,7 +206,7 @@ class _LearningDalWidgetState extends State<LearningDalWidget> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200,
                           child: TextFormField(
                             controller: _textController,

@@ -202,7 +202,7 @@ class _LearningShodWidgetState extends State<LearningShodWidget> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200,
                           child: TextFormField(
                             controller: _textController,

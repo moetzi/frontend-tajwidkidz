@@ -202,7 +202,7 @@ class _LearningQofWidgetState extends State<LearningQofWidget> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200,
                           child: TextFormField(
                             controller: _textController,

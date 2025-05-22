@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'modul1hijaiyah/m1alif.dart';
 import 'Modul5_SurahTajwid/tampilanawal.dart';
 import 'Modul2harakat/m2fathah.dart';
@@ -9,6 +8,8 @@ import 'Modul3_babibu/AIU.dart';
 
 // Halaman Level 1
 class Level1Page extends StatelessWidget {
+  const Level1Page({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +25,8 @@ class Level1Page extends StatelessWidget {
 
 // Halaman Level 2
 class Level2Page extends StatelessWidget {
+  const Level2Page({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +42,8 @@ class Level2Page extends StatelessWidget {
 
 // Halaman Level 3
 class Level3Page extends StatelessWidget {
+  const Level3Page({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,6 +59,8 @@ class Level3Page extends StatelessWidget {
 
 // Halaman Level 4
 class Level4Page extends StatelessWidget {
+  const Level4Page({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,6 +76,8 @@ class Level4Page extends StatelessWidget {
 
 // Halaman Level 5
 class Level5Page extends StatelessWidget {
+  const Level5Page({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

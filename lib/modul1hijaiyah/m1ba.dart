@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'm1ta.dart';  // Import LearningTaWidget
-import 'package:audioplayers/audioplayers.dart';
 import 'm1alif.dart';  // Import LearningAlifWidget for previous page
 
 class LearningBaWidget extends StatefulWidget {
@@ -206,7 +205,7 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200,
                           child: TextFormField(
                             controller: _textController,

@@ -206,7 +206,7 @@ class _LearningKhoWidgetState extends State<LearningKhoWidget> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200,
                           child: TextFormField(
                             controller: _textController,

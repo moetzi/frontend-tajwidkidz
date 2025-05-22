@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 
 class MiniGameWidget extends StatelessWidget {
+  const MiniGameWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

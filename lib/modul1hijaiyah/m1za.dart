@@ -202,7 +202,7 @@ class _LearningZaWidgetState extends State<LearningZaWidget> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200,
                           child: TextFormField(
                             controller: _textController,
