@@ -121,8 +121,8 @@ class MiniGameWidget extends StatelessWidget {
                 ),
 
                 GameCard(
-                  imagePath: 'assets/images/icon_game_tajwid.png',
-                  title: 'Game\nTajwid',
+                  imagePath: 'assets/images/icon_tajwidku_seru.png',
+                  title: 'Game\nTajwidku\nSeru',
                   color: const Color.fromRGBO(242, 125, 125, 1),
                   onPressed: () {
                     Navigator.push(
