@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // Import the required widgets for routing
-import 'Alfa.dart'; // Import LearningAlfatihahFullWidget
+import 'alfa.dart'; // Import LearningAlfatihahFullWidget
 import 'alfa1.dart'; // Import LearningAlfatihah1Widget
 
 class LearningAlfatihahHomeWidget extends StatefulWidget {
