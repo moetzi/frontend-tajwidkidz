@@ -40,6 +40,7 @@ class GameCard extends StatelessWidget {
             fit: BoxFit.contain,
           ),
           const SizedBox(height: 6),
+          
           Text(
             title,
             textAlign: TextAlign.center,
@@ -50,7 +51,9 @@ class GameCard extends StatelessWidget {
               color: Colors.black,
             ),
           ),
+
           const Spacer(),
+
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
