@@ -5,8 +5,6 @@ import 'package:TajwidKidz/Game/view/tebak_huruf_game.dart';
 import 'package:TajwidKidz/Game/widgets/game_card.dart';
 
 class MiniGameWidget extends StatelessWidget {
-  const MiniGameWidget({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,8 +121,8 @@ class MiniGameWidget extends StatelessWidget {
                 ),
 
                 GameCard(
-                  imagePath: 'assets/images/icon_game_tajwid.png',
-                  title: 'Game\nTajwid',
+                  imagePath: 'assets/images/icon_tajwidku_seru.png',
+                  title: 'Game\nTajwidku\nSeru',
                   color: const Color.fromRGBO(242, 125, 125, 1),
                   onPressed: () {
                     Navigator.push(
