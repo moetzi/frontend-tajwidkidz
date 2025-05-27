@@ -127,16 +127,6 @@ class _LearningAnnasHomeWidgetState extends State<LearningAnnasHomeWidget> {
                                       ),
                                     );
                                   },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.library_books_sharp,
-                                        size: 15,
-                                      ),
-                                      Text('Surah An - Nas'),
-                                    ],
-                                  ),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Color(0xFFF2CE31),
                                     padding: EdgeInsets.symmetric(horizontal: 16),
@@ -148,6 +138,16 @@ class _LearningAnnasHomeWidgetState extends State<LearningAnnasHomeWidget> {
                                       color: Colors.black,
                                       fontSize: 18,
                                     ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.library_books_sharp,
+                                        size: 15,
+                                      ),
+                                      Text('Surah An - Nas'),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -162,16 +162,6 @@ class _LearningAnnasHomeWidgetState extends State<LearningAnnasHomeWidget> {
                                     ),
                                     );
                                   },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.library_books_sharp,
-                                        size: 15,
-                                      ),
-                                      Text('Belajar Membaca Surah An - Nas'),
-                                    ],
-                                  ),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Color(0xFFF2CE31),
                                     padding: EdgeInsets.symmetric(horizontal: 16),
@@ -183,6 +173,16 @@ class _LearningAnnasHomeWidgetState extends State<LearningAnnasHomeWidget> {
                                       color: Colors.black,
                                       fontSize: 18,
                                     ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.library_books_sharp,
+                                        size: 15,
+                                      ),
+                                      Text('Belajar Membaca Surah An - Nas'),
+                                    ],
                                   ),
                                 ),
                               ),

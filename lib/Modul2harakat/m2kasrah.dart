@@ -233,7 +233,7 @@ class _LearningKasrahWidgetState extends State<LearningKasrahWidget> {
                                   ),
                                 ),
                                 Expanded(
-                                  child: Container(
+                                  child: SizedBox(
                                     width: 200,
                                     child: TextFormField(
                                       controller: _textController,

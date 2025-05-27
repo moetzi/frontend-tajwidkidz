@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:audioplayers/audioplayers.dart'; // For PlayerState enum
 import 'm1ba.dart';  // Import LearningBaWidget
-import 'package:audioplayers/audioplayers.dart'; // Import audioplayers package
+import '../model/audio_model.dart';       // your AudioModel class
+import '../controller/audio_controller.dart';  // your AudioController class
 
 class LearningAlifWidget extends StatefulWidget {
   const LearningAlifWidget({super.key});
@@ -19,8 +21,26 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
   final FocusNode _textFieldFocusNode = FocusNode();
 
   int selectedIndex = 1; // Index for the BottomNavigationBar
-  AudioPlayer _audioPlayer = AudioPlayer(); // Initialize the audio player
   bool _isPlaying = false; // Track audio playing state
+
+  // Instantiate AudioModel and AudioController for Alif audio
+  late final AudioModel alifAudioModel;
+  late final AudioController audioController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    alifAudioModel = AudioModel(label: 'Alif', fileName: 'alif_1.wav');
+    audioController = AudioController();
+
+    // Listen to player state changes to update UI
+    audioController.playerStateStream.listen((state) {
+      setState(() {
+        _isPlaying = state == PlayerState.playing;
+      });
+    });
+  }
 
   // Function to handle bottom navigation
   void onTabTapped(int index) {
@@ -28,7 +48,6 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
       selectedIndex = index;
     });
 
-    // Navigate to the corresponding screen
     switch (index) {
       case 0:
         Navigator.pushNamed(context, '/home');
@@ -50,20 +69,17 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
   void dispose() {
     _textController.dispose();
     _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
+    // no need to dispose AudioController since it doesn't expose dispose
     super.dispose();
   }
 
-  // Function to play/pause audio
+  // Use AudioController to play/pause audio from model
   void _playPauseAudio() async {
     if (_isPlaying) {
-      await _audioPlayer.pause();
+      await audioController.pause();
     } else {
-      await _audioPlayer.play(AssetSource('assets/audios/alif_1.wav'));
+      await audioController.play(alifAudioModel.fileName);
     }
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
   }
 
   @override
@@ -74,33 +90,28 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Color(0xFFFAFDCB),
+        backgroundColor: const Color(0xFFFAFDCB),
         appBar: AppBar(
-          title: Text('Level 1 Belajar Huruf Hijaiyah'),
-          backgroundColor: Color(0xFF037A16),
+          title: const Text('Level 1 Belajar Huruf Hijaiyah'),
+          backgroundColor: const Color(0xFF037A16),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
-                // Row for Back and Volume Buttons
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(15, 47, 15, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(15, 47, 15, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Back Button
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_back_ios_rounded,
                           color: Colors.black,
                           size: 30,
                         ),
-                        onPressed: () {
-                          Navigator.pop(context); // Go back to the previous screen
-                        },
+                        onPressed: () => Navigator.pop(context),
                       ),
-                      // Volume Button (Play/Pause Audio)
                       IconButton(
                         icon: FaIcon(
                           _isPlaying ? FontAwesomeIcons.volumeUp : FontAwesomeIcons.volumeOff,
@@ -112,9 +123,8 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                     ],
                   ),
                 ),
-                // Level Header and Description
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                   child: Column(
                     children: [
                       Text(
@@ -125,7 +135,7 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                         child: Text(
                           'Pengenalan Huruf Hijaiyah',
                           style: GoogleFonts.inter(
@@ -137,27 +147,24 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                     ],
                   ),
                 ),
-                // Rewind and Fast Forward Buttons
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(60, 35, 60, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Rewind Button
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.fast_rewind,
                           color: Colors.black,
                           size: 25,
                         ),
                         onPressed: () {
                           print('Rewind button pressed');
-                          // Go back to previous level (LearningBaWidget)
+                          // Implement rewind logic if needed
                         },
                       ),
-                      // Fast Forward Button
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.fast_forward,
                           color: Colors.black,
                           size: 25,
@@ -165,22 +172,19 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => LearningBaWidget()), // Navigate to next level (Ba)
+                            MaterialPageRoute(builder: (context) => const LearningBaWidget()),
                           );
                         },
                       ),
                     ],
                   ),
                 ),
-                // Card for Alif Image
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                   child: Container(
                     width: MediaQuery.sizeOf(context).width * 0.9,
                     height: 183.67,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                    ),
+                    decoration: const BoxDecoration(color: Colors.white),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.asset(
@@ -192,23 +196,23 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                     ),
                   ),
                 ),
-                // Mic Button for Feedback
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(60, 15, 60, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(60, 15, 60, 0),
                   child: Row(
                     children: [
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.mic_sharp,
                           color: Colors.black,
                           size: 30,
                         ),
                         onPressed: () {
                           print('Mic button pressed');
+                          // Implement mic logic if needed
                         },
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                         child: Text(
                           'Coba Ucapkan Huruf \n Hijaiyah!',
                           style: GoogleFonts.inter(
@@ -220,9 +224,8 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                     ],
                   ),
                 ),
-                // AI Feedback Input
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(50, 15, 50, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(50, 15, 50, 0),
                   child: Row(
                     children: [
                       Text(
@@ -233,7 +236,7 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200,
                           child: TextFormField(
                             controller: _textController,
@@ -247,21 +250,21 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                                 fontWeight: FontWeight.w600,
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               filled: true,
-                              fillColor: Color(0xFFFAFDCB),
+                              fillColor: const Color(0xFFFAFDCB),
                             ),
                             style: GoogleFonts.inter(
                               fontWeight: FontWeight.w600,
@@ -278,18 +281,18 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Color(0xFFFAFDCB),
+          backgroundColor: const Color(0xFFFAFDCB),
           type: BottomNavigationBarType.fixed,
           currentIndex: selectedIndex,
           onTap: onTabTapped,
-          selectedItemColor: Color(0xFF037A16),
+          selectedItemColor: const Color(0xFF037A16),
           unselectedItemColor: Colors.black,
-          selectedLabelStyle: TextStyle(
+          selectedLabelStyle: const TextStyle(
             fontFamily: 'Inter',
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
-          unselectedLabelStyle: TextStyle(
+          unselectedLabelStyle: const TextStyle(
             fontFamily: 'Inter',
             fontSize: 16,
             fontWeight: FontWeight.w500,

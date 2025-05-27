@@ -127,16 +127,6 @@ class _LearningAlkausarHomeWidgetState extends State<LearningAlkausarHomeWidget>
                                       ),
                                     );
                                   },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.library_books_sharp,
-                                        size: 15,
-                                      ),
-                                      Text('Surah Al - Kausar'),
-                                    ],
-                                  ),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Color(0xFFF2CE31),
                                     padding: EdgeInsets.symmetric(horizontal: 16),
@@ -148,6 +138,16 @@ class _LearningAlkausarHomeWidgetState extends State<LearningAlkausarHomeWidget>
                                       color: Colors.black,
                                       fontSize: 18,
                                     ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.library_books_sharp,
+                                        size: 15,
+                                      ),
+                                      Text('Surah Al - Kausar'),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -162,16 +162,6 @@ class _LearningAlkausarHomeWidgetState extends State<LearningAlkausarHomeWidget>
                                       ),
                                     );
                                   },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.library_books_sharp,
-                                        size: 15,
-                                      ),
-                                      Text('Belajar Membaca Surah Al - Kausar'),
-                                    ],
-                                  ),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Color(0xFFF2CE31),
                                     padding: EdgeInsets.symmetric(horizontal: 16),
@@ -183,6 +173,16 @@ class _LearningAlkausarHomeWidgetState extends State<LearningAlkausarHomeWidget>
                                       color: Colors.black,
                                       fontSize: 18,
                                     ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.library_books_sharp,
+                                        size: 15,
+                                      ),
+                                      Text('Belajar Membaca Surah Al - Kausar'),
+                                    ],
                                   ),
                                 ),
                               ),

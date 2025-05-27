@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'm1ta.dart';  // Import LearningTaWidget
 import 'package:audioplayers/audioplayers.dart';
 import 'm1alif.dart';  // Import LearningAlifWidget for previous page
+import '../model/audio_model.dart';       // your AudioModel class
+import '../controller/audio_controller.dart';  // your AudioController class
 
 class LearningBaWidget extends StatefulWidget {
   const LearningBaWidget({super.key});
@@ -20,11 +22,46 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
   final FocusNode _textFieldFocusNode = FocusNode();
 
   int selectedIndex = 1; // Index for the BottomNavigationBar
+  bool _isPlaying = false; // Track audio playing state
 
+  // Instantiate AudioModel and AudioController for Alif audio
+  late final AudioModel baAudioModel;
+  late final AudioController audioController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    baAudioModel = AudioModel(label: 'Ba', fileName: 'ba_2.wav');
+    audioController = AudioController();
+
+    // Listen to player state changes to update UI
+    audioController.playerStateStream.listen((state) {
+      setState(() {
+        _isPlaying = state == PlayerState.playing;
+      });
+    });
+  }
+
+  // Function to handle bottom navigation
   void onTabTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
+
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, '/home');
+        break;
+      case 1:
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/progress');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/account');
+        break;
+    }
   }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -33,7 +70,17 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
   void dispose() {
     _textController.dispose();
     _textFieldFocusNode.dispose();
+    // no need to dispose AudioController since it doesn't expose dispose
     super.dispose();
+  }
+
+  // Use AudioController to play/pause audio from model
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await audioController.pause();
+    } else {
+      await audioController.play(baAudioModel.fileName);
+    }
   }
 
   @override
@@ -70,14 +117,11 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
                       ),
                       IconButton(
                         icon: FaIcon(
-                          FontAwesomeIcons.volumeUp,
+                          _isPlaying ? FontAwesomeIcons.volumeUp : FontAwesomeIcons.volumeOff,
                           color: Colors.black,
                           size: 30,
                         ),
-                        onPressed: () {
-                          print('Play audio');
-                          // TODO: Add play audio functionality here
-                        },
+                        onPressed: _playPauseAudio,
                       ),
                     ],
                   ),
@@ -206,7 +250,7 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200,
                           child: TextFormField(
                             controller: _textController,

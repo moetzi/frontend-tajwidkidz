@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:untitled/Modul2harakat/m2fathahtain.dart';
+import 'package:TajwidKidz/Modul2harakat/m2fathahtain.dart';
 import 'm2fathahtain.dart';
 
 class LearningFathahWidget extends StatefulWidget {
@@ -227,7 +227,7 @@ class _LearningFathahWidgetState extends State<LearningFathahWidget> {
                                   ),
                                 ),
                                 Expanded(
-                                  child: Container(
+                                  child: SizedBox(
                                     width: 200,
                                     child: TextFormField(
                                       controller: _textController,

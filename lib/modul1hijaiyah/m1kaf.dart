@@ -3,7 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'm1qof.dart';
 import 'm1lam.dart';
-
+import 'package:audioplayers/audioplayers.dart';
+import '../model/audio_model.dart';       // your AudioModel class
+import '../controller/audio_controller.dart';  // your AudioController class
 class LearningKafWidget extends StatefulWidget {
   const LearningKafWidget({super.key});
 
@@ -19,12 +21,46 @@ class _LearningKafWidgetState extends State<LearningKafWidget> {
   final FocusNode _textFieldFocusNode = FocusNode();
 
   int selectedIndex = 1; // Index for the BottomNavigationBar
+  bool _isPlaying = false; // Track audio playing state
+
+  // Instantiate AudioModel and AudioController for Alif audio
+  late final AudioModel kafAudioModel;
+  late final AudioController audioController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    kafAudioModel = AudioModel(label: 'Kaf', fileName: 'kaf_21.wav');
+    audioController = AudioController();
+
+    // Listen to player state changes to update UI
+    audioController.playerStateStream.listen((state) {
+      setState(() {
+        _isPlaying = state == PlayerState.playing;
+      });
+    });
+  }
 
   // Function to handle bottom navigation
   void onTabTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
+
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, '/home');
+        break;
+      case 1:
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/progress');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/account');
+        break;
+    }
   }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -33,7 +69,17 @@ class _LearningKafWidgetState extends State<LearningKafWidget> {
   void dispose() {
     _textController.dispose();
     _textFieldFocusNode.dispose();
+    // no need to dispose AudioController since it doesn't expose dispose
     super.dispose();
+  }
+
+  // Use AudioController to play/pause audio from model
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await audioController.pause();
+    } else {
+      await audioController.play(kafAudioModel.fileName);
+    }
   }
 
   @override
@@ -70,14 +116,11 @@ class _LearningKafWidgetState extends State<LearningKafWidget> {
                       ),
                       IconButton(
                         icon: FaIcon(
-                          FontAwesomeIcons.volumeUp,
+                          _isPlaying ? FontAwesomeIcons.volumeUp : FontAwesomeIcons.volumeOff,
                           color: Colors.black,
                           size: 30,
                         ),
-                        onPressed: () {
-                          print('Play audio');
-                          // TODO: Add play audio functionality here
-                        },
+                        onPressed: _playPauseAudio,
                       ),
                     ],
                   ),
@@ -202,7 +245,7 @@ class _LearningKafWidgetState extends State<LearningKafWidget> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200,
                           child: TextFormField(
                             controller: _textController,

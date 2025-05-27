@@ -129,16 +129,6 @@ class _LearningAlfatihahHomeWidgetState
                                       ),
                                     );
                                   },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.library_books_sharp,
-                                        size: 15,
-                                      ),
-                                      Text('Surah Al - Fatihah'),
-                                    ],
-                                  ),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Color(0xFFF2CE31),
                                     padding: EdgeInsets.symmetric(horizontal: 16),
@@ -150,6 +140,16 @@ class _LearningAlfatihahHomeWidgetState
                                       color: Colors.black,
                                       fontSize: 18,
                                     ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.library_books_sharp,
+                                        size: 15,
+                                      ),
+                                      Text('Surah Al - Fatihah'),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -165,16 +165,6 @@ class _LearningAlfatihahHomeWidgetState
                                       ),
                                     );
                                   },
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.library_books_sharp,
-                                        size: 15,
-                                      ),
-                                      Text('Belajar Membaca Surah Al - Fatihah'),
-                                    ],
-                                  ),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Color(0xFFF2CE31),
                                     padding: EdgeInsets.symmetric(horizontal: 16),
@@ -186,6 +176,16 @@ class _LearningAlfatihahHomeWidgetState
                                       color: Colors.black,
                                       fontSize: 18,
                                     ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.library_books_sharp,
+                                        size: 15,
+                                      ),
+                                      Text('Belajar Membaca Surah Al - Fatihah'),
+                                    ],
                                   ),
                                 ),
                               ),

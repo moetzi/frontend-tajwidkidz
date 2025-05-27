@@ -8,6 +8,8 @@ import 'Modul2harakat/m2fathah.dart';
 
 // Halaman Level 1
 class Level1Page extends StatelessWidget {
+  const Level1Page({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +25,8 @@ class Level1Page extends StatelessWidget {
 
 // Halaman Level 2
 class Level2Page extends StatelessWidget {
+  const Level2Page({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +42,8 @@ class Level2Page extends StatelessWidget {
 
 // Halaman Level 3
 class Level3Page extends StatelessWidget {
+  const Level3Page({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +59,8 @@ class Level3Page extends StatelessWidget {
 
 // Halaman Level 4
 class Level4Page extends StatelessWidget {
+  const Level4Page({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +76,8 @@ class Level4Page extends StatelessWidget {
 
 // Halaman Level 5
 class Level5Page extends StatelessWidget {
+  const Level5Page({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -494,7 +504,7 @@ class _LearningWidgetState extends State<LearningWidget> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.asset(
-                              'assets/images/level5.png',
+                              'assets/images/Level5.png',
                               width: 369.1,
                               height: 200,
                               fit: BoxFit.cover,

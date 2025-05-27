@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ProgressPageWidget extends StatelessWidget {
+  const ProgressPageWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

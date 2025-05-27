@@ -9,6 +9,8 @@ class LeaderboardWidget extends StatelessWidget {
     {'name': 'Siti', 'score': 900},
   ];
 
+  LeaderboardWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'homepage.dart';
 import 'signup.dart';
-import 'homepage.dart'; // Import HomePage
+import 'auth_service.dart';
 
 class LoginModel with ChangeNotifier {
-  TextEditingController textController1 = TextEditingController();
+  TextEditingController textController1 = TextEditingController(); // Email
   FocusNode textFieldFocusNode1 = FocusNode();
 
-  TextEditingController textController2 = TextEditingController();
+  TextEditingController textController2 = TextEditingController(); // Password
   FocusNode textFieldFocusNode2 = FocusNode();
 
-  bool isPasswordVisible = false; // Track password visibility
+  bool isPasswordVisible = false;
 
-  // Method to toggle password visibility
   void togglePasswordVisibility() {
     isPasswordVisible = !isPasswordVisible;
-    notifyListeners(); // Notify listeners when password visibility changes
+    notifyListeners();
   }
 
-  // Method to dispose controllers if needed, can be called from outside
   void disposeControllers() {
     textController1.dispose();
     textFieldFocusNode1.dispose();
@@ -35,297 +34,85 @@ class LoginWidget extends StatelessWidget {
   static String routeName = 'Login';
   static String routePath = '/login';
 
+  void _showSnackbar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  Future<void> _handleEmailLogin(BuildContext context, LoginModel model) async {
+    final email = model.textController1.text.trim();
+    final password = model.textController2.text;
+
+    try {
+      final user = await AuthService.signInWithEmailPassword(email, password);
+      if (user != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePageWidget()),
+        );
+      }
+    } catch (e) {
+      _showSnackbar(context, e.toString().replaceAll('Exception: ', ''));
+    }
+  }
+
+  Future<void> _handleGoogleLogin(BuildContext context) async {
+    try {
+      final user = await AuthService.signInWithGoogle();
+      if (user != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePageWidget()),
+        );
+      }
+    } catch (e) {
+      _showSnackbar(context, e.toString().replaceAll('Exception: ', ''));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => LoginModel(),
       child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
+        onTap: () => FocusScope.of(context).unfocus(),
         child: Scaffold(
-          backgroundColor: Color(0xFFFAFDCB),
+          backgroundColor: const Color(0xFFFAFDCB),
           body: SafeArea(
             top: true,
             child: Consumer<LoginModel>(
               builder: (context, model, child) {
-                return Container(
-                  width: MediaQuery.of(context).size.width * 3.8,
-                  height: MediaQuery.of(context).size.height * 8.44,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFFAFDCB),
-                  ),
+                return SingleChildScrollView(
                   child: Column(
                     children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 150, 0, 0),
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 40,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.w600,
-                          ),
+                      const SizedBox(height: 150),
+                      const Text(
+                        'Login',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 40,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Align(
-                        alignment: AlignmentDirectional(-1, 0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(45, 25, 0, 10),
-                          child: Text(
-                            'Email',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 20,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                      const SizedBox(height: 25),
+                      _buildInputLabel('Email'),
+                      _buildTextField(model.textController1, model.textFieldFocusNode1, 'Email'),
+                      const SizedBox(height: 25),
+                      _buildInputLabel('Password'),
+                      _buildPasswordField(model),
+                      const SizedBox(height: 10),
+                      const Text(
+                        'Lupa Password ?',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 16,
                         ),
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.838,
-                        height: MediaQuery.of(context).size.height * 0.06,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color(0xFF037A16),
-                              offset: Offset(
-                                0,
-                                2,
-                              ),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                width: 200,
-                                child: TextFormField(
-                                  controller: model.textController1,
-                                  focusNode: model.textFieldFocusNode1,
-                                  autofocus: false,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    isDense: true,
-                                    labelStyle: TextStyle(
-                                      fontFamily: 'Inter',
-                                      fontSize: 16,
-                                    ),
-                                    hintText: 'Email\n',
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                  ),
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 16,
-                                  ),
-                                  cursorColor: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional(-1, 0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(45, 25, 0, 0),
-                          child: Text(
-                            'Password',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 20,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(12),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.838,
-                          height: MediaQuery.of(context).size.height * 0.06,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0xFF037A16),
-                                offset: Offset(
-                                  0,
-                                  2,
-                                ),
-                              )
-                            ],
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  width: 200,
-                                  child: TextFormField(
-                                    controller: model.textController2,
-                                    focusNode: model.textFieldFocusNode2,
-                                    autofocus: false,
-                                    obscureText: !model.isPasswordVisible, // Toggle visibility
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      labelStyle: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: 16,
-                                      ),
-                                      hintText: 'Password\n',
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                    ),
-                                    style: TextStyle(
-                                      fontFamily: 'Inter',
-                                      fontSize: 16,
-                                    ),
-                                    cursorColor: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: IconButton(
-                                  icon: Icon(
-                                    model.isPasswordVisible
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                    color: Colors.black,
-                                    size: 24,
-                                  ),
-                                  onPressed: () {
-                                    model.togglePasswordVisibility(); // Toggle password visibility
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional(0, 0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(3, 5, 0, 0),
-                          child: Text(
-                            'Lupa Password ?',
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 16,
-                              letterSpacing: 0.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.838,
-                          height: MediaQuery.of(context).size.height * 0.06,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Perform login logic here
-                              // Navigate to Home page after successful login
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => HomePageWidget()),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF037A16),
-                              foregroundColor: Colors.black,
-                              textStyle: TextStyle(
-                                fontFamily: 'Inter Tight',
-                                fontSize: 24,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              elevation: 0,
-                            ),
-                            child: Text('Login'),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 20, 10, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Don’t have an account ? ',
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 16,
-                              ),
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional(0, 0),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Navigate to Sign Up page
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => SignupWidget()),
-                                  );
-                                },
-                                child: Text(
-                                  ' Sign Up',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Align(
-                        alignment: AlignmentDirectional(-1, 0),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(80, 30, 80, 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Text(
-                                  'Login With',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                                child: FaIcon(
-                                  FontAwesomeIcons.google,
-                                  color: Color(0xFFB5584E),
-                                  size: 20,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      const SizedBox(height: 60),
+                      _buildLoginButton(context, model),
+                      const SizedBox(height: 20),
+                      _buildSignupRedirect(context),
+                      const SizedBox(height: 30),
+                      _buildGoogleLogin(context),
                     ],
                   ),
                 );
@@ -333,6 +120,143 @@ class LoginWidget extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildInputLabel(String label) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 45),
+        child: Text(
+          label,
+          style: const TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(TextEditingController controller, FocusNode focusNode, String hint) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 45),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [BoxShadow(color: Color(0xFF037A16), offset: Offset(0, 2))],
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: TextFormField(
+          controller: controller,
+          focusNode: focusNode,
+          decoration: InputDecoration(
+            hintText: '$hint\n',
+            filled: true,
+            fillColor: Colors.white,
+            border: InputBorder.none,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+          ),
+          style: const TextStyle(fontSize: 16, fontFamily: 'Inter'),
+          cursorColor: Colors.black,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPasswordField(LoginModel model) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 45),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [BoxShadow(color: Color(0xFF037A16), offset: Offset(0, 2))],
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                controller: model.textController2,
+                focusNode: model.textFieldFocusNode2,
+                obscureText: !model.isPasswordVisible,
+                decoration: const InputDecoration(
+                  hintText: 'Password\n',
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                ),
+                style: const TextStyle(fontSize: 16, fontFamily: 'Inter'),
+                cursorColor: Colors.black,
+              ),
+            ),
+            IconButton(
+              icon: Icon(
+                model.isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                color: Colors.black,
+              ),
+              onPressed: model.togglePasswordVisibility,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLoginButton(BuildContext context, LoginModel model) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 45),
+      child: SizedBox(
+        width: double.infinity,
+        height: 48,
+        child: ElevatedButton(
+          onPressed: () => _handleEmailLogin(context, model),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF037A16),
+            foregroundColor: Colors.black,
+            textStyle: const TextStyle(fontFamily: 'Inter Tight', fontSize: 24),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          ),
+          child: const Text('Login'),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSignupRedirect(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text('Don’t have an account ? ', style: TextStyle(fontSize: 16, fontFamily: 'Inter')),
+        TextButton(
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SignupWidget()));
+          },
+          child: const Text(
+            'Sign Up',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, fontFamily: 'Inter'),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildGoogleLogin(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 80),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text('Login With', style: TextStyle(fontFamily: 'Inter', fontSize: 16)),
+          IconButton(
+            icon: const FaIcon(FontAwesomeIcons.google, color: Color(0xFFB5584E), size: 20),
+            onPressed: () => _handleGoogleLogin(context),
+          ),
+        ],
       ),
     );
   }

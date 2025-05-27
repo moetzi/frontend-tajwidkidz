@@ -3,6 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'm1tsa.dart';  // Import LearningTaWidget (previous material)
 import 'm1ha.dart';  // Import LearningHaWidget (next material)
+import 'package:audioplayers/audioplayers.dart';
+import '../model/audio_model.dart';       // your AudioModel class
+import '../controller/audio_controller.dart';  // your AudioController class
 
 class LearningJimWidget extends StatefulWidget {
   const LearningJimWidget({super.key});
@@ -19,12 +22,46 @@ class _LearningJimWidgetState extends State<LearningJimWidget> {
   final FocusNode _textFieldFocusNode = FocusNode();
 
   int selectedIndex = 1; // Index for the BottomNavigationBar
+  bool _isPlaying = false; // Track audio playing state
+
+  // Instantiate AudioModel and AudioController for Alif audio
+  late final AudioModel jimAudioModel;
+  late final AudioController audioController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    jimAudioModel = AudioModel(label: 'Jim', fileName: 'jim_5.wav');
+    audioController = AudioController();
+
+    // Listen to player state changes to update UI
+    audioController.playerStateStream.listen((state) {
+      setState(() {
+        _isPlaying = state == PlayerState.playing;
+      });
+    });
+  }
 
   // Function to handle bottom navigation
   void onTabTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
+
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, '/home');
+        break;
+      case 1:
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/progress');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/account');
+        break;
+    }
   }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -33,7 +70,17 @@ class _LearningJimWidgetState extends State<LearningJimWidget> {
   void dispose() {
     _textController.dispose();
     _textFieldFocusNode.dispose();
+    // no need to dispose AudioController since it doesn't expose dispose
     super.dispose();
+  }
+
+  // Use AudioController to play/pause audio from model
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await audioController.pause();
+    } else {
+      await audioController.play(jimAudioModel.fileName);
+    }
   }
 
   @override
@@ -72,14 +119,11 @@ class _LearningJimWidgetState extends State<LearningJimWidget> {
                       // Volume Button (for playing audio)
                       IconButton(
                         icon: FaIcon(
-                          FontAwesomeIcons.volumeUp,
+                          _isPlaying ? FontAwesomeIcons.volumeUp : FontAwesomeIcons.volumeOff,
                           color: Colors.black,
                           size: 30,
                         ),
-                        onPressed: () {
-                          print('Play audio');
-                          // TODO: Add play audio functionality here
-                        },
+                        onPressed: _playPauseAudio,
                       ),
                     ],
                   ),
@@ -208,7 +252,7 @@ class _LearningJimWidgetState extends State<LearningJimWidget> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200,
                           child: TextFormField(
                             controller: _textController,
