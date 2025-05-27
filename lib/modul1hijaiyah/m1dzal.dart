@@ -31,7 +31,7 @@ class _LearningDzalWidgetState extends State<LearningDzalWidget> {
   void initState() {
     super.initState();
 
-    dzalAudioModel = AudioModel(label: 'Dzal', fileName: 'dzal_8.wav');
+    dzalAudioModel = AudioModel(label: 'Dzal', fileName: 'Modul1/dzal_8.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

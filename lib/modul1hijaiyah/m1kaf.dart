@@ -31,7 +31,7 @@ class _LearningKafWidgetState extends State<LearningKafWidget> {
   void initState() {
     super.initState();
 
-    kafAudioModel = AudioModel(label: 'Kaf', fileName: 'kaf_21.wav');
+    kafAudioModel = AudioModel(label: 'Kaf', fileName: 'Modul1/kaf_21.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

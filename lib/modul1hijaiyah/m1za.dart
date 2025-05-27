@@ -31,7 +31,7 @@ class _LearningZaWidgetState extends State<LearningZaWidget> {
   void initState() {
     super.initState();
 
-    zaAudioModel = AudioModel(label: 'Za', fileName: 'za_10.wav');
+    zaAudioModel = AudioModel(label: 'Za', fileName: 'Modul1/za_10.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

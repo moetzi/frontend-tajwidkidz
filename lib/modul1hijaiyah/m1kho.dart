@@ -31,7 +31,7 @@ class _LearningKhaWidgetState extends State<LearningKhaWidget> {
   void initState() {
     super.initState();
 
-    khaAudioModel = AudioModel(label: 'Kha', fileName: 'kha_6.wav');
+    khaAudioModel = AudioModel(label: 'Kha', fileName: 'Modul1/kha_6.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

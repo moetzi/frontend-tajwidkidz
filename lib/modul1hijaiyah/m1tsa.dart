@@ -32,7 +32,7 @@ class _LearningTsaWidgetState extends State<LearningTsaWidget> {
   void initState() {
     super.initState();
 
-    tsaAudioModel = AudioModel(label: 'Tsa', fileName: 'tsa_4.wav');
+    tsaAudioModel = AudioModel(label: 'Tsa', fileName: 'Modul1/tsa_4.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

@@ -31,7 +31,7 @@ class _LearningShodWidgetState extends State<LearningShodWidget> {
   void initState() {
     super.initState();
 
-    shodAudioModel = AudioModel(label: 'Shad', fileName: 'shad_13.wav');
+    shodAudioModel = AudioModel(label: 'Shad', fileName: 'Modul1/shad_13.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

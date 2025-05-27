@@ -31,7 +31,7 @@ class _LearningRaWidgetState extends State<LearningRaWidget> {
   void initState() {
     super.initState();
 
-    raAudioModel = AudioModel(label: 'Ra', fileName: 'ra_9.wav');
+    raAudioModel = AudioModel(label: 'Ra', fileName: 'Modul1/ra_9.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

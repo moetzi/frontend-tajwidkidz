@@ -31,7 +31,7 @@ class _LearningWauWidgetState extends State<LearningWauWidget> {
   void initState() {
     super.initState();
 
-    wauAudioModel = AudioModel(label: 'Wau', fileName: 'waw_24.wav');
+    wauAudioModel = AudioModel(label: 'Wau', fileName: 'Modul1/waw_24.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

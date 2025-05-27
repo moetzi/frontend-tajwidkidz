@@ -31,7 +31,7 @@ class _LearningQofWidgetState extends State<LearningQofWidget> {
   void initState() {
     super.initState();
 
-    qofAudioModel = AudioModel(label: 'Qof', fileName: 'qaf_20.wav');
+    qofAudioModel = AudioModel(label: 'Qof', fileName: 'Modul1/qaf_20.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

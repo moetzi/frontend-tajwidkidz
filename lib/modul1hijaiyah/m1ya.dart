@@ -30,7 +30,7 @@ class _LearningYaWidgetState extends State<LearningYaWidget> {
   void initState() {
     super.initState();
 
-    yaAudioModel = AudioModel(label: 'Ya', fileName: 'ya_28.wav');
+    yaAudioModel = AudioModel(label: 'Ya', fileName: 'Modul1/ya_28.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

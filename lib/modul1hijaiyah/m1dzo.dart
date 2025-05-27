@@ -31,7 +31,7 @@ class _LearningDzoWidgetState extends State<LearningDzoWidget> {
   void initState() {
     super.initState();
 
-    dzoAudioModel = AudioModel(label: 'Dzo', fileName: 'zha_16.wav');
+    dzoAudioModel = AudioModel(label: 'Dzo', fileName: 'Modul1/zha_16.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

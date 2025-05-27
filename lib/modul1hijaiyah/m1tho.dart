@@ -31,7 +31,7 @@ class _LearningThoWidgetState extends State<LearningThoWidget> {
   void initState() {
     super.initState();
 
-    thoAudioModel = AudioModel(label: 'Tho', fileName: 'tha_15.wav');
+    thoAudioModel = AudioModel(label: 'Tho', fileName: 'Modul1/tha_15.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

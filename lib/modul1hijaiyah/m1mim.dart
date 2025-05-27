@@ -31,7 +31,7 @@ class _LearningMimWidgetState extends State<LearningMimWidget> {
   void initState() {
     super.initState();
 
-    mimAudioModel = AudioModel(label: 'Mim', fileName: 'mim_22.wav');
+    mimAudioModel = AudioModel(label: 'Mim', fileName: 'Modul1/mim_22.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

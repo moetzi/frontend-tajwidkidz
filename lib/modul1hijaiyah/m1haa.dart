@@ -31,7 +31,7 @@ class _LearningHaaWidgetState extends State<LearningHaaWidget> {
   void initState() {
     super.initState();
 
-    haaAudioModel = AudioModel(label: 'Haa', fileName: 'haa_25.wav');
+    haaAudioModel = AudioModel(label: 'Haa', fileName: 'Modul1/haa_25.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

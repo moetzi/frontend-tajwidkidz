@@ -31,7 +31,7 @@ class _LearningGhoWidgetState extends State<LearningGhoWidget> {
   void initState() {
     super.initState();
 
-    ghoAudioModel = AudioModel(label: 'Gho', fileName: 'ghain_18.wav');
+    ghoAudioModel = AudioModel(label: 'Gho', fileName: 'Modul1/ghain_18.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

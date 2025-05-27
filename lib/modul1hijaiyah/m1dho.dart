@@ -31,7 +31,7 @@ class _LearningDhoWidgetState extends State<LearningDhoWidget> {
   void initState() {
     super.initState();
 
-    dhoAudioModel = AudioModel(label: 'Dho', fileName: 'dhad_14.wav');
+    dhoAudioModel = AudioModel(label: 'Dho', fileName: 'Modul1/dhad_14.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

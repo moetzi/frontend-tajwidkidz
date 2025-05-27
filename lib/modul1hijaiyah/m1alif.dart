@@ -31,7 +31,7 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
   void initState() {
     super.initState();
 
-    alifAudioModel = AudioModel(label: 'Alif', fileName: 'alif_1.wav');
+    alifAudioModel = AudioModel(label: 'Alif', fileName: 'Modul1/alif_1.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

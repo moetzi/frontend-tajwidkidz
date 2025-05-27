@@ -31,7 +31,7 @@ class _LearningSinWidgetState extends State<LearningSinWidget> {
   void initState() {
     super.initState();
 
-    sinAudioModel = AudioModel(label: 'Sin', fileName: 'sin_11.wav');
+    sinAudioModel = AudioModel(label: 'Sin', fileName: 'Modul1/sin_11.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

@@ -31,7 +31,7 @@ class _LearningAinWidgetState extends State<LearningAinWidget> {
   void initState() {
     super.initState();
 
-    ainAudioModel = AudioModel(label: 'Ain', fileName: 'ain_17.wav');
+    ainAudioModel = AudioModel(label: 'Ain', fileName: 'Modul1/ain_17.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

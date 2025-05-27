@@ -32,7 +32,7 @@ class _LearningBaWidgetState extends State<LearningBaWidget> {
   void initState() {
     super.initState();
 
-    baAudioModel = AudioModel(label: 'Ba', fileName: 'ba_2.wav');
+    baAudioModel = AudioModel(label: 'Ba', fileName: 'Modul1/ba_2.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

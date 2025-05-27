@@ -32,7 +32,7 @@ class _LearningJimWidgetState extends State<LearningJimWidget> {
   void initState() {
     super.initState();
 
-    jimAudioModel = AudioModel(label: 'Jim', fileName: 'jim_5.wav');
+    jimAudioModel = AudioModel(label: 'Jim', fileName: 'Modul1/jim_5.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

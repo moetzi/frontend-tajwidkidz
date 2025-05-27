@@ -31,7 +31,7 @@ class _LearningFaWidgetState extends State<LearningFaWidget> {
   void initState() {
     super.initState();
 
-    faAudioModel = AudioModel(label: 'Fa', fileName: 'fa_19.wav');
+    faAudioModel = AudioModel(label: 'Fa', fileName: 'Modul1/fa_19.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

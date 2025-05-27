@@ -31,7 +31,7 @@ class _LearningNunWidgetState extends State<LearningNunWidget> {
   void initState() {
     super.initState();
 
-    nunAudioModel = AudioModel(label: 'Nun', fileName: 'nun_23.wav');
+    nunAudioModel = AudioModel(label: 'Nun', fileName: 'Modul1/nun_23.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

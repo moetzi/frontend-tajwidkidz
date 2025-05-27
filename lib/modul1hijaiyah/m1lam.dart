@@ -31,7 +31,7 @@ class _LearningLamWidgetState extends State<LearningLamWidget> {
   void initState() {
     super.initState();
 
-    lamAudioModel = AudioModel(label: 'lam', fileName: 'lam_21.wav');
+    lamAudioModel = AudioModel(label: 'lam', fileName: 'Modul1/lam_21.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

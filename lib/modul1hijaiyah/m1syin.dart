@@ -31,7 +31,7 @@ class _LearningSyinWidgetState extends State<LearningSyinWidget> {
   void initState() {
     super.initState();
 
-    syinAudioModel = AudioModel(label: 'syin', fileName: 'syin_12.wav');
+    syinAudioModel = AudioModel(label: 'syin', fileName: 'Modul1/syin_12.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI

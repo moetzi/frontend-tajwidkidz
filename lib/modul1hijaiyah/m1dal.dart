@@ -31,7 +31,7 @@ class _LearningDalWidgetState extends State<LearningDalWidget> {
   void initState() {
     super.initState();
 
-    dalAudioModel = AudioModel(label: 'Dal', fileName: 'dal_7.wav');
+    dalAudioModel = AudioModel(label: 'Dal', fileName: 'Modul1/dal_7.wav');
     audioController = AudioController();
 
     // Listen to player state changes to update UI
