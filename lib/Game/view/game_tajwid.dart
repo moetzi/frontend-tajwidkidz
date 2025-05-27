@@ -112,7 +112,9 @@ class GameTajwid extends StatelessWidget {
                                               : 'assets/images/icon_mic.png',
                                     ),
                                   ),
+
                                   const SizedBox(height: 24),
+                                  
                                   GestureDetector(
                                     onTap: () async {
                                       await flutterTts.setLanguage("ar");
