@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:audioplayers/audioplayers.dart'; // Tambah ini kalau belum ada
 import 'jajiju.dart';
 import 'khokhikhu.dart';
 
 class LearningHaHiHuWidget extends StatefulWidget {
   const LearningHaHiHuWidget({super.key});
 
-  static String routeName = 'Learningaiu';
-  static String routePath = '/learningaiu';
+  static String routeName = 'Learninghahihtu';
+  static String routePath = '/learninghahihtu';
 
   @override
   State<LearningHaHiHuWidget> createState() => _LearningHaHiHuWidgetState();
@@ -20,48 +21,75 @@ class _LearningHaHiHuWidgetState extends State<LearningHaHiHuWidget> {
 
   int selectedIndex = 1;
 
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  bool _isPlaying = false;
+
   void onTabTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, '/home');
+        break;
+      case 1:
+      // Current page
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/progress');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/account');
+        break;
+    }
   }
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  Future<void> _playPauseAudio() async {
+    if (_isPlaying) {
+      await _audioPlayer.pause();
+    } else {
+      // Ganti path audionya sesuai file kamu
+      await _audioPlayer.play(AssetSource('audios/hahihtu_audio.mp3'));
+    }
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
+  }
 
   @override
   void dispose() {
     _textController.dispose();
     _textFieldFocusNode.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () {
         FocusScope.of(context).unfocus();
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
+        backgroundColor: const Color(0xFFFAFDCB),
         appBar: AppBar(
           title: const Text('Level 3: Belajar mengenal \n Huruf Hijaiyah (Ba Bi Bu)'),
           backgroundColor: const Color(0xFF037A16),
+          elevation: 0,
         ),
-        backgroundColor: const Color(0xFF037A16),
         body: SafeArea(
           top: true,
           child: SingleChildScrollView(
             child: Container(
               width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Color(0xFFFAFDCB),
-              ),
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+              decoration: const BoxDecoration(color: Color(0xFFFAFDCB)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Back & Volume Buttons
+                  // Tombol Back dan Speaker
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -70,37 +98,43 @@ class _LearningHaHiHuWidgetState extends State<LearningHaHiHuWidget> {
                         onPressed: () => Navigator.pop(context),
                       ),
                       IconButton(
-                        icon: const FaIcon(FontAwesomeIcons.volumeHigh, color: Colors.black, size: 30),
-                        onPressed: () {
-                        },
+                        icon: FaIcon(
+                          _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                        onPressed: _playPauseAudio,
                       ),
                     ],
                   ),
+
                   const SizedBox(height: 10),
 
-                  // Centered Title Text
-                  Center(
-                    child: Text(
-                      'Level 3: Belajar mengenal Huruf Hijaiyah dengan Metode Fonetik',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
+                  // Judul dan subtitle
+                  Column(
+                    children: [
+                      Text(
+                        'Level 3: Belajar mengenal Huruf \n Hijaiyah dengan Metode Fonetik',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Ha',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                    ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Ha',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
 
                   const SizedBox(height: 20),
 
-                  // Navigation Buttons (Rewind & Forward)
+                  // Tombol navigasi rewind dan forward
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -109,9 +143,7 @@ class _LearningHaHiHuWidgetState extends State<LearningHaHiHuWidget> {
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => LearningJaJiJuWidget(),
-                            ),
+                            MaterialPageRoute(builder: (context) => const LearningJaJiJuWidget()),
                           );
                         },
                       ),
@@ -120,7 +152,7 @@ class _LearningHaHiHuWidgetState extends State<LearningHaHiHuWidget> {
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => LearningKhoKhiKhuWidget()),
+                            MaterialPageRoute(builder: (context) => const LearningKhoKhiKhuWidget()),
                           );
                         },
                       ),
@@ -129,7 +161,7 @@ class _LearningHaHiHuWidgetState extends State<LearningHaHiHuWidget> {
 
                   const SizedBox(height: 10),
 
-                  // Image
+                  // Gambar utama
                   Container(
                     width: MediaQuery.of(context).size.width * 0.9,
                     height: 320,
@@ -148,7 +180,7 @@ class _LearningHaHiHuWidgetState extends State<LearningHaHiHuWidget> {
 
                   const SizedBox(height: 10),
 
-                  // Mic and Feedback Input
+                  // Mic dan instruksi ucapkan harakat
                   Row(
                     children: [
                       const Icon(Icons.mic_sharp, color: Colors.black, size: 30),
@@ -162,8 +194,10 @@ class _LearningHaHiHuWidgetState extends State<LearningHaHiHuWidget> {
                       ),
                     ],
                   ),
+
                   const SizedBox(height: 10),
 
+                  // Feedback AI input
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -179,6 +213,8 @@ class _LearningHaHiHuWidgetState extends State<LearningHaHiHuWidget> {
                         child: TextFormField(
                           controller: _textController,
                           focusNode: _textFieldFocusNode,
+                          autofocus: false,
+                          obscureText: false,
                           decoration: InputDecoration(
                             isDense: true,
                             hintText: '...............',
@@ -188,6 +224,10 @@ class _LearningHaHiHuWidgetState extends State<LearningHaHiHuWidget> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w600,
+                          ),
+                          cursorColor: Colors.black,
                         ),
                       ),
                     ],
@@ -196,42 +236,6 @@ class _LearningHaHiHuWidgetState extends State<LearningHaHiHuWidget> {
               ),
             ),
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: const Color(0xFFFAFDCB),
-          type: BottomNavigationBarType.fixed,
-          currentIndex: selectedIndex,
-          onTap: onTabTapped,
-          selectedItemColor: const Color(0xFF037A16),
-          unselectedItemColor: Colors.black,
-          selectedLabelStyle: const TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          unselectedLabelStyle: const TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          items: const [
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.house, size: 30),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu_book, size: 30),
-              label: 'Learning',
-            ),
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.chartBar, size: 30),
-              label: 'Progress',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined, size: 30),
-              label: 'Account',
-            ),
-          ],
         ),
       ),
     );

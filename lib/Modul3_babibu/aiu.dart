@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'babibu.dart';
+import 'package:audioplayers/audioplayers.dart'; // Import audioplayers package
 
 class LearningAIUWidget extends StatefulWidget {
-  const LearningAIUWidget({super.key});
+  const LearningAIUWidget ({super.key});
 
   static String routeName = 'Learningaiu';
   static String routePath = '/learningaiu';
@@ -13,25 +14,56 @@ class LearningAIUWidget extends StatefulWidget {
   State<LearningAIUWidget> createState() => _LearningAIUWidgetState();
 }
 
-class _LearningAIUWidgetState extends State<LearningAIUWidget> {
+class _LearningAIUWidgetState extends State<LearningAIUWidget > {
   final TextEditingController _textController = TextEditingController();
   final FocusNode _textFieldFocusNode = FocusNode();
 
-  int selectedIndex = 1;
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+  final AudioPlayer _audioPlayer = AudioPlayer(); // Buat final karena tidak diubah
+  bool _isPlaying = false; // Track audio playing state
 
+  // Function to handle bottom navigation
   void onTabTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
-  }
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+    // Navigate to the corresponding screen
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, '/home');
+        break;
+      case 1:
+      // current screen
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/progress');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/account');
+        break;
+    }
+  }
 
   @override
   void dispose() {
     _textController.dispose();
     _textFieldFocusNode.dispose();
+    _audioPlayer.dispose();
     super.dispose();
+  }
+
+  // Function to play/pause audio
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await _audioPlayer.pause();
+    } else {
+      // Perbaiki penggunaan volume icon dan play AssetSource dengan path relatif benar
+      await _audioPlayer.play(AssetSource('audios/alif_1.wav'));
+    }
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
   }
 
   @override
@@ -39,78 +71,91 @@ class _LearningAIUWidgetState extends State<LearningAIUWidget> {
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
+        backgroundColor: const Color(0xFFFAFDCB),
         appBar: AppBar(
           title: const Text('Level 3: Belajar mengenal \n Huruf Hijaiyah (Ba Bi Bu)'),
           backgroundColor: const Color(0xFF037A16),
+          elevation: 0,
         ),
-        backgroundColor: const Color(0xFF037A16),
         body: SafeArea(
-          top: true,
           child: SingleChildScrollView(
-            child: Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Color(0xFFFAFDCB),
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Back & Volume Buttons
-                  Row(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(15, 47, 15, 0),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.black, size: 30),
-                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(
+                          Icons.arrow_back_ios_rounded,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                       ),
                       IconButton(
-                        icon: const FaIcon(FontAwesomeIcons.volumeHigh, color: Colors.black, size: 30),
-                        onPressed: () {
-                        },
+                        icon: FaIcon(
+                          _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff, // pakai volumeHigh bukan volumeUp
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                        onPressed: _playPauseAudio,
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10),
+                ),
 
-                  // Centered Title Text
-                  Center(
-                    child: Text(
-                      'Level 3: Belajar mengenal Huruf Hijaiyah dengan Metode Fonetik',
-                      textAlign: TextAlign.center,
+                const SizedBox(height: 10),
+
+                Column(
+                  children: [
+                    Text(
+                      'Level 3: Belajar mengenal Huruf \n Hijaiyah dengan Metode Fonetik',
                       style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w600,
                         fontSize: 20,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Alif',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
+                    const SizedBox(height: 4),
+                    Text(
+                      'Alif',
+                      style: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
+                  ],
+                ),
 
-                  const SizedBox(height: 20),
+                const SizedBox(height: 35),
 
-                  // Navigation Buttons (Rewind & Forward)
-                  Row(
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(60, 0, 60, 0),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.fast_rewind, color: Colors.black, size: 30),
-                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.fast_rewind,
+                          color: Colors.black,
+                          size: 25,
+                        ),
+                        onPressed: () {
+                        },
                       ),
                       IconButton(
-                        icon: const Icon(Icons.fast_forward, color: Colors.black, size: 30),
+                        icon: const Icon(
+                          Icons.fast_forward,
+                          color: Colors.black,
+                          size: 25,
+                        ),
                         onPressed: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => LearningBaBiBuWidget()),
                           );
@@ -118,52 +163,59 @@ class _LearningAIUWidgetState extends State<LearningAIUWidget> {
                       ),
                     ],
                   ),
+                ),
 
-                  const SizedBox(height: 10),
+                const SizedBox(height: 20),
 
-                  // Image
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 320,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Theme.of(context).secondaryHeaderColor,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.asset(
-                        'assets/images/AIU.png',
-                        fit: BoxFit.cover,
-                      ),
+                Container(
+                  width: MediaQuery.sizeOf(context).width * 0.9,
+                  height: 320,
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'assets/images/AIU.png',
+                      width: 333.9,
+                      height: 207.2,
+                      fit: BoxFit.cover,
                     ),
                   ),
+                ),
 
-                  const SizedBox(height: 10),
+                const SizedBox(height: 15),
 
-                  // Mic and Feedback Input
-                  Row(
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(60, 0, 60, 0),
+                  child: Row(
                     children: [
-                      const Icon(Icons.mic_sharp, color: Colors.black, size: 30),
-                      const SizedBox(width: 10),
+                      const Icon(
+                        Icons.mic_sharp,
+                        color: Colors.black,
+                        size: 30,
+                      ),
+                      const SizedBox(width: 5),
                       Text(
-                        'Coba Ucapkan Harakat!',
+                        'Coba Ucapkan Huruf \n Harakat!',
                         style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
                           fontSize: 16,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10),
+                ),
 
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                const SizedBox(height: 15),
+
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(50, 0, 50, 0),
+                  child: Row(
                     children: [
                       Text(
-                        'Feedback AI:',
+                        'Feedback AI: ',
                         style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
                           fontSize: 16,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -171,59 +223,37 @@ class _LearningAIUWidgetState extends State<LearningAIUWidget> {
                         child: TextFormField(
                           controller: _textController,
                           focusNode: _textFieldFocusNode,
+                          autofocus: false,
+                          obscureText: false,
                           decoration: InputDecoration(
                             isDense: true,
                             hintText: '...............',
-                            filled: true,
-                            fillColor: const Color(0xFFFAFDCB),
-                            border: OutlineInputBorder(
+                            hintStyle: GoogleFonts.inter(
+                              fontWeight: FontWeight.w600,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.transparent, width: 1),
                               borderRadius: BorderRadius.circular(8),
                             ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.transparent, width: 1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            filled: true,
+                            fillColor: const Color(0xFFFAFDCB),
                           ),
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w600,
+                          ),
+                          cursorColor: Colors.black,
                         ),
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: const Color(0xFFFAFDCB),
-          type: BottomNavigationBarType.fixed,
-          currentIndex: selectedIndex,
-          onTap: onTabTapped,
-          selectedItemColor: const Color(0xFF037A16),
-          unselectedItemColor: Colors.black,
-          selectedLabelStyle: const TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          unselectedLabelStyle: const TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          items: const [
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.house, size: 30),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu_book, size: 30),
-              label: 'Learning',
-            ),
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.chartBar, size: 30),
-              label: 'Progress',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined, size: 30),
-              label: 'Account',
-            ),
-          ],
         ),
       ),
     );

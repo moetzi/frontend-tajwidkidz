@@ -159,7 +159,7 @@ class _LearningAnnasHomeWidgetState extends State<LearningAnnasHomeWidget> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const LearningAnNas1Widget(),
+                                        builder: (context) => const LearningAnnas1Widget(),
                                       ),
                                     );
                                   },
@@ -199,6 +199,7 @@ class _LearningAnnasHomeWidgetState extends State<LearningAnnasHomeWidget> {
             ),
           ),
         ),
+        // Navbar sudah dihapus
       ),
     );
   }

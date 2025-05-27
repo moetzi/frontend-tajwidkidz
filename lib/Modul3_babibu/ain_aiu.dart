@@ -1,40 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:audioplayers/audioplayers.dart'; // jangan lupa tambahkan package ini ke pubspec.yaml
+
 import 'dzodzidzu.dart';
 import 'ghoghighu.dart';
 
-
-
 class LearningAinAIUWidget extends StatefulWidget {
-  const LearningAinAIUWidget ({super.key});
+  const LearningAinAIUWidget({super.key});
 
   static String routeName = 'Learningain_aiu';
   static String routePath = '/learningain_aiu';
 
   @override
-  State <LearningAinAIUWidget> createState() => _LearningAinAIUWidgetState();
+  State<LearningAinAIUWidget> createState() => _LearningAinAIUWidgetState();
 }
 
 class _LearningAinAIUWidgetState extends State<LearningAinAIUWidget> {
   final TextEditingController _textController = TextEditingController();
   final FocusNode _textFieldFocusNode = FocusNode();
 
-  int selectedIndex = 1; // Index for the BottomNavigationBar
+  int selectedIndex = 1; // masih bisa kamu gunakan jika perlu
 
-  // Function to handle bottom navigation
+  final AudioPlayer _audioPlayer = AudioPlayer(); // AudioPlayer instance
+  bool _isPlaying = false; // Track audio playing state
+
+  // Function to handle bottom navigation (tetap bisa dipakai untuk tujuan lain)
   void onTabTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
   }
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  // Play/pause audio toggle function
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await _audioPlayer.pause();
+    } else {
+      await _audioPlayer.play(AssetSource('audios/Ain_AIU_audio.mp3'));
+      // ganti dengan path audio kamu di assets
+    }
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
+  }
 
   @override
   void dispose() {
     _textController.dispose();
     _textFieldFocusNode.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
@@ -46,37 +61,37 @@ class _LearningAinAIUWidgetState extends State<LearningAinAIUWidget> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
+        key: GlobalKey<ScaffoldState>(),
         appBar: AppBar(
-          title: Text('Level 3: Belajar mengenal \n Huruf Hijaiyah (Ba Bi Bu)'),
-          backgroundColor: Color(0xFF037A16),
+          title: const Text('Level 3: Belajar mengenal \n Huruf Hijaiyah (Ba Bi Bu)'),
+          backgroundColor: const Color(0xFF037A16),
         ),
-        backgroundColor: Color(0xFF037A16), // Using default theme
+        backgroundColor: const Color(0xFF037A16),
         body: SafeArea(
           top: true,
-          child: SingleChildScrollView(  // Ensure scrollable content
+          child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width * 3.9,
                   height: MediaQuery.of(context).size.height * 8.44,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xFFFAFDCB),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 35, 15, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(15, 35, 15, 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
                               child: IconButton(
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.arrow_back_ios_rounded,
                                   color: Colors.black,
                                   size: 30,
@@ -87,17 +102,18 @@ class _LearningAinAIUWidgetState extends State<LearningAinAIUWidget> {
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(0, 0),
+                              alignment: const AlignmentDirectional(0, 0),
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(240, 0, 0, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(240, 0, 0, 0),
                                 child: IconButton(
                                   icon: FaIcon(
-                                    FontAwesomeIcons.volumeHigh,
+                                    _isPlaying
+                                        ? FontAwesomeIcons.volumeHigh
+                                        : FontAwesomeIcons.volumeOff,
                                     color: Colors.black,
                                     size: 30,
                                   ),
-                                  onPressed: () {
-                                  },
+                                  onPressed: _playPauseAudio,
                                 ),
                               ),
                             ),
@@ -105,7 +121,7 @@ class _LearningAinAIUWidgetState extends State<LearningAinAIUWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -120,12 +136,12 @@ class _LearningAinAIUWidgetState extends State<LearningAinAIUWidget> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                               child: Text(
                                 'Ain',
                                 style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
@@ -133,12 +149,12 @@ class _LearningAinAIUWidgetState extends State<LearningAinAIUWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(60, 20, 60, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(60, 20, 60, 0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.fast_rewind,
                                 color: Colors.black,
                                 size: 30,
@@ -147,15 +163,15 @@ class _LearningAinAIUWidgetState extends State<LearningAinAIUWidget> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => LearningDzoDziDzuWidget(),
+                                    builder: (context) => const LearningDzoDziDzuWidget(),
                                   ),
                                 );
                               },
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(160, 0, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(160, 0, 0, 0),
                               child: IconButton(
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.fast_forward,
                                   color: Colors.black,
                                   size: 30,
@@ -164,7 +180,7 @@ class _LearningAinAIUWidgetState extends State<LearningAinAIUWidget> {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => LearningGhoGhiGhuWidget(),
+                                      builder: (context) => const LearningGhoGhiGhuWidget(),
                                     ),
                                   );
                                 },
@@ -176,7 +192,7 @@ class _LearningAinAIUWidgetState extends State<LearningAinAIUWidget> {
                       Column(
                         children: [
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.9,
                               height: 320,
@@ -195,34 +211,27 @@ class _LearningAinAIUWidgetState extends State<LearningAinAIUWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(60, 8, 60, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(60, 8, 60, 0),
                             child: Row(
                               children: [
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.mic_sharp,
-                                    color: Colors.black,
-                                    size: 30,
-                                  ),
-                                  onPressed: () {
-                                  },
+                                const Icon(
+                                  Icons.mic_sharp,
+                                  color: Colors.black,
+                                  size: 30,
                                 ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                                  child: Text(
-                                    'Coba Ucapkan Harakat!',
-                                    style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16,
-                                    ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  'Coba Ucapkan Harakat!',
+                                  style: GoogleFonts.inter(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          // Adjusted Feedback AI position (move upwards)
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(20, 6, 20, 10), // Slightly moved upwards
+                            padding: const EdgeInsetsDirectional.fromSTEB(20, 6, 20, 10),
                             child: Row(
                               children: [
                                 Text(
@@ -244,7 +253,7 @@ class _LearningAinAIUWidgetState extends State<LearningAinAIUWidget> {
                                         isDense: true,
                                         hintText: '...............',
                                         filled: true,
-                                        fillColor: Color(0xFFFAFDCB),
+                                        fillColor: const Color(0xFFFAFDCB),
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(8),
                                         ),
@@ -264,42 +273,7 @@ class _LearningAinAIUWidgetState extends State<LearningAinAIUWidget> {
             ),
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Color(0xFFFAFDCB),
-          type: BottomNavigationBarType.fixed,
-          currentIndex: selectedIndex,
-          onTap: onTabTapped,
-          selectedItemColor: Color(0xFF037A16),
-          unselectedItemColor: Colors.black,
-          selectedLabelStyle: TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          unselectedLabelStyle: TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          items: const [
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.house, size: 30),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu_book, size: 30),
-              label: 'Learning',
-            ),
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.chartBar, size: 30),
-              label: 'Progress',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined, size: 30),
-              label: 'Account',
-            ),
-          ],
-        ),
+        // BottomNavigationBar sudah dihapus
       ),
     );
   }

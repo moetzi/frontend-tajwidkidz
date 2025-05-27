@@ -24,7 +24,7 @@ class _LearningtampilanSplashWidgetState
     extends State<LearningtampilanSplashWidget> {
   int selectedIndex = 1;
 
-  // Function to handle bottom navigation
+  // Function to handle bottom navigation (still here if needed for future)
   void onTabTapped(int index) {
     setState(() {
       selectedIndex = index;
@@ -41,7 +41,7 @@ class _LearningtampilanSplashWidgetState
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Color(0xFFFAFDCB),
+        backgroundColor: const Color(0xFFFAFDCB),
         body: SafeArea(
           top: true,
           child: SingleChildScrollView( // Added SingleChildScrollView to make the content scrollable
@@ -50,15 +50,15 @@ class _LearningtampilanSplashWidgetState
                 Container(
                   width: MediaQuery.of(context).size.width * 3.9,
                   height: MediaQuery.of(context).size.height * 8.44,
-                  decoration: BoxDecoration(color: Color(0xFFFAFDCB)),
+                  decoration: const BoxDecoration(color: Color(0xFFFAFDCB)),
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         child: Row(
                           children: [
                             IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.arrow_back_ios_rounded,
                                 color: Colors.black,
                                 size: 30,
@@ -67,21 +67,22 @@ class _LearningtampilanSplashWidgetState
                                 Navigator.pop(context); // Go back on press
                               },
                             ),
-                            Spacer(),
+                            const Spacer(),
                             IconButton(
-                              icon: FaIcon(
+                              icon: const FaIcon(
                                 FontAwesomeIcons.volumeHigh,
                                 color: Colors.black,
                                 size: 30,
                               ),
                               onPressed: () {
+                                // TODO: Volume button action
                               },
                             ),
                           ],
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Column(
                           children: [
                             Text(
@@ -93,7 +94,7 @@ class _LearningtampilanSplashWidgetState
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: Text(
                                 '"Di level ini, kamu akan belajar membaca surat-surat pendek dalam Al-Qur’an dengan benar sesuai dengan hukum tajwid yang telah kamu pelajari sebelumnya."',
                                 textAlign: TextAlign.center,
@@ -107,7 +108,7 @@ class _LearningtampilanSplashWidgetState
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 50),
+                        padding: const EdgeInsets.only(top: 50),
                         child: Column(
                           children: [
                             ElevatedButton(
@@ -116,13 +117,13 @@ class _LearningtampilanSplashWidgetState
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LearningAlfatihahHomeWidget()
+                                      builder: (context) => const LearningAlfatihahHomeWidget()
                                   ),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFFF2CE31),
-                                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                                backgroundColor: const Color(0xFFF2CE31),
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -136,20 +137,20 @@ class _LearningtampilanSplashWidgetState
                                 ),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             ElevatedButton(
                               onPressed: () {
                                 // Navigate to the LearningAnNasHomeWidget
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LearningAnnasHomeWidget()
+                                      builder: (context) => const LearningAnnasHomeWidget()
                                   ),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFFF2CE31),
-                                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                                backgroundColor: const Color(0xFFF2CE31),
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -163,20 +164,20 @@ class _LearningtampilanSplashWidgetState
                                 ),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             ElevatedButton(
                               onPressed: () {
                                 // Navigate to the LearningIkhlasHomeWidget
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LearningAlikhlasHomeWidget()
+                                      builder: (context) => const LearningAlikhlasHomeWidget()
                                   ),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFFF2CE31),
-                                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                                backgroundColor: const Color(0xFFF2CE31),
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -190,20 +191,20 @@ class _LearningtampilanSplashWidgetState
                                 ),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             ElevatedButton(
                               onPressed: () {
                                 // Navigate to the LearningFalaqHomeWidget
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LearningFalaqHomeWidget()
+                                      builder: (context) => const LearningFalaqHomeWidget()
                                   ),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFFF2CE31),
-                                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                                backgroundColor: const Color(0xFFF2CE31),
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -217,20 +218,20 @@ class _LearningtampilanSplashWidgetState
                                 ),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             ElevatedButton(
                               onPressed: () {
                                 // Navigate to the LearningKausarHomeWidget
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LearningAlkausarHomeWidget()
+                                      builder: (context) => const LearningAlkausarHomeWidget()
                                   ),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFFF2CE31),
-                                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                                backgroundColor: const Color(0xFFF2CE31),
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -244,20 +245,20 @@ class _LearningtampilanSplashWidgetState
                                 ),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             ElevatedButton(
                               onPressed: () {
                                 // Navigate to the LearningKafirunHomeWidget
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LearningAlkafirunHomeWidget()
+                                      builder: (context) => const LearningAlkafirunHomeWidget()
                                   ),
                                 );
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFFF2CE31),
-                                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                                backgroundColor: const Color(0xFFF2CE31),
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -281,31 +282,7 @@ class _LearningtampilanSplashWidgetState
             ),
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Color(0xFFFAFDCB),
-          currentIndex: selectedIndex,
-          onTap: onTabTapped,
-          selectedItemColor: Color(0xFF037A16),
-          unselectedItemColor: Colors.black,
-          items: const [
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.house, size: 30),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu_book, size: 30),
-              label: 'Learning',
-            ),
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.chartBar, size: 30),
-              label: 'Progress',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined, size: 30),
-              label: 'Account',
-            ),
-          ],
-        ),
+        // BottomNavigationBar has been removed here as requested
       ),
     );
   }
