@@ -5,10 +5,10 @@ final List<TajwidModel> susunHurufQuestions = [
     number: "1",
     title: "Izhar Halqi",
     otherTitle: "(Dibaca Jelas)",
-    influentialLetter: "عـ, ﻩ, ع, ح, غ, خ",
+    influentialLetter: "ء ,ﻩ , ع, ح, غ, خ",
     howToRead: "Nun sukun atau tanwin dibaca jelas tanpa dengung.",
     exampleWord: [
-      ['Nun sukun (ْن) bertemu dengan huruf Ya (ي)', 'Nun sukun (ْن) bertemu dengan huruf Ha (ه)', 'Nun sukun (ْن) bertemu dengan huruf Ghoin (غ )']
+      ['Nun sukun (ن) bertemu dengan huruf Ya (ي)', 'Nun sukun (ن) bertemu dengan huruf Ha (ه)', 'Nun sukun (ن) bertemu dengan huruf Ghoin (غ )']
     ],
     exampleImage: [
       ['assets/images/contoh_izhar_1.png', 'assets/images/contoh_izhar_2.png', 'assets/images/contoh_izhar_3.png']
@@ -22,7 +22,7 @@ final List<TajwidModel> susunHurufQuestions = [
     howToRead:
         "Apabila ada nun sukun atau tanwin bertemu dengan salah satu huruf ي, و, م, n, maka dibaca dengan dengung.",
     exampleWord: [
-      ['Nun sukun (ْن) bertemu dengan huruf Ya (ي)', 'Nun sukun (ْن) bertemu dengan huruf Wa (و)', 'Kasrah tanwin (ٍـ ) bertemu dengan huruf Wa (و)']
+      ['Nun sukun (ن) bertemu dengan huruf Ya (ي)', 'Nun sukun (ن) bertemu dengan huruf Wa (و)', 'Kasrah tanwin (ـ ) bertemu dengan huruf Wa (و)']
     ],
     exampleImage: [
       ['assets/images/contoh_idgham_bighunnah_1.png', 'assets/images/contoh_idgham_bighunnah_2.png', 'assets/images/contoh_idgham_bighunnah_3.png']
@@ -36,7 +36,7 @@ final List<TajwidModel> susunHurufQuestions = [
     howToRead:
         "Nun sukun atau tanwin yang bertemu dengan huruf lam (ل) atau ra (ر) dibaca lebur tanpa dengung.",
     exampleWord: [
-      [': nun sukun (ن) bertemu dengan huruf Lam (ل)', ': nun sukun (ْن) bertemu dengan huruf Ro (ر)', ': nun sukun (ْن) bertemu dengan huruf Lam (ل)']
+      [': nun sukun (ن) bertemu dengan huruf Lam (ل)', ': nun sukun (ن) bertemu dengan huruf Ro (ر)', ': nun sukun (ن) bertemu dengan huruf Lam (ل)']
     ],
     exampleImage: [
       ['assets/images/contoh_idgham_bilaghunnah_1.png', 'assets/images/contoh_idgham_bilaghunnah_2.png', 'assets/images/contoh_idgham_bilaghunnah_3.png']
@@ -50,7 +50,7 @@ final List<TajwidModel> susunHurufQuestions = [
     howToRead:
         "Apabila ada nun sukun atau tanwin bertemu dengan salah satu huruf tersebut maka dibaca samar dengan dengung",
     exampleWord: [
-      [': nun sukun (ن) bertemu dengan huruf Ta (ت)', ': nun sukun (ْن) bertemu dengan huruf Tsa (ث)', ': nun sukun (ْن) bertemu dengan huruf Jim(ج)']
+      [': nun sukun (ن) bertemu dengan huruf Ta (ت)', ': nun sukun (ن) bertemu dengan huruf Tsa (ث)', ': nun sukun (ن) bertemu dengan huruf Jim(ج)']
     ],
     exampleImage: [
       ['assets/images/contoh_ikhfa_haqiqi_1.png', 'assets/images/contoh_ikhfa_haqiqi_2.png', 'assets/images/contoh_ikhfa_haqiqi_3.png']
@@ -63,9 +63,9 @@ final List<TajwidModel> susunHurufQuestions = [
     influentialLetter:
         "ب",
     howToRead:
-        "Apabila ada nun sukun atau tanwin bertemu dengan huruf (ب), maka berubah menjadi mim dengan dengung",
+        "Apabila ada nun sukun atau tanwin bertemu dengan huruf Ba (ب), maka berubah menjadi mim dengan dengung",
     exampleWord: [
-      [': nun sukun (ن) bertemu dengan huruf Ba (ب)', ': nun sukun (ْن) bertemu dengan huruf Ba (ب)', ': nun sukun (ْن) bertemu dengan huruf Ba (ب)']
+      [': nun sukun (ن) bertemu dengan huruf Ba (ب)', ': nun sukun (ن) bertemu dengan huruf Ba (ب)', ': nun sukun (ن) bertemu dengan huruf Ba (ب)']
     ],
     exampleImage: [
       ['assets/images/contoh_iqlab_1.png', 'assets/images/contoh_iqlab_2.png', 'assets/images/contoh_iqlab_3.png']
@@ -77,7 +77,7 @@ final List<TajwidModel> susunHurufQuestions = [
     otherTitle: "",
     influentialLetter: "ب",
     howToRead:
-        "Apabila ada mim sukun (مْ) bertemu dengan huruf (ب), makadibaca samar dengan dengung",
+        "Apabila ada mim sukun (مْ) bertemu dengan huruf Ba (ب), maka dibaca samar dengan dengung",
     exampleWord: [
       ['mim sukun (م) bertemu dengan huruf Ba (ب)', 'mim sukun (مْ) bertemu dengan huruf Ba (ب)', 'mim sukun (مْ) bertemu dengan huruf Ba (ب)']
     ],
@@ -89,9 +89,9 @@ final List<TajwidModel> susunHurufQuestions = [
     number: "7",
     title: "Idhgam Mini",
     otherTitle: "",
-    influentialLetter: "(م)",
+    influentialLetter: "م",
     howToRead:
-        "Apabila ada mim sukun (مْ)bertemu dengan huruf (م), maka dibaca dengan dengung",
+        "Apabila ada mim sukun (مْ) bertemu dengan huruf Mim (م), maka dibaca dengan dengung",
     exampleWord: [
       [': mim sukun (مْ) bertemu dengan huruf mim (م)', ': mim sukun (مْ) bertemu dengan huruf mim (م)', ': mim sukun (مْ) bertemu dengan huruf mim (م)']
     ],
@@ -105,7 +105,7 @@ final List<TajwidModel> susunHurufQuestions = [
     otherTitle: "",
     influentialLetter: "Semua huruf kecuali م dan ب",
     howToRead:
-        "Apabila ada mim sukun (مْ)bertemu dengan selain huruf م dan ب maka mim sukun dibaca dengan jelas tanpa dengung",
+        "Apabila ada mim sukun (مْ) bertemu dengan selain huruf م dan ب maka mim sukun dibaca dengan jelas tanpa dengung",
     exampleWord: [
       [': mim sukun (مْ) bertemu dengan huruf Qaf (ق)', ': mim sukun (مْ) bertemu dengan huruf Fa (ف)', ': mim sukun (مْ) bertemu dengan huruf Ta (ت)']
     ],
@@ -191,15 +191,15 @@ final List<TajwidModel> susunHurufQuestions = [
   ),
   TajwidModel(
     number: "14",
-    title: "Hukum Ra Tafkhim & Ra Tarqiq",
+    title: "Hukum Tafkhim dan Tarqiq pada Huruf Ra",
     otherTitle: "", // Kosong karena sudah ada di judul
     influentialLetter: "ر",
     howToRead: "Hukum bacaan huruf Ra (ر) terbagi menjadi dua, yaitu Tafkhim (tebal) dan Tarqiq (tipis).",
     exampleWord: [
       ['Tafkhim (Dibaca Tebal)'], // Sub-judul untuk Ra Tafkhim
-      [': huruf رَ (Fathah)', ': huruf رُ (Dhammah)', ': huruf رَ (Fathah)'], // Contoh Ra Tafkhim
+      [': huruf رَ Fathah', ': huruf رُ Dhammah', ': huruf رَ Fathah'], // Contoh Ra Tafkhim
       ['Tarqiq (Dibaca Tipis)'], // Sub-judul untuk Ra Tarqiq
-      ['Huruf ر (kasrah)', 'Huruf ر (kasrah)', 'Huruf ر (kasrah)'] // Contoh Ra Tarqiq
+      ['Huruf ر kasrah', 'Huruf ر kasrah', 'Huruf ر kasrah'] // Contoh Ra Tarqiq
     ],
     exampleImage: [
       [''], // Kosong untuk sub-judul

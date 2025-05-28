@@ -51,6 +51,7 @@ class MacamTajwidScreen extends StatelessWidget {
             },
           ),
           title: const Text("Macam - Macam Tajwid"),
+          backgroundColor: Color(0xFFFAFDCB),
           centerTitle: true,
           actions: [
             IconButton(
@@ -73,18 +74,9 @@ class MacamTajwidScreen extends StatelessWidget {
                     isOdd ? const Color(0xFFDDEB9D) : const Color(0xFFFAFDCB);
 
                 String fullTextToSpeak =
-                    "${tajwid.number}. ${tajwid.title} ${tajwid.otherTitle}. Huruf yang Berpengaruh: ${tajwid.influentialLetter}. Cara Baca: ${tajwid.howToRead}. ";
+                    "${tajwid.title} ${tajwid.otherTitle}. Huruf yang Berpengaruh: ${tajwid.influentialLetter}. Cara Baca: ${tajwid.howToRead}.";
 
-                for (var subExamples in tajwid.exampleWord) {
-                  if (subExamples.isNotEmpty) {
-                    if (subExamples.length == 1) {
-                      fullTextToSpeak += "${subExamples[0]}. ";
-                    } else {
-                      fullTextToSpeak += subExamples.join(', ') + ". ";
-                    }
-                  }
-                }
-                print('Full Text to Speak: $fullTextToSpeak'); // Tambahkan baris ini
+                print('Full Text to Speak: $fullTextToSpeak');
                 print('Text Length: ${fullTextToSpeak.length}');
 
                 return Card(
@@ -143,7 +135,6 @@ class MacamTajwidScreen extends StatelessWidget {
                                 height: 45,
                               ),
                               onPressed: () {
-                                // The viewModel.speak() call will now internally wait for TTS to be ready.
                                 viewModel.speak(fullTextToSpeak);
                               },
                             ),
@@ -200,7 +191,6 @@ class MacamTajwidScreen extends StatelessWidget {
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
-                                  color: Colors.deepPurple,
                                 ),
                               ),
                             );
@@ -221,7 +211,7 @@ class MacamTajwidScreen extends StatelessWidget {
                                           height: 35,
                                         ),
                                         onPressed: () {
-                                          viewModel.speak(subExamples[j]);
+                                          viewModel.speak(subExamples[j], forceIndonesian: true);
                                         },
                                       ),
                                       const SizedBox(width: 6),
