@@ -20,7 +20,7 @@ final List<TajwidModel> susunHurufQuestions = [
     otherTitle: "(Dimasukkan Dengan Dengung)",
     influentialLetter: "ي, و, م, ن",
     howToRead:
-        "Apabila ada nun sukun atau tanwin bertemu dengan salah satu huruf ي, و, م, n, maka dibaca dengan dengung.",
+        "Apabila ada nun sukun atau tanwin bertemu dengan salah satu huruf ي, و, م, ن, maka dibaca dengan dengung.",
     exampleWord: [
       ['Nun sukun (ن) bertemu dengan huruf Ya (ي)', 'Nun sukun (ن) bertemu dengan huruf Wa (و)', 'Kasrah tanwin (ـ ) bertemu dengan huruf Wa (و)']
     ],
@@ -87,7 +87,7 @@ final List<TajwidModel> susunHurufQuestions = [
   ),
   TajwidModel(
     number: "7",
-    title: "Idhgam Mini",
+    title: "Idhgam Mimi",
     otherTitle: "",
     influentialLetter: "م",
     howToRead:
