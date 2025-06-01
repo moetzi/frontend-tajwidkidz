@@ -112,11 +112,13 @@ class GameTajwid extends StatelessWidget {
                                               : 'assets/images/icon_mic.png',
                                     ),
                                   ),
+
                                   const SizedBox(height: 24),
+                                  
                                   GestureDetector(
                                     onTap: () async {
                                       await flutterTts.setLanguage("ar");
-                                      await flutterTts.speak(question.word);
+                                      await flutterTts.speak(question.correctAnswer);
                                     },
                                     child: Image.asset(
                                       'assets/images/icon_speaker.png',

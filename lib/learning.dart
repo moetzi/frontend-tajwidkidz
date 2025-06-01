@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+<<<<<<< HEAD
+=======
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:untitled/Modul4_MacamTajwid/view/macam_tajwid_screen.dart';
+>>>>>>> playground-yuvina
 import 'modul1hijaiyah/m1alif.dart';
 import 'Modul5_SurahTajwid/tampilanawal.dart';
 import 'Modul2harakat/m2fathah.dart';
@@ -401,7 +406,7 @@ class _LearningWidgetState extends State<LearningWidget> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Level4Page()),
+                      MaterialPageRoute(builder: (context) => MacamTajwidScreen()),
                     );
                   },
                   child: Padding(
