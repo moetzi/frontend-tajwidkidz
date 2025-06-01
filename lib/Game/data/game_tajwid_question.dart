@@ -6,7 +6,7 @@ final List<GameTajwidQuestion> gameTajwidQuestions = [
     levelName: "Izhar Halqi",
     questions: [
       TajwidQuestion(
-        question: "'أنۡهَٰرٞ' تَجۡرِي",
+        question: "أَنۡهَٰرٞ تَجۡرِي",
         word: "أَنۡهَٰرٞ تَجۡرِي",
         correctAnswer: "anharun tajri",
       ),
