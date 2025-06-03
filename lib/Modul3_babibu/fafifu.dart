@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:audioplayers/audioplayers.dart'; // Pastikan sudah di pubspec.yaml
 import 'ghoghighu.dart';
 import 'qoqiqu.dart';
+import '../model/audio_model.dart'; // Your AudioModel class file
+import '../controller/audio_controller.dart'; // Your AudioController class file
 
 class LearningFaFiFuWidget extends StatefulWidget {
   const LearningFaFiFuWidget({super.key});
@@ -19,10 +21,33 @@ class _LearningFaFiFuWidgetState extends State<LearningFaFiFuWidget> {
   final TextEditingController _textController = TextEditingController();
   final FocusNode _textFieldFocusNode = FocusNode();
 
-  int selectedIndex = 1;
-
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+  late final AudioModel fafifuAudioModel;
+  late final AudioController audioController;
   bool _isPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    fafifuAudioModel = AudioModel(label: 'FAFIFU', fileName: 'Modul3/Fa Fi Fu.wav');
+    audioController = AudioController();
+
+    // Listen to player state and update _isPlaying
+    audioController.playerStateStream.listen((state) {
+      setState(() {
+        _isPlaying = state == PlayerState.playing;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _textFieldFocusNode.dispose();
+    // Dispose audioController here if needed
+    super.dispose();
+  }
 
   void onTabTapped(int index) {
     setState(() {
@@ -34,7 +59,7 @@ class _LearningFaFiFuWidgetState extends State<LearningFaFiFuWidget> {
         Navigator.pushNamed(context, '/home');
         break;
       case 1:
-      // current screen
+        // current screen
         break;
       case 2:
         Navigator.pushNamed(context, '/progress');
@@ -45,24 +70,12 @@ class _LearningFaFiFuWidgetState extends State<LearningFaFiFuWidget> {
     }
   }
 
-  Future<void> _playPauseAudio() async {
+  void _playPauseAudio() async {
     if (_isPlaying) {
-      await _audioPlayer.pause();
+      await audioController.pause();
     } else {
-      // Ganti path audio sesuai file Anda
-      await _audioPlayer.play(AssetSource('audios/fafifu_audio.mp3'));
+      await audioController.play(fafifuAudioModel.fileName);
     }
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
-  }
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
-    super.dispose();
   }
 
   @override

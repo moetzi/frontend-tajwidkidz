@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:audioplayers/audioplayers.dart'; // Pastikan sudah ada di pubspec.yaml
 import 'khokhikhu.dart';
 import 'dzadzidzu.dart';
+import '../model/audio_model.dart'; // Your AudioModel class file
+import '../controller/audio_controller.dart'; // Your AudioController class file
 
 class LearningDaDiDuWidget extends StatefulWidget {
   const LearningDaDiDuWidget({super.key});
@@ -19,23 +21,45 @@ class _LearningDaDiDuWidgetState extends State<LearningDaDiDuWidget> {
   final TextEditingController _textController = TextEditingController();
   final FocusNode _textFieldFocusNode = FocusNode();
 
-  int selectedIndex = 1; // BottomNavigationBar index
-
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+  late final AudioModel dadiduAudioModel;
+  late final AudioController audioController;
   bool _isPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    dadiduAudioModel = AudioModel(label: 'DADIDU', fileName: 'Modul3/Da Di Du.wav');
+    audioController = AudioController();
+
+    // Listen to player state and update _isPlaying
+    audioController.playerStateStream.listen((state) {
+      setState(() {
+        _isPlaying = state == PlayerState.playing;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _textFieldFocusNode.dispose();
+    // Dispose audioController here if needed
+    super.dispose();
+  }
 
   void onTabTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
 
-    // Navigasi BottomNavigationBar
     switch (index) {
       case 0:
         Navigator.pushNamed(context, '/home');
         break;
       case 1:
-      // Current screen, tidak perlu aksi
+        // current screen
         break;
       case 2:
         Navigator.pushNamed(context, '/progress');
@@ -46,23 +70,12 @@ class _LearningDaDiDuWidgetState extends State<LearningDaDiDuWidget> {
     }
   }
 
-  Future<void> _playPauseAudio() async {
+  void _playPauseAudio() async {
     if (_isPlaying) {
-      await _audioPlayer.pause();
+      await audioController.pause();
     } else {
-      await _audioPlayer.play(AssetSource('audios/dadidu_audio.mp3')); // Sesuaikan path audio kamu
+      await audioController.play(dadiduAudioModel.fileName);
     }
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
-  }
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
-    super.dispose();
   }
 
   @override

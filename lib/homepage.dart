@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'learning.dart'; // Import halaman LearningWidget
+import 'learning.dart' as mylearning; // Import halaman LearningWidget dengan prefix
 import 'minigame.dart'; // Import halaman MiniGame
 import 'leaderboard.dart'; // Import halaman Leaderboard
 import 'progress.dart'; // Import halaman ProgressPage
@@ -32,7 +32,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       case 0: // Home
         return buildHomePage();
       case 1: // Learning
-        return LearningWidget();
+        return mylearning.LearningWidget();
       case 2: // Mini Game
         return MiniGameWidget(); // Halaman MiniGame
       case 3: // Leaderboard
@@ -106,7 +106,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LearningWidget(),
+                          builder: (context) => mylearning.LearningWidget(),
                         ),
                       );
                     },

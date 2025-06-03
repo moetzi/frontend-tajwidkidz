@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:audioplayers/audioplayers.dart'; // Pastikan sudah ditambahkan di pubspec.yaml
 import 'tsatsitsu.dart';
 import 'hahihu.dart';
+import '../model/audio_model.dart'; // Your AudioModel class file
+import '../controller/audio_controller.dart'; // Your AudioController class file
 
 class LearningJaJiJuWidget extends StatefulWidget {
   const LearningJaJiJuWidget({super.key});
@@ -19,10 +21,33 @@ class _LearningJaJiJuWidgetState extends State<LearningJaJiJuWidget> {
   final TextEditingController _textController = TextEditingController();
   final FocusNode _textFieldFocusNode = FocusNode();
 
-  int selectedIndex = 1;
-
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+  late final AudioModel jajijuAudioModel;
+  late final AudioController audioController;
   bool _isPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    jajijuAudioModel = AudioModel(label: 'JAJIJU', fileName: 'Modul3/Ja Ji Ju.wav');
+    audioController = AudioController();
+
+    // Listen to player state and update _isPlaying
+    audioController.playerStateStream.listen((state) {
+      setState(() {
+        _isPlaying = state == PlayerState.playing;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _textFieldFocusNode.dispose();
+    // Dispose audioController here if needed
+    super.dispose();
+  }
 
   void onTabTapped(int index) {
     setState(() {
@@ -34,7 +59,7 @@ class _LearningJaJiJuWidgetState extends State<LearningJaJiJuWidget> {
         Navigator.pushNamed(context, '/home');
         break;
       case 1:
-      // Current screen, no action needed
+        // current screen
         break;
       case 2:
         Navigator.pushNamed(context, '/progress');
@@ -45,24 +70,12 @@ class _LearningJaJiJuWidgetState extends State<LearningJaJiJuWidget> {
     }
   }
 
-  Future<void> _playPauseAudio() async {
+  void _playPauseAudio() async {
     if (_isPlaying) {
-      await _audioPlayer.pause();
+      await audioController.pause();
     } else {
-      // Ganti dengan path audio yang sesuai dengan file kamu
-      await _audioPlayer.play(AssetSource('audios/jajiju_audio.mp3'));
+      await audioController.play(jajijuAudioModel.fileName);
     }
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
-  }
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
-    super.dispose();
   }
 
   @override

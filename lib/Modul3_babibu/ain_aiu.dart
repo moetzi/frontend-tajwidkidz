@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:audioplayers/audioplayers.dart'; // jangan lupa tambahkan package ini ke pubspec.yaml
-
 import 'dzodzidzu.dart';
 import 'ghoghighu.dart';
+import '../model/audio_model.dart'; // Your AudioModel class file
+import '../controller/audio_controller.dart'; // Your AudioController class file
 
 class LearningAinAIUWidget extends StatefulWidget {
   const LearningAinAIUWidget({super.key});
@@ -20,28 +21,23 @@ class _LearningAinAIUWidgetState extends State<LearningAinAIUWidget> {
   final TextEditingController _textController = TextEditingController();
   final FocusNode _textFieldFocusNode = FocusNode();
 
-  int selectedIndex = 1; // masih bisa kamu gunakan jika perlu
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+  late final AudioModel ainaiuAudioModel;
+  late final AudioController audioController;
+  bool _isPlaying = false;
 
-  final AudioPlayer _audioPlayer = AudioPlayer(); // AudioPlayer instance
-  bool _isPlaying = false; // Track audio playing state
+  @override
+  void initState() {
+    super.initState();
 
-  // Function to handle bottom navigation (tetap bisa dipakai untuk tujuan lain)
-  void onTabTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
+    ainaiuAudioModel = AudioModel(label: 'AIN_AIU', fileName: 'Modul3/Ain.wav');
+    audioController = AudioController();
 
-  // Play/pause audio toggle function
-  void _playPauseAudio() async {
-    if (_isPlaying) {
-      await _audioPlayer.pause();
-    } else {
-      await _audioPlayer.play(AssetSource('audios/Ain_AIU_audio.mp3'));
-      // ganti dengan path audio kamu di assets
-    }
-    setState(() {
-      _isPlaying = !_isPlaying;
+    // Listen to player state and update _isPlaying
+    audioController.playerStateStream.listen((state) {
+      setState(() {
+        _isPlaying = state == PlayerState.playing;
+      });
     });
   }
 
@@ -49,8 +45,37 @@ class _LearningAinAIUWidgetState extends State<LearningAinAIUWidget> {
   void dispose() {
     _textController.dispose();
     _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
+    // Dispose audioController here if needed
     super.dispose();
+  }
+
+  void onTabTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, '/home');
+        break;
+      case 1:
+        // current screen
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/progress');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/account');
+        break;
+    }
+  }
+
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await audioController.pause();
+    } else {
+      await audioController.play(ainaiuAudioModel.fileName);
+    }
   }
 
   @override

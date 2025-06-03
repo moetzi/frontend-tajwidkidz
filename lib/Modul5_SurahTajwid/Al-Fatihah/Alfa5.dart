@@ -4,6 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'alfa4.dart';
 import 'alfa6.dart';
 import 'package:audioplayers/audioplayers.dart';
+import '/model/audio_model.dart'; // Your AudioModel class file
+import '/controller/audio_controller.dart'; // Your AudioController class file
+import '/controller/audio_record_controller.dart';
 
 class LearningAlfatihah5Widget extends StatefulWidget {
   const LearningAlfatihah5Widget({super.key});
@@ -18,34 +21,65 @@ class LearningAlfatihah5Widget extends StatefulWidget {
 class _LearningAlfatihah5WidgetState extends State<LearningAlfatihah5Widget> {
   final TextEditingController _textController1 = TextEditingController();
   final FocusNode _textFieldFocusNode1 = FocusNode();
+  final AudioRecordController _recordController = AudioRecordController();
+  bool isRecording = false;
+  AudioModel? currentAudio;
 
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+  late final AudioModel alfa5AudioModel;
+  late final AudioController audioController;
   bool _isPlaying = false;
 
   @override
   void initState() {
     super.initState();
-    _audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
+
+    alfa5AudioModel = AudioModel(label: 'Alfa5', fileName: 'Modul5/Al-Fatihah/Ayat 5.wav');
+    audioController = AudioController();
+
+    // Listen to player state and update _isPlaying
+    audioController.playerStateStream.listen((state) {
       setState(() {
-        _isPlaying = (state == PlayerState.playing);
+        _isPlaying = state == PlayerState.playing;
       });
     });
-  }
-
-  void _playPauseAudio() async {
-    if (_isPlaying) {
-      await _audioPlayer.pause();
-    } else {
-      await _audioPlayer.play(AssetSource('audios/alfatihah_4.wav')); // Sesuaikan path audio
-    }
   }
 
   @override
   void dispose() {
     _textController1.dispose();
     _textFieldFocusNode1.dispose();
-    _audioPlayer.dispose();
+    // Dispose audioController here if needed
     super.dispose();
+  }
+
+  void onTabTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, '/home');
+        break;
+      case 1:
+        // current screen
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/progress');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/account');
+        break;
+    }
+  }
+
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await audioController.pause();
+    } else {
+      await audioController.play(alfa5AudioModel.fileName);
+    }
   }
 
   void _navigateTo(int page) {
@@ -165,8 +199,37 @@ class _LearningAlfatihah5WidgetState extends State<LearningAlfatihah5Widget> {
                 // Mic and instruction text
                 Row(
                   children: [
-                    const Icon(Icons.mic_sharp, size: 30, color: Colors.black),
-                    const SizedBox(width: 5),
+                    IconButton(
+                      icon: Icon(
+                        isRecording ? Icons.stop : Icons.mic_sharp,
+                        size: 30,
+                        color: Colors.black,
+                      ),
+                      onPressed: () async {
+                        if (!isRecording) {
+                          final recorded = await _recordController.startRecording();
+                          if (recorded != null) {
+                            setState(() {
+                              currentAudio = recorded;
+                              isRecording = true;
+                            });
+                          }
+                        } else if (currentAudio != null) {
+                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5');
+                          if (url != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Uploaded! Link: $url')),
+                          );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Upload failed')),
+                            );
+                          }
+                          setState(() => isRecording = false);
+                        }
+                      },
+                    ),
+                    const SizedBox(width: 10),
                     Text(
                       'Coba Ucapkan Huruf \nHijaiyah!',
                       style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 16),

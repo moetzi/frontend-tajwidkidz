@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'hahihu.dart';
 import 'dadidu.dart';
+import '../model/audio_model.dart'; // Your AudioModel class file
+import '../controller/audio_controller.dart'; // Your AudioController class file
 
 class LearningKhoKhiKhuWidget extends StatefulWidget {
   const LearningKhoKhiKhuWidget({super.key});
@@ -19,9 +21,33 @@ class _LearningKhoKhiKhuWidgetState extends State<LearningKhoKhiKhuWidget> {
   final TextEditingController _textController = TextEditingController();
   final FocusNode _textFieldFocusNode = FocusNode();
 
-  int selectedIndex = 1;
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+  late final AudioModel khokhikhuAudioModel;
+  late final AudioController audioController;
   bool _isPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    khokhikhuAudioModel = AudioModel(label: 'KHOKHIKHU', fileName: 'Modul3/Kho Khi Khu.wav');
+    audioController = AudioController();
+
+    // Listen to player state and update _isPlaying
+    audioController.playerStateStream.listen((state) {
+      setState(() {
+        _isPlaying = state == PlayerState.playing;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _textFieldFocusNode.dispose();
+    // Dispose audioController here if needed
+    super.dispose();
+  }
 
   void onTabTapped(int index) {
     setState(() {
@@ -33,7 +59,7 @@ class _LearningKhoKhiKhuWidgetState extends State<LearningKhoKhiKhuWidget> {
         Navigator.pushNamed(context, '/home');
         break;
       case 1:
-      // Current screen, tidak perlu pindah apa-apa
+        // current screen
         break;
       case 2:
         Navigator.pushNamed(context, '/progress');
@@ -44,24 +70,12 @@ class _LearningKhoKhiKhuWidgetState extends State<LearningKhoKhiKhuWidget> {
     }
   }
 
-  Future<void> _playPauseAudio() async {
+  void _playPauseAudio() async {
     if (_isPlaying) {
-      await _audioPlayer.pause();
+      await audioController.pause();
     } else {
-      // Ganti path audio sesuai file audio yang kamu miliki
-      await _audioPlayer.play(AssetSource('audios/khokhikhu_audio.mp3'));
+      await audioController.play(khokhikhuAudioModel.fileName);
     }
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
-  }
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
-    super.dispose();
   }
 
   @override

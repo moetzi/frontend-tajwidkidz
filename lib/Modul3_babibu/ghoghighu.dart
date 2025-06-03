@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:audioplayers/audioplayers.dart'; // Pastikan sudah di pubspec.yaml
 import 'ain_aiu.dart';
 import 'fafifu.dart';
+import '../model/audio_model.dart'; // Your AudioModel class file
+import '../controller/audio_controller.dart'; // Your AudioController class file
 
 class LearningGhoGhiGhuWidget extends StatefulWidget {
   const LearningGhoGhiGhuWidget({super.key});
@@ -19,10 +21,33 @@ class _LearningGhoGhiGhuWidgetState extends State<LearningGhoGhiGhuWidget> {
   final TextEditingController _textController = TextEditingController();
   final FocusNode _textFieldFocusNode = FocusNode();
 
-  int selectedIndex = 1;
-
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+  late final AudioModel ghoghighuAudioModel;
+  late final AudioController audioController;
   bool _isPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    ghoghighuAudioModel = AudioModel(label: 'GHOGHIGHU', fileName: 'Modul3/Gho Ghi Ghu.wav');
+    audioController = AudioController();
+
+    // Listen to player state and update _isPlaying
+    audioController.playerStateStream.listen((state) {
+      setState(() {
+        _isPlaying = state == PlayerState.playing;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _textFieldFocusNode.dispose();
+    // Dispose audioController here if needed
+    super.dispose();
+  }
 
   void onTabTapped(int index) {
     setState(() {
@@ -34,7 +59,7 @@ class _LearningGhoGhiGhuWidgetState extends State<LearningGhoGhiGhuWidget> {
         Navigator.pushNamed(context, '/home');
         break;
       case 1:
-      // current screen
+        // current screen
         break;
       case 2:
         Navigator.pushNamed(context, '/progress');
@@ -45,23 +70,12 @@ class _LearningGhoGhiGhuWidgetState extends State<LearningGhoGhiGhuWidget> {
     }
   }
 
-  Future<void> _playPauseAudio() async {
+  void _playPauseAudio() async {
     if (_isPlaying) {
-      await _audioPlayer.pause();
+      await audioController.pause();
     } else {
-      // Contoh: await _audioPlayer.play(AssetSource('audios/ghoghighu_audio.mp3'));
+      await audioController.play(ghoghighuAudioModel.fileName);
     }
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
-  }
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
-    super.dispose();
   }
 
   @override

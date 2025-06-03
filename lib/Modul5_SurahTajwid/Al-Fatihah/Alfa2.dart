@@ -4,6 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'alfa1.dart';
 import 'alfa3.dart';
 import 'package:audioplayers/audioplayers.dart';
+import '/model/audio_model.dart'; // Your AudioModel class file
+import '/controller/audio_controller.dart'; // Your AudioController class file
+import '/controller/audio_record_controller.dart';
 
 class LearningAlfatihah2Widget extends StatefulWidget {
   const LearningAlfatihah2Widget({super.key});
@@ -18,16 +21,26 @@ class LearningAlfatihah2Widget extends StatefulWidget {
 class _LearningAlfatihah2WidgetState extends State<LearningAlfatihah2Widget> {
   final TextEditingController _textController1 = TextEditingController();
   final FocusNode _textFieldFocusNode1 = FocusNode();
+  final AudioRecordController _recordController = AudioRecordController();
+  bool isRecording = false;
+  AudioModel? currentAudio;
 
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+  late final AudioModel alfa1AudioModel;
+  late final AudioController audioController;
   bool _isPlaying = false;
 
   @override
   void initState() {
     super.initState();
-    _audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
+
+    alfa1AudioModel = AudioModel(label: 'Alfa2', fileName: 'Modul5/Al-Fatihah/Ayat 2.wav');
+    audioController = AudioController();
+
+    // Listen to player state and update _isPlaying
+    audioController.playerStateStream.listen((state) {
       setState(() {
-        _isPlaying = (state == PlayerState.playing);
+        _isPlaying = state == PlayerState.playing;
       });
     });
   }
@@ -36,15 +49,36 @@ class _LearningAlfatihah2WidgetState extends State<LearningAlfatihah2Widget> {
   void dispose() {
     _textController1.dispose();
     _textFieldFocusNode1.dispose();
-    _audioPlayer.dispose();
+    // Dispose audioController here if needed
     super.dispose();
+  }
+
+  void onTabTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, '/home');
+        break;
+      case 1:
+        // current screen
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/progress');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/account');
+        break;
+    }
   }
 
   void _playPauseAudio() async {
     if (_isPlaying) {
-      await _audioPlayer.pause();
+      await audioController.pause();
     } else {
-      await _audioPlayer.play(AssetSource('audios/alfa_1.wav')); // Sesuaikan path audio
+      await audioController.play(alfa1AudioModel.fileName);
     }
   }
 
@@ -151,9 +185,33 @@ class _LearningAlfatihah2WidgetState extends State<LearningAlfatihah2Widget> {
                 Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.mic_sharp, size: 30, color: Colors.black),
-                      onPressed: () {
-                        // Mic button pressed
+                      icon: Icon(
+                        isRecording ? Icons.stop : Icons.mic_sharp,
+                        size: 30,
+                        color: Colors.black,
+                      ),
+                      onPressed: () async {
+                        if (!isRecording) {
+                          final recorded = await _recordController.startRecording();
+                          if (recorded != null) {
+                            setState(() {
+                              currentAudio = recorded;
+                              isRecording = true;
+                            });
+                          }
+                        } else if (currentAudio != null) {
+                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5');
+                          if (url != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Uploaded! Link: $url')),
+                          );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Upload failed')),
+                            );
+                          }
+                          setState(() => isRecording = false);
+                        }
                       },
                     ),
                     const SizedBox(width: 10),

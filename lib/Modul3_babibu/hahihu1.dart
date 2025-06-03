@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:audioplayers/audioplayers.dart'; // Jangan lupa ditambahkan di pubspec.yaml
 import 'wawiwu.dart';
 import 'yayiyu.dart';
+import '../model/audio_model.dart'; // Your AudioModel class file
+import '../controller/audio_controller.dart'; // Your AudioController class file
 
 class LearningHaHiHu1Widget extends StatefulWidget {
   const LearningHaHiHu1Widget({super.key});
@@ -19,21 +21,45 @@ class _LearningHaHiHu1WidgetState extends State<LearningHaHiHu1Widget> {
   final TextEditingController _textController = TextEditingController();
   final FocusNode _textFieldFocusNode = FocusNode();
 
-  int selectedIndex = 1;
-
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+  late final AudioModel hahihu1AudioModel;
+  late final AudioController audioController;
   bool _isPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    hahihu1AudioModel = AudioModel(label: 'HaHiHu1', fileName: 'Modul3/Ha Hi Hu_K.wav');
+    audioController = AudioController();
+
+    // Listen to player state and update _isPlaying
+    audioController.playerStateStream.listen((state) {
+      setState(() {
+        _isPlaying = state == PlayerState.playing;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _textFieldFocusNode.dispose();
+    // Dispose audioController here if needed
+    super.dispose();
+  }
 
   void onTabTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
+
     switch (index) {
       case 0:
         Navigator.pushNamed(context, '/home');
         break;
       case 1:
-      // Current page, no action
+        // current screen
         break;
       case 2:
         Navigator.pushNamed(context, '/progress');
@@ -44,23 +70,12 @@ class _LearningHaHiHu1WidgetState extends State<LearningHaHiHu1Widget> {
     }
   }
 
-  Future<void> _playPauseAudio() async {
+  void _playPauseAudio() async {
     if (_isPlaying) {
-      await _audioPlayer.pause();
+      await audioController.pause();
     } else {
-      await _audioPlayer.play(AssetSource('audios/hahihu1_audio.mp3')); // Ganti sesuai file audio kamu
+      await audioController.play(hahihu1AudioModel.fileName);
     }
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
-  }
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
-    super.dispose();
   }
 
   @override

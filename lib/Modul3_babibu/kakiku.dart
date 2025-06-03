@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:audioplayers/audioplayers.dart'; // Pastikan sudah ditambahkan di pubspec.yaml
 import 'qoqiqu.dart';
 import 'lalilu.dart';
+import '../model/audio_model.dart'; // Your AudioModel class file
+import '../controller/audio_controller.dart'; // Your AudioController class file
 
 class LearningKaKiKuWidget extends StatefulWidget {
   const LearningKaKiKuWidget({super.key});
@@ -19,10 +21,33 @@ class _LearningKaKiKuWidgetState extends State<LearningKaKiKuWidget> {
   final TextEditingController _textController = TextEditingController();
   final FocusNode _textFieldFocusNode = FocusNode();
 
-  int selectedIndex = 1;
-
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+  late final AudioModel kakikuAudioModel;
+  late final AudioController audioController;
   bool _isPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    kakikuAudioModel = AudioModel(label: 'KAKIKU', fileName: 'Modul3/Ka Ki Ku.wav');
+    audioController = AudioController();
+
+    // Listen to player state and update _isPlaying
+    audioController.playerStateStream.listen((state) {
+      setState(() {
+        _isPlaying = state == PlayerState.playing;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _textFieldFocusNode.dispose();
+    // Dispose audioController here if needed
+    super.dispose();
+  }
 
   void onTabTapped(int index) {
     setState(() {
@@ -34,7 +59,7 @@ class _LearningKaKiKuWidgetState extends State<LearningKaKiKuWidget> {
         Navigator.pushNamed(context, '/home');
         break;
       case 1:
-      // Current screen
+        // current screen
         break;
       case 2:
         Navigator.pushNamed(context, '/progress');
@@ -45,24 +70,12 @@ class _LearningKaKiKuWidgetState extends State<LearningKaKiKuWidget> {
     }
   }
 
-  Future<void> _playPauseAudio() async {
+  void _playPauseAudio() async {
     if (_isPlaying) {
-      await _audioPlayer.pause();
+      await audioController.pause();
     } else {
-      // Ganti dengan path file audio yang sesuai
-      await _audioPlayer.play(AssetSource('audios/kakiku_audio.mp3'));
+      await audioController.play(kakikuAudioModel.fileName);
     }
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
-  }
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
-    super.dispose();
   }
 
   @override

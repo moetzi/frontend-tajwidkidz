@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'babibu.dart';
-import 'package:audioplayers/audioplayers.dart'; // Import audioplayers package
+import 'babibu.dart'; // Make sure your imports are correct
+import '../model/audio_model.dart'; // Your AudioModel class file
+import '../controller/audio_controller.dart'; // Your AudioController class file
+import 'package:audioplayers/audioplayers.dart';
 
 class LearningAIUWidget extends StatefulWidget {
-  const LearningAIUWidget ({super.key});
+  const LearningAIUWidget({super.key});
 
   static String routeName = 'Learningaiu';
   static String routePath = '/learningaiu';
@@ -14,27 +16,49 @@ class LearningAIUWidget extends StatefulWidget {
   State<LearningAIUWidget> createState() => _LearningAIUWidgetState();
 }
 
-class _LearningAIUWidgetState extends State<LearningAIUWidget > {
+class _LearningAIUWidgetState extends State<LearningAIUWidget> {
   final TextEditingController _textController = TextEditingController();
   final FocusNode _textFieldFocusNode = FocusNode();
 
   int selectedIndex = 1; // Index for the BottomNavigationBar
-  final AudioPlayer _audioPlayer = AudioPlayer(); // Buat final karena tidak diubah
-  bool _isPlaying = false; // Track audio playing state
+  late final AudioModel aiuAudioModel;
+  late final AudioController audioController;
+  bool _isPlaying = false;
 
-  // Function to handle bottom navigation
+  @override
+  void initState() {
+    super.initState();
+
+    aiuAudioModel = AudioModel(label: 'AIU', fileName: 'Modul3/A I U.wav');
+    audioController = AudioController();
+
+    // Listen to player state and update _isPlaying
+    audioController.playerStateStream.listen((state) {
+      setState(() {
+        _isPlaying = state == PlayerState.playing;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _textFieldFocusNode.dispose();
+    // Dispose audioController here if needed
+    super.dispose();
+  }
+
   void onTabTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
 
-    // Navigate to the corresponding screen
     switch (index) {
       case 0:
         Navigator.pushNamed(context, '/home');
         break;
       case 1:
-      // current screen
+        // current screen
         break;
       case 2:
         Navigator.pushNamed(context, '/progress');
@@ -45,25 +69,12 @@ class _LearningAIUWidgetState extends State<LearningAIUWidget > {
     }
   }
 
-  @override
-  void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
-    super.dispose();
-  }
-
-  // Function to play/pause audio
   void _playPauseAudio() async {
     if (_isPlaying) {
-      await _audioPlayer.pause();
+      await audioController.pause();
     } else {
-      // Perbaiki penggunaan volume icon dan play AssetSource dengan path relatif benar
-      await _audioPlayer.play(AssetSource('audios/alif_1.wav'));
+      await audioController.play(aiuAudioModel.fileName);
     }
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
   }
 
   @override

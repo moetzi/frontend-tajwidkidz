@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'm2sukun.dart';
 import 'package:audioplayers/audioplayers.dart'; // Import audioplayers package
+import '../model/audio_model.dart'; // Your AudioModel class file
+import '../controller/audio_controller.dart'; // Your AudioController class file
 
 class LearningTasydidWidget extends StatefulWidget {
   const LearningTasydidWidget ({super.key});
@@ -19,22 +21,44 @@ class _LearningTasydidWidgetState extends State<LearningTasydidWidget > {
   final FocusNode _textFieldFocusNode = FocusNode();
 
   int selectedIndex = 1; // Index for the BottomNavigationBar
-  final AudioPlayer _audioPlayer = AudioPlayer(); // Buat final karena tidak diubah
-  bool _isPlaying = false; // Track audio playing state
+  late final AudioModel tasydidAudioModel;
+  late final AudioController audioController;
+  bool _isPlaying = false;
 
-  // Function to handle bottom navigation
+  @override
+  void initState() {
+    super.initState();
+
+    tasydidAudioModel = AudioModel(label: 'Tasydid', fileName: 'Modul2/Tasydid.wav');
+    audioController = AudioController();
+
+    // Listen to player state and update _isPlaying
+    audioController.playerStateStream.listen((state) {
+      setState(() {
+        _isPlaying = state == PlayerState.playing;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _textFieldFocusNode.dispose();
+    // Dispose audioController here if needed
+    super.dispose();
+  }
+
   void onTabTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
 
-    // Navigate to the corresponding screen
     switch (index) {
       case 0:
         Navigator.pushNamed(context, '/home');
         break;
       case 1:
-      // current screen
+        // current screen
         break;
       case 2:
         Navigator.pushNamed(context, '/progress');
@@ -45,25 +69,12 @@ class _LearningTasydidWidgetState extends State<LearningTasydidWidget > {
     }
   }
 
-  @override
-  void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
-    super.dispose();
-  }
-
-  // Function to play/pause audio
   void _playPauseAudio() async {
     if (_isPlaying) {
-      await _audioPlayer.pause();
+      await audioController.pause();
     } else {
-      // Perbaiki penggunaan volume icon dan play AssetSource dengan path relatif benar
-      await _audioPlayer.play(AssetSource('audios/alif_1.wav'));
+      await audioController.play(tasydidAudioModel.fileName);
     }
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
   }
 
   @override

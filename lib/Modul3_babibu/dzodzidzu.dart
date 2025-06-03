@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:audioplayers/audioplayers.dart'; // Pastikan sudah di pubspec.yaml
 import 'thothithu.dart';
 import 'ain_aiu.dart';
+import '../model/audio_model.dart'; // Your AudioModel class file
+import '../controller/audio_controller.dart'; // Your AudioController class file
 
 class LearningDzoDziDzuWidget extends StatefulWidget {
   const LearningDzoDziDzuWidget({super.key});
@@ -19,10 +21,33 @@ class _LearningDzoDziDzuWidgetState extends State<LearningDzoDziDzuWidget> {
   final TextEditingController _textController = TextEditingController();
   final FocusNode _textFieldFocusNode = FocusNode();
 
-  int selectedIndex = 1;
-
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+  late final AudioModel dzodzidzuAudioModel;
+  late final AudioController audioController;
   bool _isPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    dzodzidzuAudioModel = AudioModel(label: 'DZODZIDZU', fileName: 'Modul3/Dzho Dzhi Dzhi.wav');
+    audioController = AudioController();
+
+    // Listen to player state and update _isPlaying
+    audioController.playerStateStream.listen((state) {
+      setState(() {
+        _isPlaying = state == PlayerState.playing;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _textFieldFocusNode.dispose();
+    // Dispose audioController here if needed
+    super.dispose();
+  }
 
   void onTabTapped(int index) {
     setState(() {
@@ -34,7 +59,7 @@ class _LearningDzoDziDzuWidgetState extends State<LearningDzoDziDzuWidget> {
         Navigator.pushNamed(context, '/home');
         break;
       case 1:
-      // current screen
+        // current screen
         break;
       case 2:
         Navigator.pushNamed(context, '/progress');
@@ -45,23 +70,12 @@ class _LearningDzoDziDzuWidgetState extends State<LearningDzoDziDzuWidget> {
     }
   }
 
-  Future<void> _playPauseAudio() async {
+  void _playPauseAudio() async {
     if (_isPlaying) {
-      await _audioPlayer.pause();
+      await audioController.pause();
     } else {
-      await _audioPlayer.play(AssetSource('audios/dzodzidzu_audio.mp3')); // Sesuaikan path audio Anda
+      await audioController.play(dzodzidzuAudioModel.fileName);
     }
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
-  }
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
-    super.dispose();
   }
 
   @override

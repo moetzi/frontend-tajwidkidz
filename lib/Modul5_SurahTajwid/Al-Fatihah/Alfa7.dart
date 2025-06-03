@@ -3,6 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'alfa6.dart';
 import 'package:audioplayers/audioplayers.dart';
+import '/model/audio_model.dart'; // Your AudioModel class file
+import '/controller/audio_controller.dart'; // Your AudioController class file
+import '/controller/audio_record_controller.dart';
 
 class LearningAlfatihah7Widget extends StatefulWidget {
   const LearningAlfatihah7Widget({super.key});
@@ -17,43 +20,65 @@ class LearningAlfatihah7Widget extends StatefulWidget {
 class _LearningAlfatihah7WidgetState extends State<LearningAlfatihah7Widget> {
   final TextEditingController _textController1 = TextEditingController();
   final FocusNode _textFieldFocusNode1 = FocusNode();
+  final AudioRecordController _recordController = AudioRecordController();
+  bool isRecording = false;
+  AudioModel? currentAudio;
 
-  int selectedIndex = 1;
-
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+  late final AudioModel alfa7AudioModel;
+  late final AudioController audioController;
   bool _isPlaying = false;
 
   @override
   void initState() {
     super.initState();
-    _audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
+
+    alfa7AudioModel = AudioModel(label: 'Alfa7', fileName: 'Modul5/Al-Fatihah/Ayat 7.wav');
+    audioController = AudioController();
+
+    // Listen to player state and update _isPlaying
+    audioController.playerStateStream.listen((state) {
       setState(() {
-        _isPlaying = (state == PlayerState.playing);
+        _isPlaying = state == PlayerState.playing;
       });
     });
-  }
-
-  void onTabTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-    // Anda bisa sesuaikan navigasi bottom nav jika dipakai
-  }
-
-  void _playPauseAudio() async {
-    if (_isPlaying) {
-      await _audioPlayer.pause();
-    } else {
-      await _audioPlayer.play(AssetSource('audios/alfatihah_1.wav')); // Ganti sesuai path file Anda
-    }
   }
 
   @override
   void dispose() {
     _textController1.dispose();
     _textFieldFocusNode1.dispose();
-    _audioPlayer.dispose();
+    // Dispose audioController here if needed
     super.dispose();
+  }
+
+  void onTabTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, '/home');
+        break;
+      case 1:
+        // current screen
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/progress');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/account');
+        break;
+    }
+  }
+
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await audioController.pause();
+    } else {
+      await audioController.play(alfa7AudioModel.fileName);
+    }
   }
 
   @override
@@ -163,9 +188,33 @@ class _LearningAlfatihah7WidgetState extends State<LearningAlfatihah7Widget> {
                 Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.mic_sharp, size: 30, color: Colors.black),
-                      onPressed: () {
-                        // Bisa tambah fungsional mic
+                      icon: Icon(
+                        isRecording ? Icons.stop : Icons.mic_sharp,
+                        size: 30,
+                        color: Colors.black,
+                      ),
+                      onPressed: () async {
+                        if (!isRecording) {
+                          final recorded = await _recordController.startRecording();
+                          if (recorded != null) {
+                            setState(() {
+                              currentAudio = recorded;
+                              isRecording = true;
+                            });
+                          }
+                        } else if (currentAudio != null) {
+                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5');
+                          if (url != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Uploaded! Link: $url')),
+                          );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Upload failed')),
+                            );
+                          }
+                          setState(() => isRecording = false);
+                        }
                       },
                     ),
                     const SizedBox(width: 10),
