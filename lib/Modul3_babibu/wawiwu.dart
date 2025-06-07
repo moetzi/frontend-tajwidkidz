@@ -174,7 +174,7 @@ class _LearningWaWiWuWidgetState extends State<LearningWaWiWuWidget>  {
 
                 Container(
                   width: MediaQuery.sizeOf(context).width * 0.9,
-                  height: 340,
+                  height: 320,
                   decoration: const BoxDecoration(color: Colors.white),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),

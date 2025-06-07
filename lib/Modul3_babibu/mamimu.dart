@@ -174,7 +174,7 @@ class _LearningMaMiMuWidgetState extends State<LearningMaMiMuWidget>  {
 
                 Container(
                   width: MediaQuery.sizeOf(context).width * 0.9,
-                  height: 330,
+                  height: 310,
                   decoration: const BoxDecoration(color: Colors.white),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
