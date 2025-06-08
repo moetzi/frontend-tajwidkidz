@@ -69,12 +69,11 @@ class _LearningYaWidgetState extends State<LearningYaWidget> {
                       ),
                       IconButton(
                         icon: FaIcon(
-                          FontAwesomeIcons.volumeUp,
+                          FontAwesomeIcons.volumeHigh,
                           color: Colors.black,
                           size: 30,
                         ),
                         onPressed: () {
-                          print('Play audio');
                           // TODO: Add play audio functionality here
                         },
                       ),
@@ -132,7 +131,6 @@ class _LearningYaWidgetState extends State<LearningYaWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          print('Fast Forward button pressed');
                         },
                       ),
                     ],
@@ -168,7 +166,6 @@ class _LearningYaWidgetState extends State<LearningYaWidget> {
                           size: 30,
                         ),
                         onPressed: () {
-                          print('Mic button pressed');
                         },
                       ),
                       Padding(
@@ -196,7 +193,7 @@ class _LearningYaWidgetState extends State<LearningYaWidget> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200,
                           child: TextFormField(
                             controller: _textController,
@@ -259,7 +256,7 @@ class _LearningYaWidgetState extends State<LearningYaWidget> {
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
               label: 'Home',
             ),
             BottomNavigationBarItem(

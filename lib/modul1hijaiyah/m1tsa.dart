@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'm1ta.dart';  // Import LearningBaWidget for previous level (fast rewind)
 import 'm1jim.dart';  // Import LearningJaWidget for next level (fast forward)
-import 'package:audioplayers/audioplayers.dart';
 
 class LearningTsaWidget extends StatefulWidget {
   const LearningTsaWidget({super.key});
@@ -71,12 +70,11 @@ class _LearningTsaWidgetState extends State<LearningTsaWidget> {
                       ),
                       IconButton(
                         icon: FaIcon(
-                          FontAwesomeIcons.volumeUp,
+                          FontAwesomeIcons.volumeHigh,
                           color: Colors.black,
                           size: 30,
                         ),
                         onPressed: () {
-                          print('Play audio');
                           // TODO: Add play audio functionality here
                         },
                       ),
@@ -179,7 +177,6 @@ class _LearningTsaWidgetState extends State<LearningTsaWidget> {
                           size: 30,
                         ),
                         onPressed: () {
-                          print('Mic button pressed');
                         },
                       ),
                       Padding(
@@ -207,7 +204,7 @@ class _LearningTsaWidgetState extends State<LearningTsaWidget> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200,
                           child: TextFormField(
                             controller: _textController,
@@ -270,7 +267,7 @@ class _LearningTsaWidgetState extends State<LearningTsaWidget> {
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
               label: 'Home',
             ),
             BottomNavigationBarItem(
