@@ -105,6 +105,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/hijaiyah/
     - assets/audios/
 #    - assets/videos/
 #    - assets/audios/

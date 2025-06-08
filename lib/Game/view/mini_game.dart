@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/Game/view/game_tajwid.dart';
-import 'package:untitled/Game/view/susun_huruf_game.dart';
-import 'package:untitled/Game/view/tebak_huruf_game.dart';
+import 'package:untitled/Game/view/game%20tajwid/game_tajwid.dart';
+import 'package:untitled/Game/view/susun%20huruf/susun_huruf_game.dart';
+import 'package:untitled/Game/view/tebak%20huruf/tebak_huruf_game.dart';
+import 'package:untitled/Game/view/tebak%20huruf/tebak_huruf_game_2.dart';
+import 'package:untitled/Game/view/tebak%20huruf/tebak_huruf_level_screen.dart';
 import 'package:untitled/Game/widgets/game_card.dart';
 
 class MiniGameWidget extends StatelessWidget {
@@ -84,7 +86,7 @@ class MiniGameWidget extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => const TebakHurufGame()),
+                      MaterialPageRoute(builder: (_) => TebakHurufLevelScreen()),
                     );
                   },
                 ),

@@ -3,12 +3,51 @@ class HijaiyahQuestion {
   final String word;
   final String correctAnswer;
   final List<String> options;
+  final String? notes;
+  final String? correctImagePath;
 
   HijaiyahQuestion({
     required this.text,
     required this.word,
     required this.correctAnswer,
     required this.options,
+    this.notes,
+    this.correctImagePath,
+  });
+}
+
+enum QuestionType {
+  listenAndChooseText,
+  seeAndChooseAudio,
+}
+
+class HijaiyahQuestion2 {
+  final QuestionType type;
+  final String text; // Teks instruksi
+  
+  // Untuk stimulus/soal
+  final String? questionWord; // Kata yg diucapkan ATAU ditampilkan. Cth: "fa" atau "ج"
+  final String? questionImagePath; // Gambar yg ditampilkan sbg soal
+  final String? questionNotes; // Catatan yg ditampilkan sbg soal
+
+  // Untuk opsi & jawaban
+  final List<String> options;
+  final String correctAnswer;
+
+  // Untuk feedback (setelah menjawab benar)
+  final String? feedbackImagePath;
+  final String? feedbackNotes;
+
+  HijaiyahQuestion2({
+    required this.type,
+    required this.text,
+    required this.options,
+    required this.correctAnswer,
+    this.questionWord,
+    this.questionImagePath,
+    this.questionNotes,
+    this.feedbackImagePath,
+    this.feedbackNotes,
   });
 }
 

@@ -1,6 +1,8 @@
+// tebak_huruf_viewmodel.dart
+import 'dart:math'; // Untuk Random
 import 'package:flutter/material.dart';
-import 'package:untitled/Game/data/tebak_huruf_question.dart';
-import '../models/question_model.dart';
+import 'package:untitled/Game/data/tebak_huruf_question.dart'; // sesuaikan path jika beda
+import '../models/question_model.dart'; // sesuaikan path jika beda
 
 class QuestionAnswerTebak {
   String? selectedAnswer;
@@ -23,101 +25,114 @@ class QuestionAnswerTebak {
 }
 
 class TebakHurufViewmodel extends ChangeNotifier {
-  final List<HijaiyahQuestion> _questions = tebakHurufQuestions;
+  final List<HijaiyahQuestion> _allQuestions = List.from(tebakHurufQuestions); // Salinan dari semua soal
+  List<HijaiyahQuestion> _questionsForGame = []; // 10 soal yang dipilih untuk game saat ini
+
   int _currentIndex = 0;
   int _score = 0;
   int _correctAnswers = 0;
   String? _selectedAnswer;
   bool _isFinished = false;
-  final Set<int> _answeredQuestions = {};
+  // Set<int> _answeredQuestions = {}; // Tidak lagi menggunakan Set ini dengan cara lama
+                                      // karena index merujuk ke _questionsForGame
 
-  // Store answers for each question
   final Map<int, QuestionAnswerTebak> _questionAnswers = {};
 
-  VoidCallback? onGameFinished;
+  VoidCallback? onGameFinishedCallback; // Mengganti nama agar lebih jelas
 
-  List<HijaiyahQuestion> get questions => _questions;
+  TebakHurufViewmodel() {
+    _initializeGameQuestions();
+  }
+
+  void _initializeGameQuestions() {
+    final random = Random();
+    _allQuestions.shuffle(random); // Acak semua pertanyaan
+    // Ambil 10 pertanyaan pertama, atau kurang jika total pertanyaan < 10
+    _questionsForGame = _allQuestions.take(10).toList();
+    // Pastikan _loadAnswerForQuestion dipanggil setelah _questionsForGame diinisialisasi
+    // dan _currentIndex adalah 0
+    _loadAnswerForQuestion(_currentIndex); 
+  }
+
+  List<HijaiyahQuestion> get questions => _questionsForGame;
   int get currentIndex => _currentIndex;
   int get score => _score;
   int get correctAnswers => _correctAnswers;
-  String? get selectedAnswer => _selectedAnswer;
-  bool get isAnswered => _selectedAnswer != null;
+  String? get selectedAnswer => _questionAnswers[_currentIndex]?.selectedAnswer; // Ambil dari map
+  bool get isAnswered => _questionAnswers[_currentIndex]?.isAnswered ?? false; // Ambil dari map
   bool get isFinished => _isFinished;
-  bool get isQuestionAnswered => _answeredQuestions.contains(_currentIndex);
-  HijaiyahQuestion get currentQuestion => _questions[_currentIndex];
+  // bool get isQuestionAnswered => _answeredQuestions.contains(_currentIndex); // Tidak dipakai lagi
+  HijaiyahQuestion get currentQuestion => _questionsForGame[_currentIndex];
+
 
   void answer(String option) {
-    if (isQuestionAnswered) return; // Prevent re-answering
+    // Cek apakah pertanyaan saat ini sudah dijawab sebelumnya berdasarkan _questionAnswers
+    if (_questionAnswers[_currentIndex]?.isAnswered ?? false) return;
 
-    _selectedAnswer = option;
-    _answeredQuestions.add(_currentIndex);
+    // Simpan jawaban baru
+    _questionAnswers[_currentIndex] = QuestionAnswerTebak(
+        selectedAnswer: option,
+        isAnswered: true,
+    );
+    // _selectedAnswer = option; // Tidak lagi langsung set _selectedAnswer
+    // _answeredQuestions.add(_currentIndex); // Tidak lagi menggunakan _answeredQuestions
 
     if (option == currentQuestion.correctAnswer) {
       _score += 10;
       _correctAnswers++;
     }
-
     notifyListeners();
   }
 
-  void _saveCurrentAnswer() {
-    _questionAnswers[_currentIndex] = QuestionAnswerTebak(
-      selectedAnswer: _selectedAnswer,
-      isAnswered: _selectedAnswer != null,
-    );
-  }
+  // _saveCurrentAnswer tidak lagi diperlukan secara eksplisit karena _questionAnswers diupdate di 'answer'
+  // dan saat navigasi, kita akan load dari _questionAnswers
 
   void _loadAnswerForQuestion(int questionIndex) {
-    if (_questionAnswers.containsKey(questionIndex)) {
-      final savedAnswer = _questionAnswers[questionIndex]!;
-      _selectedAnswer = savedAnswer.selectedAnswer;
-    } else {
-      // Clear state for unanswered question
-      _selectedAnswer = null;
-    }
+    // Tidak perlu set _selectedAnswer di sini lagi, karena getter akan mengambil dari map
+    // Jika belum ada di map (pertanyaan baru), getter akan return null/false
+    // yang merupakan kondisi default yang benar.
+    // _selectedAnswer = _questionAnswers[questionIndex]?.selectedAnswer;
+    // Ini memastikan UI rebuild dengan state yang benar untuk pertanyaan yang baru ditampilkan.
+    notifyListeners(); 
   }
 
   void nextQuestion() {
-    // Save current answer before moving to next question
-    if (_selectedAnswer != null) {
-      _saveCurrentAnswer();
-    }
+    // Tidak perlu _saveCurrentAnswer() karena sudah dihandle di answer()
+    // Dan saat navigasi, state sudah ada di _questionAnswers
 
-    if (_currentIndex < _questions.length - 1) {
+    if (_currentIndex < _questionsForGame.length - 1) {
       _currentIndex++;
-      _loadAnswerForQuestion(_currentIndex);
-      notifyListeners();
+      _loadAnswerForQuestion(_currentIndex); // Untuk memastikan UI update jika ada state tersimpan
+      // notifyListeners(); // _loadAnswerForQuestion sudah memanggil notifyListeners
     } else {
       _isFinished = true;
-      onGameFinished?.call();
+      onGameFinishedCallback?.call();
     }
   }
 
   void previousQuestion() {
     if (_currentIndex > 0) {
-      // Save current answer before moving to previous question
-      if (_selectedAnswer != null) {
-        _saveCurrentAnswer();
-      }
-
+      // Tidak perlu _saveCurrentAnswer()
       _currentIndex--;
       _loadAnswerForQuestion(_currentIndex);
-      notifyListeners();
+      // notifyListeners(); // _loadAnswerForQuestion sudah memanggil notifyListeners
     }
   }
 
   void resetGame() {
+    _initializeGameQuestions(); // Pilih 10 soal baru secara acak
     _currentIndex = 0;
     _score = 0;
     _correctAnswers = 0;
-    _selectedAnswer = null;
+    // _selectedAnswer = null; // Tidak perlu karena state diambil dari _questionAnswers
     _isFinished = false;
-    _answeredQuestions.clear();
-    _questionAnswers.clear();
+    // _answeredQuestions.clear(); // Tidak dipakai
+    _questionAnswers.clear(); // Hapus semua jawaban tersimpan
+    _loadAnswerForQuestion(_currentIndex); // Load state untuk pertanyaan pertama yang baru
     notifyListeners();
   }
 
   void setOnGameFinished(VoidCallback callback) {
-    onGameFinished = callback;
+    onGameFinishedCallback = callback;
   }
 }
