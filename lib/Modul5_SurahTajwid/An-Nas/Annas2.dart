@@ -179,7 +179,7 @@ class _LearningAnnas2WidgetState extends State<LearningAnnas2Widget > {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.asset(
-                      'assets/images/An-nas 1.png',
+                      'assets/images/An-nas 2.png',
                       width: width * 0.8,
                       height: height * 0.44,
                       fit: BoxFit.cover,
