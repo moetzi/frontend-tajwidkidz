@@ -7,6 +7,8 @@ import 'package:untitled/Game/view/tebak%20huruf/tebak_huruf_level_screen.dart';
 import 'package:untitled/Game/widgets/game_card.dart';
 
 class MiniGameWidget extends StatelessWidget {
+  const MiniGameWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

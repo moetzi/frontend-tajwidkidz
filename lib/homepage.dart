@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:untitled/account.dart';
 import 'learning.dart'; // Import halaman LearningWidget
 import 'minigame.dart'; // Import halaman MiniGame
 import 'leaderboard.dart'; // Import halaman Leaderboard
-import 'Progress.dart'; // Import halaman ProgressPage
+import 'progress.dart'; // Import halaman ProgressPage
 
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({super.key});
@@ -34,11 +35,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       case 1: // Learning
         return LearningWidget();
       case 2: // Mini Game
-        return MiniGameWidget(); // Halaman MiniGame
+        return ProgressPageWidget(); // Halaman MiniGame
       case 3: // Leaderboard
-        return LeaderboardWidget(); // Halaman Leaderboard
+        return AccountWidget(); // Halaman Leaderboard
       case 4: // Progress
-        return ProgressPageWidget(); // Halaman Progress Saya
+        return LearningWidget(); // Halaman Progress Saya
       default:
         return buildHomePage(); // Default ke Home
     }
@@ -127,7 +128,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             size: 24,
                           ),
                           FaIcon(
-                            FontAwesomeIcons.quran,
+                            FontAwesomeIcons.bookQuran,
                             color: Color(0xFF037A16),
                             size: 60,
                           ),
@@ -268,7 +269,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LeaderboardWidget(),
+                          builder: (context) => LeaderboardApp(),
                         ),
                       );
                     },
@@ -348,7 +349,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
               label: 'Home',
             ),
             BottomNavigationBarItem(

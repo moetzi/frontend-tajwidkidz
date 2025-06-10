@@ -72,12 +72,11 @@ class _LearningDzalWidgetState extends State<LearningDzalWidget> {
                       // Volume Button - for playing audio
                       IconButton(
                         icon: FaIcon(
-                          FontAwesomeIcons.volumeUp,
+                          FontAwesomeIcons.volumeHigh,
                           color: Colors.black,
                           size: 30,
                         ),
                         onPressed: () {
-                          print('Play audio');
                           // TODO: Add play audio functionality here
                         },
                       ),
@@ -178,7 +177,6 @@ class _LearningDzalWidgetState extends State<LearningDzalWidget> {
                           size: 30,
                         ),
                         onPressed: () {
-                          print('Mic button pressed');
                         },
                       ),
                       Padding(
@@ -206,7 +204,7 @@ class _LearningDzalWidgetState extends State<LearningDzalWidget> {
                         ),
                       ),
                       Expanded(
-                        child: Container(
+                        child: SizedBox(
                           width: 200,
                           child: TextFormField(
                             controller: _textController,
@@ -269,7 +267,7 @@ class _LearningDzalWidgetState extends State<LearningDzalWidget> {
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
               label: 'Home',
             ),
             BottomNavigationBarItem(
