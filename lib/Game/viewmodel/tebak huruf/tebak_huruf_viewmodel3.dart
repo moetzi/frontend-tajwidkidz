@@ -3,25 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:untitled/Game/data/tebak_huruf_question.dart';
 import 'package:untitled/Game/models/question_model.dart';
 
-class QuestionAnswerTebak2 {
+class QuestionAnswerTebak3 {
   String? selectedAnswer;
   bool isAnswered;
 
-  QuestionAnswerTebak2({
+  QuestionAnswerTebak3({
     this.selectedAnswer,
     this.isAnswered = false,
   });
 }
 
-class TebakHurufViewmodel2 extends ChangeNotifier {
-  final List<HijaiyahQuestion2> _allQuestions = List.from(tebakHurufQuestions2);
+class TebakHurufViewmodel3 extends ChangeNotifier {
+  final List<HijaiyahQuestion2> _allQuestions = List.from(tebakHurufQuestions3);
   List<HijaiyahQuestion2> _questionsForGame = [];
 
   int _currentIndex = 0;
   int _score = 0;
   int _correctAnswers = 0;
   bool _isFinished = false;
-  final Map<int, QuestionAnswerTebak2> _questionAnswers = {};
+  final Map<int, QuestionAnswerTebak3> _questionAnswers = {};
   VoidCallback? onGameFinishedCallback;
 
   // --- PERUBAHAN 1: Tambahkan state untuk pilihan sementara ---
@@ -29,14 +29,12 @@ class TebakHurufViewmodel2 extends ChangeNotifier {
   String? get tentativeSelectedAnswer => _tentativeSelectedAnswer;
   // -----------------------------------------------------------
 
-  TebakHurufViewmodel2() {
+  TebakHurufViewmodel3() {
     _initializeGameQuestions();
   }
 
   void _initializeGameQuestions() {
-    final random = Random();
-    _allQuestions.shuffle(random);
-    _questionsForGame = _allQuestions.take(10).toList();
+    _questionsForGame = _allQuestions.take(20).toList();
     _loadAnswerForQuestion(_currentIndex);
   }
 
@@ -68,7 +66,7 @@ class TebakHurufViewmodel2 extends ChangeNotifier {
     // Jika tidak ada jawaban yang bisa dikunci, jangan lakukan apa-apa
     if (finalAnswer == null) return;
 
-    _questionAnswers[_currentIndex] = QuestionAnswerTebak2(
+    _questionAnswers[_currentIndex] = QuestionAnswerTebak3(
         selectedAnswer: finalAnswer,
         isAnswered: true,
     );

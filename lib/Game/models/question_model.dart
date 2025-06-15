@@ -87,3 +87,31 @@ class TajwidQuestion {
   });
 }
 
+class TajwidLevel2Question {
+  // Nama hukum tajwid, e.g., "Imālah"
+  final String ruleName;
+  
+  // Ayat lengkap dengan tanda kutip " " untuk highlight
+  final String verse;
+  
+  // Contoh bacaan yang benar (untuk TTS)
+  final String audioExample;
+  
+  // Teks yang akan dibandingkan dengan hasil rekaman suara pengguna
+  final String correctAnswer;
+  
+  // Feedback jika ucapan pengguna benar
+  final String positiveFeedback;
+  
+  // Feedback jika ucapan pengguna salah
+  final String correctiveFeedback;
+
+  TajwidLevel2Question({
+    required this.ruleName,
+    required this.verse,
+    required this.audioExample,
+    required this.correctAnswer,
+    required this.positiveFeedback,
+    required this.correctiveFeedback,
+  });
+}

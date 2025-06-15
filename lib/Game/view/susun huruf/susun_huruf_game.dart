@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/Game/view/result_screen.dart';
-import 'package:untitled/Game/viewmodel/susun_huruf_viewmodel.dart';
+import 'package:untitled/Game/viewmodel/susun%20huruf/susun_huruf_viewmodel.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class SusunHurufGame extends StatelessWidget {
@@ -105,7 +105,7 @@ class SusunHurufGame extends StatelessWidget {
                                     Container(
                                       padding: const EdgeInsets.only(left: 22),
                                       alignment: Alignment.centerLeft,
-                                      width: containerWidth * 0.65,
+                                      width: containerWidth * 0.55,
                                       height: 95,
                                       decoration: BoxDecoration(
                                         color: const Color.fromARGB(255, 165, 214, 167),
