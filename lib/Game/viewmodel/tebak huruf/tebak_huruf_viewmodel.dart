@@ -2,7 +2,7 @@
 import 'dart:math'; // Untuk Random
 import 'package:flutter/material.dart';
 import 'package:untitled/Game/data/tebak_huruf_question.dart'; // sesuaikan path jika beda
-import '../models/question_model.dart'; // sesuaikan path jika beda
+import '../../models/question_model.dart'; // sesuaikan path jika beda
 
 class QuestionAnswerTebak {
   String? selectedAnswer;

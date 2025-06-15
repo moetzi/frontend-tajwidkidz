@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/Game/data/susun_huruf_question.dart';
-import '../models/question_model.dart';
+import '../../models/question_model.dart';
 
 class QuestionAnswer {
   List<String> userAnswer;
@@ -34,8 +34,8 @@ class QuestionAnswer {
   }
 }
 
-class SusunHurufViewmodel extends ChangeNotifier {
-  final List<HijaiyahQuestion> _questions = susunHurufQuestions;
+class SusunHurufViewmodel3 extends ChangeNotifier {
+  final List<HijaiyahQuestion> _questions = susunHurufQuestions3;
   int _currentQuestionIndex = 0;
   int _score = 0;
   int correctAnswers = 0;
