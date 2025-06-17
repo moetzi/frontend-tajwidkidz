@@ -160,7 +160,7 @@ class _LearningAlfalaq4WidgetState extends State<LearningAlfalaq4Widget> {
 
                   Container(
                     width: width * 0.9,
-                    height: 750,
+                    height: 770,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),

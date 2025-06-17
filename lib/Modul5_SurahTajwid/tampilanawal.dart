@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // Pastikan import semua home widget berikut dengan benar
@@ -48,53 +47,52 @@ class _LearningtampilanSplashWidgetState
         key: scaffoldKey,
         backgroundColor: const Color(0xFFFAFDCB),
         body: SafeArea(
-          top: true,
+          top: false, // Set top: false to make the header extend fully to the top
           child: SingleChildScrollView(
             child: Container(
               width: MediaQuery.of(context).size.width,
               color: const Color(0xFFFAFDCB),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(
-                            Icons.arrow_back_ios_rounded,
-                            color: Colors.black,
-                            size: 30,
+                  // === HEADER with dark green background that reaches the top ===
+                  Container(
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.15, // height is reduced to be shorter
+                    color: const Color(0xFF037A16), // Dark green background for header (same as Al-Kausar)
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back_ios_rounded,
+                              color: Colors.black,
+                              size: 30,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                           ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                        const Spacer(),
-                        IconButton(
-                          icon: const FaIcon(
-                            FontAwesomeIcons.volumeHigh,
-                            color: Colors.black,
-                            size: 30,
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              'Level 5 : Belajar Membaca\nSurah dengan Tajwid',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.inter(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                                color: Colors.black,
+                              ),
+                            ),
                           ),
-                          onPressed: () {
-                            // TODO: Volume button action
-                          },
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Column(
                       children: [
-                        Text(
-                          'Level 5 : Belajar Membaca\nSurah dengan Tajwid',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
                         Padding(
                           padding: const EdgeInsets.all(10),
                           child: Text(
@@ -133,13 +131,19 @@ class _LearningtampilanSplashWidgetState
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: Text(
-                            '1. Surah Al - Fatihah',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.book, color: Colors.black),
+                              const SizedBox(width: 10),
+                              Text(
+                                '1. Surah Al - Fatihah',
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -148,7 +152,8 @@ class _LearningtampilanSplashWidgetState
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const LearningAnnasHomeWidget(),
+                                builder: (context) =>
+                                const LearningAnnasHomeWidget(),
                               ),
                             );
                           },
@@ -160,13 +165,19 @@ class _LearningtampilanSplashWidgetState
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: Text(
-                            '2. Surah An - Nas',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.book, color: Colors.black),
+                              const SizedBox(width: 10),
+                              Text(
+                                '2. Surah An - Nas',
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -188,13 +199,19 @@ class _LearningtampilanSplashWidgetState
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: Text(
-                            '3. Surah Al - Ikhlas',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.book, color: Colors.black),
+                              const SizedBox(width: 10),
+                              Text(
+                                '3. Surah Al - Ikhlas',
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -216,13 +233,19 @@ class _LearningtampilanSplashWidgetState
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: Text(
-                            '4. Surah Al - Falaq',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.book, color: Colors.black),
+                              const SizedBox(width: 10),
+                              Text(
+                                '4. Surah Al - Falaq',
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -244,13 +267,19 @@ class _LearningtampilanSplashWidgetState
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: Text(
-                            '5. Surah Al - Kausar',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.book, color: Colors.black),
+                              const SizedBox(width: 10),
+                              Text(
+                                '5. Surah Al - Kausar',
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -272,13 +301,19 @@ class _LearningtampilanSplashWidgetState
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: Text(
-                            '6. Surah Al - Kafirun',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.book, color: Colors.black),
+                              const SizedBox(width: 10),
+                              Text(
+                                '6. Surah Al - Kafirun',
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -300,13 +335,19 @@ class _LearningtampilanSplashWidgetState
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: Text(
-                            '7. Surah Quraisy',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.book, color: Colors.black),
+                              const SizedBox(width: 10),
+                              Text(
+                                '7. Surah Quraisy',
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -328,13 +369,19 @@ class _LearningtampilanSplashWidgetState
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: Text(
-                            '8. Surah An - Nasr',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.book, color: Colors.black),
+                              const SizedBox(width: 10),
+                              Text(
+                                '8. Surah An - Nasr',
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -356,13 +403,19 @@ class _LearningtampilanSplashWidgetState
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: Text(
-                            '9. Surah Al-Asr',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.book, color: Colors.black),
+                              const SizedBox(width: 10),
+                              Text(
+                                '9. Surah Al-Asr',
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -384,13 +437,19 @@ class _LearningtampilanSplashWidgetState
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: Text(
-                            '10. Surah Al - Lahab',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.book, color: Colors.black),
+                              const SizedBox(width: 10),
+                              Text(
+                                '10. Surah Al - Lahab',
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 30),

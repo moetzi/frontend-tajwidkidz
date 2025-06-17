@@ -142,7 +142,7 @@ class _LearningAlkausar1WidgetState extends State<LearningAlkausar1Widget > {
 
                 Container(
                   width: width * 0.9,
-                  height: 850,
+                  height: 900,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8),

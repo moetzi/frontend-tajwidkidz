@@ -142,7 +142,7 @@ class _LearningAlfatihah7WidgetState extends State<LearningAlfatihah7Widget> {
 
                 Container(
                   width: width * 0.9,
-                  height: 1200,
+                  height: 1300,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8),

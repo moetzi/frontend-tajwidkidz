@@ -141,7 +141,7 @@ class _LearningAlikhlas4WidgetState extends State<LearningAlikhlas4Widget> {
 
                 Container(
                   width: width * 0.9,
-                  height: height * 0.90,
+                  height: height * 0.85,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8),

@@ -144,7 +144,7 @@ class _LearningAlfatihah5WidgetState extends State<LearningAlfatihah5Widget> {
                 // Image container
                 Container(
                   width: size.width * 0.94,
-                  height: 650,
+                  height: 680,
                   decoration: BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.circular(8),

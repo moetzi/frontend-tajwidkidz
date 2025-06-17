@@ -169,7 +169,7 @@ class _LearningAlfalaq2WidgetState extends State<LearningAlfalaq2Widget> {
                       child: Image.asset(
                         'assets/images/Al-falaq2.png',
                         width: width * 0.9,
-                        height: 500,
+                        height: 550,
                         fit: BoxFit.cover,
                       ),
                     ),

@@ -1,39 +1,205 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:audioplayers/audioplayers.dart';
 
-class LearningAlikhlasfullWidget extends StatefulWidget {
-  const LearningAlikhlasfullWidget ({super.key});
+class LearningAlIkhlasFullWidget extends StatefulWidget {
+  const LearningAlIkhlasFullWidget({super.key});
 
-  static String routeName = 'Learningal_ikhlas';
-  static String routePath = '/learningal_ikhlas';
+  static String routeName = 'LearningAlIkhlas';
+  static String routePath = '/learningAlIkhlas';
 
   @override
-  State<LearningAlikhlasfullWidget > createState() =>
-      _LearningAlikhlasfullWidgetState();
+  State<LearningAlIkhlasFullWidget> createState() =>
+      _LearningAlIkhlasFullWidgetState();
 }
 
-class _LearningAlikhlasfullWidgetState
-    extends State<LearningAlikhlasfullWidget > {
-  final TextEditingController _textController = TextEditingController();
-  final FocusNode _textFieldFocusNode = FocusNode();
-
-  int selectedIndex = 1; // Index for the BottomNavigationBar
-
-  // Function to handle bottom navigation
-  void onTabTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
-
+class _LearningAlIkhlasFullWidgetState
+    extends State<LearningAlIkhlasFullWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  bool _isPlaying = false;
+
+  // Tap recognizers
+  late TapGestureRecognizer _allahRecognizer;
+  late TapGestureRecognizer _ahadRecognizer;
+  late TapGestureRecognizer _allah2Recognizer;
+  late TapGestureRecognizer _shamadRecognizer;
+  late TapGestureRecognizer _dalShamadRecognizer;
+  late TapGestureRecognizer _lamYalidRecognizer;
+  late TapGestureRecognizer _dalYalidRecognizer;
+  late TapGestureRecognizer _lamYuuRecognizer;
+  late TapGestureRecognizer _dalYuuRecognizer;
+  late TapGestureRecognizer _lamYakunRecognizer;
+  late TapGestureRecognizer _lahuRecognizer;
+  late TapGestureRecognizer _kufuwanRecognizer;
+  late TapGestureRecognizer _ahad4Recognizer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _allahRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'اللّٰهُ',
+          arti: 'Allah',
+          hukum: 'Lam Jalalah Tafkhim',
+          caraBaca: 'Dibaca ditebalkan.',
+        );
+      };
+    _ahadRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'اَحَدٌۚ',
+          arti: 'Yang Maha Esa',
+          hukum: 'Qalqalah Kubra',
+          caraBaca: 'Dibaca jelas dan mantul.',
+        );
+      };
+    _allah2Recognizer = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'اللّٰهُ',
+          arti: 'Allah',
+          hukum: 'Lam Jalalah Tafkhim',
+          caraBaca: 'Dibaca ditebalkan.',
+        );
+      };
+    _shamadRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'الصَّمَدُ',
+          arti: 'Tempat bergantung',
+          hukum: 'Alif Lam Syamsiyah',
+          caraBaca: 'Masuk ke ص.',
+        );
+      };
+    _dalShamadRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'الصَّمَدُ',
+          arti: 'Tempat bergantung',
+          hukum: 'Qalqalah Kubra',
+          caraBaca: 'Dibaca mantul.',
+        );
+      };
+    _lamYalidRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'لَمْ يَلِدْ',
+          arti: 'Tidak beranak',
+          hukum: 'Idhar Safawi',
+          caraBaca: 'Mim mati bertemu Ya.',
+        );
+      };
+    _dalYalidRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'يَلِدْ',
+          arti: 'Beranak',
+          hukum: 'Qalqalah Sugra',
+          caraBaca: 'Mantul pelan.',
+        );
+      };
+    _lamYuuRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'وَلَمْ يُو',
+          arti: 'Tidak dilahirkan',
+          hukum: 'Idhar Safawi',
+          caraBaca: 'Mim mati bertemu Ya.',
+        );
+      };
+    _dalYuuRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'يُوْلَدْ',
+          arti: 'Dilahirkan',
+          hukum: 'Qalqalah Kubra',
+          caraBaca: 'Mantul di akhir.',
+        );
+      };
+    _lamYakunRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'وَلَمْ يَكُنْ',
+          arti: 'Dan tidak ada',
+          hukum: 'Idhar Safawi',
+          caraBaca: 'Mim mati bertemu Ya.',
+        );
+      };
+    _lahuRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'لَهُ',
+          arti: 'Bagi-Nya',
+          hukum: 'Mad Shilah Qashirah',
+          caraBaca: 'Panjang 2 harakat.',
+        );
+      };
+    _kufuwanRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'كُفُوًا أَ',
+          arti: 'Yang setara',
+          hukum: 'Idhar Halqi',
+          caraBaca: 'Fathah tain bertemu Alif.',
+        );
+      };
+    _ahad4Recognizer = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'أَحَدٌ',
+          arti: 'Satu',
+          hukum: 'Qalqalah Kubra',
+          caraBaca: 'Mantul di akhir.',
+        );
+      };
+  }
 
   @override
   void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
+    _allahRecognizer.dispose();
+    _ahadRecognizer.dispose();
+    _allah2Recognizer.dispose();
+    _shamadRecognizer.dispose();
+    _dalShamadRecognizer.dispose();
+    _lamYalidRecognizer.dispose();
+    _dalYalidRecognizer.dispose();
+    _lamYuuRecognizer.dispose();
+    _dalYuuRecognizer.dispose();
+    _lamYakunRecognizer.dispose();
+    _lahuRecognizer.dispose();
+    _kufuwanRecognizer.dispose();
+    _ahad4Recognizer.dispose();
+    _audioPlayer.dispose();
     super.dispose();
+  }
+
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await _audioPlayer.pause();
+    } else {
+      await _audioPlayer.play(AssetSource('audio/alikhlas.wav'));
+    }
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
   }
 
   @override
@@ -41,279 +207,182 @@ class _LearningAlikhlasfullWidgetState
     double width = MediaQuery.sizeOf(context).width;
     double height = MediaQuery.sizeOf(context).height;
 
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: Color(0xFFFAFDCB),
-        body: SafeArea(
-          top: true,
-          child: Container(
-            width: width * 3.9,
-            height: height * 8.44,
-            decoration: BoxDecoration(
-              color: Color(0xFFFAFDCB),
+    return Scaffold(
+      key: scaffoldKey,
+      backgroundColor: const Color(0xFFFAFDCB),
+      body: SafeArea(
+        top: false,
+        child: Column(
+          children: [
+            // === HEADER FIX ===
+            Container(
+              width: width,
+              height: height * 0.15,
+              color: const Color(0xFF037A16),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 40, left: 12, right: 12),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back_ios_rounded,
+                          color: Colors.black, size: 28),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    Expanded(
+                      child: Text(
+                        'Surah Al-Ikhlas',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20,
+                            color: Colors.black),
+                      ),
+                    ),
+                    IconButton(
+                      icon: FaIcon(
+                        _isPlaying
+                            ? FontAwesomeIcons.volumeHigh
+                            : FontAwesomeIcons.volumeOff,
+                        color: Colors.black,
+                        size: 30,
+                      ),
+                      onPressed: _playPauseAudio,
+                    ),
+                  ],
+                ),
+              ),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
-                  width: width,
-                  height: height * 0.18, // Adjusted to use percentage
-                  decoration: BoxDecoration(
-                    color: Color(0xFF037A16),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(15, 40, 15, 40),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+
+            // === BODY ===
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.all(16),
+                children: [
+                  _buildAyatCard(width, 1, RichText(
+                    textDirection: TextDirection.rtl,
+                    text: TextSpan(
+                      style: GoogleFonts.inter(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
                       children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.arrow_back_ios_rounded,
-                              color: Colors.black,
-                              size: 30,
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context); // Go back on press
-                            },
-                          ),
+                        const TextSpan(text: '١. ', style: TextStyle(color: Colors.black)),
+                        const TextSpan(text: 'قُلْ هُوَ ', style: TextStyle(color: Colors.black)),
+                        TextSpan(
+                          text: 'اللّٰهُ ',
+                          recognizer: _allahRecognizer,
+                          style: const TextStyle(color: Color(0xFF6F0C0C)),
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(40, 0, 43, 0),
-                          child: Text(
-                            'Surah Al - Ikhlas',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20,
-                              letterSpacing: 0.0,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(0, 0),
-                          child: IconButton(
-                            icon: FaIcon(
-                              FontAwesomeIcons.volumeHigh,
-                              color: Colors.black,
-                              size: 30,
-                            ),
-                            onPressed: () {
-                            },
-                          ),
+                        TextSpan(
+                          text: 'اَحَدٌۚ',
+                          recognizer: _ahadRecognizer,
+                          style: const TextStyle(color: Color(0xFF3EB489)),
                         ),
                       ],
                     ),
-                  ),
-                ),
-                // Wrap ListView with Expanded to ensure it scrolls
-                Expanded(
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      Column(
-                        children: [
-                          // Surah 1
-                          _buildSurahContainer(
-                            width,
-                            height,
-                            1, // Surah 1 (odd)
-                            'Qul huwallāhu ahad(un).',
-                            'Katakanlah (Nabi Muhammad), “Di-\nalah Allah Yang Maha Esa.',
-                            ' Lam jalalah tafkhim, Qalqalah kubra',
-                            'assets/images/Ikhlas 1.png',
-                            0.360, // Default height factor
-                            0.65, // 60% width for Surah 1 image
-                            0.08, // 4% height for Surah 1 image
-                            25, // Padding for Surah 1
-                          ),
-                          // Surah 2
-                          _buildSurahContainer(
-                            width,
-                            height,
-                            2, // Surah 2 (even)
-                            'Allāhus-samad(u).',
-                            'Allah tempat meminta segala sesuatu.',
-                            'Ghunah Musyaddadah,  Alif Lam Sya-\n msiyah,  Mad Arid Lisukun',
-                            'assets/images/Ikhlas 2.png',
-                            0.250, // Default height factor
-                            0.39, // Default width and height for Surah 2
-                            0.05,
-                            0, // No extra padding for Surah 2
-                          ),
-                          // Surah 3
-                          _buildSurahContainer(
-                            width,
-                            height,
-                            3, // Surah 3 (odd)
-                            'Lam yalid wa lam yūlad.',
-                            'Dia tidak beranak dan tidak pula \n  diperanakkan',
-                            ' Idhar safaw, Qolqolah sugra, Qolqolah\n  kubra',
-                            'assets/images/Ihlkas3.png',
-                            0.280, // Default height factor
-                            0.50, // Default width for Surah 3
-                            0.06,
-                            0, // No extra padding for Surah 3
-                          ),
-                          // Surah 4
-                          _buildSurahContainer(
-                            width,
-                            height,
-                            4, // Surah 4 (even)
-                            'Wa lam yakul lahū kufuwan aḥad(un).',
-                            ' Serta tidak ada sesuatu pun yang\n setara dengan-Nya.”',
-                            ' Idhar safaw, Idhar Halqi, Qolqolah \n kubra,  Mad shilah qashirah',
-                            'assets/images/Ikhlas 4.png',
-                            0.3, // Default height factor
-                            0.78, // Default width and height for Surah 4
-                            0.06,
-                            0, // No extra padding for Surah 4
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  // Reusable widget for Surah container
-  Widget _buildSurahContainer(
-      double width,
-      double height,
-      int surahIndex, // Add index for each Surah
-      String surah,
-      String meaning,
-      String hukumBacaan,
-      String imagePath,
-      double heightFactor, // Parameter for height adjustment
-      double imageWidthPercentage, // Set width percentage for image
-      double imageHeightPercentage, // Set height percentage for image
-      double surahPadding // Padding for Surah 1
-      ) {
-    // Set background color for odd and even Surah
-    Color backgroundColor = (surahIndex % 2 == 0) ? Color(0xFFDDEB9D) : Color(0xFFFAFDCB);
-
-    // Calculate width and height of image based on percentage
-    double imageWidth = width * imageWidthPercentage; // Width in percentage
-    double imageHeight = height * imageHeightPercentage; // Height in percentage
-
-    // Initialize color for hukum bacaan
-    Color hukumBacaanColor = Colors.black;
-
-    // Set colors for different hukum bacaan
-    Map<String, Color> hukumBacaanColors = {
-      'Idhar halqi': Color(0xFFF6279C),
-      'Idhar safawi': Color(0xFF746C6C),
-      'Mad Layin': Color(0xFFF8BD00),
-      'Alif Lam Qomariyah': Color(0xFFEC7700),
-      'Alif Lam Syamsiyah': Color(0xFF587DBD),
-      'Mad arid lisukun': Color(0xFF3EC1D3),
-      'Idgham Mimi (Mithlain)': Color(0xFF746C6C),
-      'Mad lazim mutsaqqal kilmi': Color(0xFF107A88),
-    };
-
-    // Check if the hukumBacaan is in the map, otherwise default to black
-    hukumBacaanColor = hukumBacaanColors[hukumBacaan] ?? Colors.black;
-
-    return Container(
-      width: width * 2,
-      height: height * heightFactor,  // Dynamic height based on heightFactor
-      decoration: BoxDecoration(
-        color: backgroundColor,  // Use dynamic color based on surah index
-      ),
-      child: Padding(
-        padding: EdgeInsetsDirectional.only(top: surahPadding), // Set top padding for Surah 1
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(60, 20, 0, 0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      imagePath,
-                      width: imageWidth,  // Use dynamic width
-                      height: imageHeight,  // Use dynamic height
-                      fit: BoxFit.cover,
+                  ), 'Qul huwallāhu ahad(un).',
+                      'Katakanlah, “Dia-lah Allah, Yang Maha Esa.”',
+                      'Lam Jalalah Tafkhim, Qalqalah Kubra'),
+                  const SizedBox(height: 16),
+                  _buildAyatCard(width, 2, RichText(
+                    textDirection: TextDirection.rtl,
+                    text: TextSpan(
+                      style: GoogleFonts.inter(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                      children: [
+                        const TextSpan(text: '٢. ', style: TextStyle(color: Colors.black)),
+                        TextSpan(
+                          text: 'اللّٰهُ ',
+                          recognizer: _allah2Recognizer,
+                          style: const TextStyle(color: Color(0xFF910D0D)),
+                        ),
+                        TextSpan(
+                          text: 'الصَّمَدُ',
+                          recognizer: _shamadRecognizer,
+                          style: const TextStyle(color: Color(0xFF587DBD)),
+                        ),
+                        TextSpan(
+                          text: ' ',
+                          recognizer: _dalShamadRecognizer,
+                          style: const TextStyle(color: Color(0xFF3EB489)),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20, 25, 20, 0),
-              child: Row(
-                children: [
-                  Text(
-                    surah,
-                    style: GoogleFonts.notoNaskhArabic(
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF037A16),
-                      fontSize: 17,
-                      letterSpacing: 0.0,
+                  ), 'Allāhus-samad(u).',
+                      'Allah tempat bergantung segala sesuatu.',
+                      'Lam Jalalah Tafkhim, Alif Lam Syamsiyah, Qalqalah Kubra'),
+                  const SizedBox(height: 16),
+                  _buildAyatCard(width, 3, RichText(
+                    textDirection: TextDirection.rtl,
+                    text: TextSpan(
+                      style: GoogleFonts.inter(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                      children: [
+                        const TextSpan(text: '٣. ', style: TextStyle(color: Colors.black)),
+                        TextSpan(
+                          text: 'لَمْ يَلِدْ ',
+                          recognizer: _lamYalidRecognizer,
+                          style: const TextStyle(color: Color(0xFF746C6C)),
+                        ),
+                        TextSpan(
+                          text: 'يَلِدْ ',
+                          recognizer: _dalYalidRecognizer,
+                          style: const TextStyle(color: Color(0xFF037A16)),
+                        ),
+                        TextSpan(
+                          text: 'وَلَمْ يُو ',
+                          recognizer: _lamYuuRecognizer,
+                          style: const TextStyle(color: Color(0xFF746C6C)),
+                        ),
+                        TextSpan(
+                          text: 'يُوْلَدْۙ',
+                          recognizer: _dalYuuRecognizer,
+                          style: const TextStyle(color: Color(0xFF3EB489)),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20, 8, 20, 0),
-              child: Row(
-                children: [
-                  Text(
-                    'Artinya: $meaning',
-                    style: GoogleFonts.notoNaskhArabic(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                      letterSpacing: 0.0,
+                  ), 'Lam yalid wa lam yūlad.',
+                      'Dia tidak beranak dan tidak pula diperanakkan.',
+                      'Idhar Safawi, Qalqalah Sugra, Qalqalah Kubra'),
+                  const SizedBox(height: 16),
+                  _buildAyatCard(width, 4, RichText(
+                    textDirection: TextDirection.rtl,
+                    text: TextSpan(
+                      style: GoogleFonts.inter(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                      children: [
+                        const TextSpan(text: '٤. ', style: TextStyle(color: Colors.black)),
+                        TextSpan(
+                          text: 'وَلَمْ يَكُنْ ',
+                          recognizer: _lamYakunRecognizer,
+                          style: const TextStyle(color: Color(0xFF746C6C)),
+                        ),
+                        TextSpan(
+                          text: 'لَهُ ',
+                          recognizer: _lahuRecognizer,
+                          style: const TextStyle(color: Color(0xFF7939E7)),
+                        ),
+                        TextSpan(
+                          text: 'كُفُوًا أَ ',
+                          recognizer: _kufuwanRecognizer,
+                          style: const TextStyle(color: Color(0xFFCA4BB0)),
+                        ),
+                        TextSpan(
+                          text: 'أَحَدٌ',
+                          recognizer: _ahad4Recognizer,
+                          style: const TextStyle(color: Color(0xFF3EB489)),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 13, 0, 0),
-                    child: Text(
-                      'Hukum bacaan:',
-                      style: GoogleFonts.notoNaskhArabic(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                        fontSize: 12,
-                        letterSpacing: 0.0,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(3, 13, 0, 0),
-                    child: Text(
-                      hukumBacaan,
-                      style: GoogleFonts.notoNaskhArabic(
-                        fontWeight: FontWeight.w600,
-                        color: hukumBacaanColor,  // Use the dynamic color here
-                        fontSize: 12,
-                        letterSpacing: 0.0,
-                      ),
-                    ),
-                  ),
+                  ), 'Wa lam yakun lahū kufuwan aḥad(un).',
+                      'Dan tidak ada sesuatu pun yang setara dengan-Nya.',
+                      'Idhar Safawi, Mad Shilah Qashirah, Idhar Halqi, Qalqalah Kubra'),
                 ],
               ),
             ),
@@ -321,5 +390,73 @@ class _LearningAlikhlasfullWidgetState
         ),
       ),
     );
+  }
+
+  Widget _buildAyatCard(double width, int ayatIndex, dynamic arabic,
+      String latin, String arti, String hukum) {
+    Color bgColor =
+    (ayatIndex % 2 != 0) ? const Color(0xFFFAFDCB) : const Color(0xFFDDEB9D);
+    return Container(
+      width: width,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: const [
+          BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(2, 4))
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          arabic,
+          const SizedBox(height: 12),
+          Text(latin,
+              textAlign: TextAlign.justify,
+              style:
+              GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 8),
+          Text(arti,
+              textAlign: TextAlign.justify,
+              style: GoogleFonts.inter(fontSize: 14)),
+          const SizedBox(height: 8),
+          Text('Hukum Bacaan: $hukum',
+              textAlign: TextAlign.justify,
+              style:
+              GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold)),
+        ],
+      ),
+    );
+  }
+
+  void _showWordDialog(BuildContext context,
+      {required String word,
+        required String arti,
+        required String hukum,
+        required String caraBaca}) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: const Color(0xFFFAFDCB),
+            title: Text(word, style: GoogleFonts.inter(fontWeight: FontWeight.bold)),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Arti: $arti'),
+                const SizedBox(height: 8),
+                Text('Hukum Bacaan:\n$hukum'),
+                const SizedBox(height: 8),
+                Text('Cara Membaca:\n$caraBaca'),
+              ],
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('Tutup')),
+            ],
+          );
+        });
   }
 }

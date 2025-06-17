@@ -7,6 +7,7 @@ import 'modul1hijaiyah/m1alif.dart';
 import 'Modul5_SurahTajwid/tampilanawal.dart';
 import 'Modul2harakat/m2fathah.dart';
 import 'Modul3_babibu/aiu.dart';
+import 'Modul6gharib/gharib.dart';
 
 
 // Halaman Level 1
@@ -94,6 +95,22 @@ class Level5Page extends StatelessWidget {
   }
 }
 
+// Halaman Level 5
+class Level6Page extends StatelessWidget {
+  const Level6Page({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Level 6'),
+      ),
+      body: Center(
+        child: Text('Halaman Level 6: Belajar Mengenal Gharib'),
+      ),
+    );
+  }
+}
 // Halaman Utama - LearningWidget
 class LearningWidget extends StatefulWidget {
   const LearningWidget({super.key});
@@ -571,6 +588,92 @@ class _LearningWidgetState extends State<LearningWidget> {
                     ),
                   ),
                 ),
+                // Level 6
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BacaanGharibPage()),
+                    );
+                  },
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width * 3.43,
+                      height: MediaQuery.sizeOf(context).height * 0.35,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFDDEB9D),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.asset(
+                              'assets/images/Modul 6.png',
+                              width: 369.1,
+                              height: 200,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(10, 5, 0, 5),
+                              child: Text(
+                                'Level 6',
+                                style: GoogleFonts.inter(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 5),
+                              child: Text(
+                                'Belajar Mengenal Gharib',
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 1),
+                                  child: LinearPercentIndicator(
+                                    percent: 0.4,
+                                    width: MediaQuery.sizeOf(context).width * 0.9,
+                                    lineHeight: 20,
+                                    animation: true,
+                                    animateFromLastPercent: true,
+                                    progressColor: Color(0xFF037A16),
+                                    backgroundColor: Colors.deepOrange,
+                                    center: Text(
+                                      '50%',
+                                      style: GoogleFonts.inter(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    padding: EdgeInsets.zero,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -593,6 +696,7 @@ void main() {
         '/level3': (context) => Level3Page(),
         '/level4': (context) => Level4Page(),
         '/level5': (context) => Level5Page(),
+        '/level6': (context) => Level6Page(),
         '/m1alif': (context) => LearningAlifWidget()
       },
     ),
