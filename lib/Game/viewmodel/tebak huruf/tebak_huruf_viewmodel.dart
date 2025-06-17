@@ -2,7 +2,7 @@
 import 'dart:math'; // Untuk Random
 import 'package:flutter/material.dart';
 import 'package:untitled/Game/data/tebak_huruf_question.dart'; // sesuaikan path jika beda
-import '../models/question_model.dart'; // sesuaikan path jika beda
+import '../../models/question_model.dart'; // sesuaikan path jika beda
 
 class QuestionAnswerTebak {
   String? selectedAnswer;
@@ -45,13 +45,8 @@ class TebakHurufViewmodel extends ChangeNotifier {
   }
 
   void _initializeGameQuestions() {
-    final random = Random();
-    _allQuestions.shuffle(random); // Acak semua pertanyaan
-    // Ambil 10 pertanyaan pertama, atau kurang jika total pertanyaan < 10
-    _questionsForGame = _allQuestions.take(10).toList();
-    // Pastikan _loadAnswerForQuestion dipanggil setelah _questionsForGame diinisialisasi
-    // dan _currentIndex adalah 0
-    _loadAnswerForQuestion(_currentIndex); 
+    _questionsForGame = _allQuestions.take(20).toList();
+    _loadAnswerForQuestion(_currentIndex);
   }
 
   List<HijaiyahQuestion> get questions => _questionsForGame;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/Game/view/game%20tajwid/game_tajwid.dart';
-import 'package:untitled/Game/view/susun%20huruf/susun_huruf_game.dart';
-import 'package:untitled/Game/view/tebak%20huruf/tebak_huruf_game.dart';
-import 'package:untitled/Game/view/tebak%20huruf/tebak_huruf_game_2.dart';
+import 'package:untitled/Game/view/game%20tajwid/game_tajwid_level_screen.dart';
+import 'package:untitled/Game/view/susun%20huruf/susun_huruf_level_screen.dart';
 import 'package:untitled/Game/view/tebak%20huruf/tebak_huruf_level_screen.dart';
 import 'package:untitled/Game/widgets/game_card.dart';
 
 class MiniGameWidget extends StatelessWidget {
+  const MiniGameWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +57,7 @@ class MiniGameWidget extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      width: 315,
+                      width: 300,
                       height: 30,
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -77,7 +77,7 @@ class MiniGameWidget extends StatelessWidget {
                   ],
                 ),
 
-                const SizedBox(height: 28),
+                const SizedBox(height: 32),
 
                 GameCard(
                   imagePath: 'assets/images/icon_tebak_huruf.png',
@@ -108,7 +108,7 @@ class MiniGameWidget extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (_) => const SusunHurufGame()),
+                          MaterialPageRoute(builder: (_) => SusunHurufLevelScreen()),
                         );
                       },
                     ),
@@ -123,13 +123,13 @@ class MiniGameWidget extends StatelessWidget {
                 ),
 
                 GameCard(
-                  imagePath: 'assets/images/icon_tajwidku_seru.png',
-                  title: 'Game\nTajwidku\nSeru',
+                  imagePath: 'assets/images/icon_game_tajwid.png',
+                  title: 'Game\nTajwid',
                   color: const Color.fromRGBO(242, 125, 125, 1),
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => const GameTajwid()),
+                      MaterialPageRoute(builder: (_) => GameTajwidLevelScreen()),
                     );
                   },
                 ),

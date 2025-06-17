@@ -242,3 +242,106 @@ final List<GameTajwidQuestion> gameTajwidQuestions = [
     ],
   ),
 ];
+
+// Level 2
+final List<TajwidLevel2Question> tajwidLevel2Questions = [
+  // 1. Imālah
+  TajwidLevel2Question(
+    ruleName: "Imālah",
+    verse: "﴿وَقِيلَ ٱرْكَبُواْ فِيهَا بِسْمِ ٱللَّهِ \"مَجْرَاهَا\" وَمُرْسَاهَا﴾",
+    audioExample: "majrēhā",
+    correctAnswer: "majreha", // Disederhanakan untuk perbandingan speech-to-text
+    positiveFeedback: "Suara imālah sudah tepat.",
+    correctiveFeedback: "Ucapkan antara a dan i pada ‘مَجْرَاهَا’.",
+  ),
+
+  // 2. Isymām
+  TajwidLevel2Question(
+    ruleName: "Isymām",
+    verse: "﴿قَالُواْ يَٰٓأَبَانَا لِمَ \"تَأْمَنَّا\" عَلَىٰ يُوسُفَ﴾",
+    audioExample: "ta'manna",
+    correctAnswer: "ta'manna",
+    positiveFeedback: "Isyarat bibir bagus tanpa suara tambahan.",
+    correctiveFeedback: "Tidak terlihat isymām. Gerakkan bibir seolah berdhammah.",
+  ),
+
+  // 3. Saktah
+  TajwidLevel2Question(
+    ruleName: "Saktah",
+    verse: "﴿...مِن \"مَّرْقَدِنَا ۜ هَٰذَا\" مَا وَعَدَ ٱلرَّحْمَٰنُ﴾",
+    audioExample: "marqodina, hadza",
+    correctAnswer: "marqodina hadza",
+    positiveFeedback: "Jeda tanpa napas sudah tepat.",
+    correctiveFeedback: "Terlalu cepat, beri jeda 2 harakat sebelum lanjut ke ‘هَٰذَا’.",
+  ),
+
+  // 4. Tashīl
+  TajwidLevel2Question(
+    ruleName: "Tashīl",
+    verse: "﴿وَلَوْ جَعَلْنَٰهُ قُرْءَانًا \"أَأَعْجَمِيًّا\"﴾",
+    audioExample: "a'a'jamiyya",
+    correctAnswer: "a'jamiyya", // Fokus pada bagian yang unik
+    positiveFeedback: "Tashīl lembut dan jelas.",
+    correctiveFeedback: "Hamzah kedua terlalu keras, ubah jadi bunyi antara hamzah dan alif.",
+  ),
+
+  // 5. Naql
+  TajwidLevel2Question(
+    ruleName: "Naql",
+    verse: "﴿بِئْسَ \"ٱلِٱسْمُ\" ٱلْفُسُوقُ﴾",
+    audioExample: "bi'salismu",
+    correctAnswer: "bisalismu",
+    positiveFeedback: "Pemindahan harakat terdengar halus.",
+    correctiveFeedback: "Hamzah masih terdengar, seharusnya dipindah ke ‘سَ’.",
+  ),
+
+  // 6. Badal
+  TajwidLevel2Question(
+    ruleName: "Badal",
+    verse: "﴿...كَفَرْتُم بِهِ مَنْ أَضَلُّ ... \"ائْتُونِي\"﴾",
+    audioExample: "ītūnī",
+    correctAnswer: "ituni",
+    positiveFeedback: "Huruf alif menggantikan hamzah dengan baik.",
+    correctiveFeedback: "Hamzah pertama masih keras, ganti dengan alif.",
+  ),
+
+  // 7. Mad & Qaṣr
+  TajwidLevel2Question(
+    ruleName: "Mad & Qaṣr",
+    verse: "﴿لَكُمْ دِينُكُمْ وَلِيَ دِينِ﴾ ... \"أَنَا\"",
+    audioExample: "ana",
+    correctAnswer: "ana",
+    positiveFeedback: "Bacaan pendek sudah benar.",
+    correctiveFeedback: "Jangan dibaca panjang, cukup satu harakat.",
+  ),
+
+  // 8. Ṣilah
+  TajwidLevel2Question(
+    ruleName: "Ṣilah",
+    verse: "﴿قُلْ \"هُوَ\" ٱللَّهُ أَحَدٌ ... وَلَمْ يَكُن \"لَّهُ\" كُفُوًا أَحَدٌۢ﴾",
+    audioExample: "lahu",
+    correctAnswer: "lahu",
+    positiveFeedback: "Mad ṣilah terdengar jelas.",
+    correctiveFeedback: "Tidak ada tambahan harakat, padahal posisinya di antara dua harakat.",
+  ),
+
+  // 9. Lafaz "Mālik"
+  TajwidLevel2Question(
+    ruleName: "Lafaz 'Mālik'",
+    verse: "﴿\"مَٰلِكِ\" يَوْمِ ٱلدِّينِ﴾",
+    audioExample: "māliki",
+    correctAnswer: "maliki",
+    positiveFeedback: "Pilihan qira’at sesuai, bacaan diterima.",
+    correctiveFeedback: "Bacaan tidak konsisten dengan riwayat yang dipilih.",
+  ),
+  
+  // 10. Lafaz "Ḍuʿf"
+  TajwidLevel2Question(
+    ruleName: "Lafaz 'Ḍuʿf'",
+    verse: "﴿ٱللَّهُ ٱلَّذِى خَلَقَكُم مِّن \"ضَعْفٍ\"﴾",
+    audioExample: "dha'fin",
+    correctAnswer: "da'fin",
+    positiveFeedback: "Bacaan sesuai dengan salah satu qira’at.",
+    correctiveFeedback: "Periksa kembali harakat pada huruf ḍād.",
+  ),
+];

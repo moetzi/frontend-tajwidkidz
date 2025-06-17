@@ -3,7 +3,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/Game/data/game_tajwid_question.dart';
 import 'package:untitled/Game/view/result_screen.dart';
-import 'package:untitled/Game/viewmodel/game_tajwid_viewmodel.dart';
+import 'package:untitled/Game/viewmodel/game_tajwid/game_tajwid_viewmodel.dart';
 
 class GameTajwid extends StatelessWidget {
   const GameTajwid({super.key});

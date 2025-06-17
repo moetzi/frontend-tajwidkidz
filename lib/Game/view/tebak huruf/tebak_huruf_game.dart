@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:untitled/Game/view/result_screen.dart'; // sesuaikan path
-import 'package:untitled/Game/viewmodel/tebak_huruf_viewmodel.dart'; // sesuaikan path
+import 'package:untitled/Game/viewmodel/tebak%20huruf/tebak_huruf_viewmodel.dart'; // sesuaikan path
 
 bool isArabic(String text) {
   final arabicRegex = RegExp(r'[\u0600-\u06FF]');

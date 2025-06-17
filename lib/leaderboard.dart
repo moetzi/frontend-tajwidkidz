@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/Game/view/mini_game.dart'; // Sesuaikan path ini
+import 'package:untitled/Game/view/minigame.dart'; // Sesuaikan path ini
 import 'homepage.dart'; // Import HomePageWidget, sesuaikan pathnya
 
 void main() {
