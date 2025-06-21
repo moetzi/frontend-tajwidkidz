@@ -34,10 +34,10 @@ class TebakHurufViewmodel3 extends ChangeNotifier {
   }
 
   void _initializeGameQuestions() {
-  final shuffledQuestions = _allQuestions.toList()..shuffle();
-  _questionsForGame = shuffledQuestions.take(20).toList();
-  _loadAnswerForQuestion(_currentIndex);
-}
+    final shuffledQuestions = _allQuestions.toList()..shuffle();
+    _questionsForGame = shuffledQuestions.take(20).toList();
+    _loadAnswerForQuestion(_currentIndex);
+  }
 
   List<HijaiyahQuestion2> get questions => _questionsForGame;
   int get currentIndex => _currentIndex;

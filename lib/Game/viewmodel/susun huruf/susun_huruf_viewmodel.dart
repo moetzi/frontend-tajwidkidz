@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:untitled/Game/data/susun_huruf_question.dart';
 import '../../models/question_model.dart';
 
-// Class QuestionAnswer tidak perlu diubah, jadi kita biarkan saja
 class QuestionAnswer {
   List<String> userAnswer;
   List<int> usedIndices;
@@ -35,7 +34,6 @@ class QuestionAnswer {
   }
 }
 
-
 class SusunHurufViewmodel extends ChangeNotifier {
   // DIUBAH: Buat 2 list: satu untuk master data, satu untuk soal di game
   final List<HijaiyahQuestion> _allQuestions = susunHurufQuestions; // Master data semua soal
@@ -46,7 +44,7 @@ class SusunHurufViewmodel extends ChangeNotifier {
   int correctAnswers = 0;
   
   final Map<int, QuestionAnswer> _questionAnswers = {};
-  
+
   List<String> _userAnswer = [];
   List<int> _usedIndices = [];
   bool _isCorrect = false;
@@ -56,7 +54,6 @@ class SusunHurufViewmodel extends ChangeNotifier {
   final Set<int> _answeredQuestions = {};
 
   VoidCallback? onGameFinished;
-  
   // DIUBAH: Panggil method untuk mengacak soal di constructor
   SusunHurufViewmodel() {
     _initializeGameQuestions();
@@ -84,7 +81,6 @@ class SusunHurufViewmodel extends ChangeNotifier {
   bool get isCurrentAnswerCorrect => userAnswer.join('') == currentQuestion.correctAnswer;
   bool get isQuestionAnswered => _answeredQuestions.contains(_currentQuestionIndex);
 
-  // ... (Tidak ada perubahan pada method addLetter, removeLastLetter, removeLetterAtIndex, checkAnswer)
   void addLetter(String letter, int index) {
     if (isQuestionAnswered) return;
 
@@ -171,6 +167,7 @@ class SusunHurufViewmodel extends ChangeNotifier {
   }
 
   void nextQuestion() {
+
     if (_isAnswerComplete) {
       _saveCurrentAnswer();
     }
@@ -186,6 +183,7 @@ class SusunHurufViewmodel extends ChangeNotifier {
 
   void previousQuestion() {
     if (_currentQuestionIndex > 0) {
+
       if (_isAnswerComplete || _userAnswer.isNotEmpty) {
         _saveCurrentAnswer();
       }

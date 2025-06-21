@@ -161,7 +161,7 @@ class _LearningQurais2WidgetState extends State<LearningQurais2Widget> {
                   const SizedBox(height: 20),
                   Container(
                     width: width * 0.9,
-                    height: 730,
+                    height: 760,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),

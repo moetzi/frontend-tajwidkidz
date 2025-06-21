@@ -147,7 +147,7 @@ class _LearningAlfalaq1WidgetState extends State<LearningAlfalaq1Widget> {
 
                   Container(
                     width: width * 0.9,
-                    height: 500,
+                    height: 550,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),

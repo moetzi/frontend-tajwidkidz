@@ -37,6 +37,7 @@ class QuestionAnswer {
 class SusunHurufViewmodel2 extends ChangeNotifier {
   final List<HijaiyahQuestion> _allQuestions = susunHurufQuestions2;
   List<HijaiyahQuestion> _questions = [];
+
   int _currentQuestionIndex = 0;
   int _score = 0;
   int correctAnswers = 0;
@@ -68,7 +69,7 @@ class SusunHurufViewmodel2 extends ChangeNotifier {
     // 3. Gunakan list yang sudah diacak sebagai soal untuk game
     _questions = tempList;
   }
-
+  
   List<HijaiyahQuestion> get questions => _questions;
   int get currentQuestionIndex => _currentQuestionIndex;
   int get score => _score;

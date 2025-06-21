@@ -152,7 +152,7 @@ class _LearningAllahab2WidgetState extends State<LearningAllahab2Widget> {
 
                   Container(
                     width: width * 0.9,
-                    height: 630,
+                    height: 660,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),

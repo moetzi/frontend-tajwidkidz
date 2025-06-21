@@ -146,7 +146,7 @@ class _LearningAlkafirun3WidgetState extends State<LearningAlkafirun3Widget > {
 
                 Container(
                   width: width * 0.9,
-                  height: height * 0.75,
+                  height: height * 0.7,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8),

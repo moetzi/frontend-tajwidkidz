@@ -147,7 +147,7 @@ class _LearningAnnasr3WidgetState extends State<LearningAnnasr3Widget> {
 
                   Container(
                     width: width * 0.9,
-                    height: 450,
+                    height: 820,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),

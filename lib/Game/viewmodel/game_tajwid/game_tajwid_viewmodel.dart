@@ -59,6 +59,7 @@ class GameTajwidViewModel extends ChangeNotifier {
 
   // DIUBAH: Sekarang getter mengambil data dari _shuffledGameData, bukan data asli
   GameTajwidQuestion get currentLevel => _shuffledGameData[_currentLevelIndex];
+
   TajwidQuestion get currentQuestion => currentLevel.questions[_currentQuestionIndex];
   int get level => currentLevel.level;
   String get levelName => currentLevel.levelName;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:untitled/account.dart';
+import 'package:untitled/account/account.dart';
 import 'learning.dart'; // Import halaman LearningWidget
 import 'Game/view/minigame.dart'; // Import halaman MiniGame
 import 'leaderboard.dart'; // Import halaman Leaderboard

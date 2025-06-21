@@ -1,39 +1,209 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/gestures.dart'; // Import for TapGestureRecognizer
+import 'package:audioplayers/audioplayers.dart';
 
-class LearningQuraisfullWidget extends StatefulWidget {
-  const LearningQuraisfullWidget({super.key});
+class LearningQuraisyFullWidget extends StatefulWidget {
+  const LearningQuraisyFullWidget({super.key});
 
-  static String routeName = 'Learningquraisy';
-  static String routePath = '/learningquraisy';
+  static String routeName = 'LearningQuraisyFull';
+  static String routePath = '/learningQuraisyFull';
 
   @override
-  State<LearningQuraisfullWidget> createState() =>
-      _LearningQuraisfullWidgetState();
+  State<LearningQuraisyFullWidget> createState() =>
+      _LearningQuraisyFullWidgetState();
 }
 
-class _LearningQuraisfullWidgetState
-    extends State<LearningQuraisfullWidget> {
-  final TextEditingController _textController = TextEditingController();
-  final FocusNode _textFieldFocusNode = FocusNode();
-
-  int selectedIndex = 1; // Index for the BottomNavigationBar
-
-  // Function to handle bottom navigation
-  void onTabTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
-
+class _LearningQuraisyFullWidgetState
+    extends State<LearningQuraisyFullWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  bool _isPlaying = false;
+
+  // Tap recognizers for each ayah's highlighted words
+  late TapGestureRecognizer _quraisyMadLayin;
+  late TapGestureRecognizer _idharsafawi;
+  late TapGestureRecognizer _alifLamSyamsiyah;
+  late TapGestureRecognizer _alifLamQomariyah;
+  late TapGestureRecognizer _qolqolahSughra;
+  late TapGestureRecognizer _idhgamMutamasilaen;
+  late TapGestureRecognizer _ikhfaHaqiqi;
+  late TapGestureRecognizer _idghamBighunnah;
+  late TapGestureRecognizer _alifLamSyamsiyah2; // Added for "وَالصَّيْفِۚ"
+  late TapGestureRecognizer _madLayin;
+
+  late TapGestureRecognizer _idghamMimi; // Added for "وَآمَنَهُمْ"
+  late TapGestureRecognizer _idharHalqi; // Added for "مِنْ خَوْفٍ"
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Tap recognizers for Surah Quraisy's recitation rules
+    _quraisyMadLayin = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'قُرَيْشٍ',
+          arti: 'Quraisy',
+          hukum: 'Mad Layin',
+          caraBaca: 'Karena ada tanda baca fatkhah bertemu dengan huruf ya mati. Cara membacanya lunak dan lemas.',
+        );
+      };
+
+    _idharsafawi = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'اٖلٰفِهِمْ',
+          arti: 'Kebiasaan mereka',
+          hukum: 'Idhar Safawi',
+          caraBaca: 'Karena ada huruf mim mati/sukun bertemu dengan huruf ro. Cara membacanya terang di bibir dengan mulut tertutup.',
+        );
+      };
+
+    _alifLamSyamsiyah = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'الشِّتَاۤءِ',
+          arti: 'Musim dingin',
+          hukum: 'Alif Lam Syamsiyah',
+          caraBaca: 'Karena ada huruf الْ bertemu dengan huruf ش. Cara membacanya dimasukkan ke huruf ش.',
+        );
+      };
+
+    _alifLamQomariyah = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'الْبَيْتِ',
+          arti: 'Rumah (Kaabah)',
+          hukum: 'Alif Lam Qomariyah, Mad Layin',
+          caraBaca: 'Alif Lam bertemu dengan ب, dibaca terang dan jelas. Mad Layin, karena ada tanda baca fatkhah bertemu dengan huruf يْ. Cara membacanya sekedar lunak dan lemas.',
+        );
+      };
+
+    // 4th Ayah recognizers
+    _qolqolahSughra = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'أَطْعَمَهُمْ',
+          arti: 'Memberi makan mereka',
+          hukum: '1. Qolqolah Sughra \n 2. Idgham Mimi',
+          caraBaca: '1. Karena ada huruf جْ di dalam kalimat. Cara membacanya membalik membentuk huruf ج.\n 2. Ada huruf مْ bertemu dengan huruf م. Cara membacanya dimasukan dengan mendengung.',
+        );
+      };
+
+    _idhgamMutamasilaen = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'أَطْعَمَهُم مِّن',
+          arti: 'Memberi makan mereka dari',
+          hukum: 'Idgham Mutamasilaen (Idgham Mimi)',
+          caraBaca: 'Karena ada huruf مْ bertemu dengan huruf م. Cara membacanya dimasukan dengan mendengung.',
+        );
+      };
+
+    _ikhfaHaqiqi = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'مِّن جُوعٍ',
+          arti: 'Dari rasa lapar',
+          hukum: '1. Ikhfa Haqiqi \n 2. Idgham bighunnah',
+          caraBaca: '1.Karena ada نْ bertemu dengan huruf ج. Cara membacanya samar-samar membentuk huruf ج.\n 2. Ada kasrahtain bertemu dengan huruf و. Cara membacanya masuk dengan mendengung.',
+        );
+      };
+
+    _idghamBighunnah = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'جُوعٍ وَ',
+          arti: 'Kelaparan dan',
+          hukum: 'Idgham Bighunnah',
+          caraBaca: 'Karena ada kasrahtain bertemu dengan huruf و. Cara membacanya masuk dengan mendengung.',
+        );
+      };
+
+    // New recognizers for Ayah 2's "وَالصَّيْفِۚ"
+    _alifLamSyamsiyah2 = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'وَالصَّيْفِۚ',
+          arti: 'Dan Musim Panas',
+          hukum: 'Alif Lam Syamsiyah, Mad Layin',
+          caraBaca: 'Alif Lam bertemu dengan ص, cara membacanya dimasukkan ke huruf ص. Mad Layin karena ada fathah bertemu dengan يْ.',
+        );
+      };
+
+    _madLayin = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'وَالصَّيْفِۚ',
+          arti: 'Dan Musim Panas',
+          hukum: 'Mad Layin',
+          caraBaca: 'Karena ada tanda baca fathah bertemu dengan huruf يْ. Cara membacanya sekedar lunak dan lemas.',
+        );
+      };
+
+    // Added recognizers for Idgham Mimi and Idhar Halqi
+    _idghamMimi = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'وَآمَنَهُمْ',
+          arti: 'Dan mengamankan mereka',
+          hukum: 'Idgham Mimi',
+          caraBaca: 'Karena ada huruf مْ bertemu dengan huruf م. Cara membacanya dimasukkan dengan mendengung.',
+        );
+      };
+
+    _idharHalqi = TapGestureRecognizer()
+      ..onTap = () {
+        _showWordDialog(
+          context,
+          word: 'مِنْ خَوْفٍ',
+          arti: 'Dari rasa takut',
+          hukum: '1. Idhar Halqi\n 2. Mad layin',
+          caraBaca: '1. Karena ada huruf نْ bertemu dengan huruf خ. Cara membacanya adalah jelas di mulut.\n 2.Ada tanda baca fatkkhah bertemu dengan huruf وْ. Cara membacanya sekedar lunak dan lemas.',
+        );
+      };
+  }
 
   @override
   void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
+    _quraisyMadLayin.dispose();
+    _idharsafawi.dispose();
+    _alifLamSyamsiyah.dispose();
+    _alifLamQomariyah.dispose();
+    _qolqolahSughra.dispose();
+    _idhgamMutamasilaen.dispose();
+    _ikhfaHaqiqi.dispose();
+    _idghamBighunnah.dispose();
+    _alifLamSyamsiyah2.dispose();
+    _madLayin.dispose();
+    _idghamMimi.dispose();
+    _idharHalqi.dispose();
+    _audioPlayer.dispose();
     super.dispose();
+  }
+
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await _audioPlayer.pause();
+    } else {
+      await _audioPlayer.play(AssetSource('audio/quraisy.wav'));
+    }
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
   }
 
   @override
@@ -41,278 +211,205 @@ class _LearningQuraisfullWidgetState
     double width = MediaQuery.sizeOf(context).width;
     double height = MediaQuery.sizeOf(context).height;
 
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: Color(0xFFFAFDCB),
-        body: SafeArea(
-          top: true,
-          child: Container(
-            width: width * 3.9,
-            height: height * 8.44,
-            decoration: BoxDecoration(
-              color: Color(0xFFFAFDCB),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
-                  width: width,
-                  height: height * 0.18, // Adjusted to use percentage
-                  decoration: BoxDecoration(
-                    color: Color(0xFF037A16),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(15, 40, 15, 40),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.arrow_back_ios_rounded,
-                              color: Colors.black,
-                              size: 30,
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context); // Go back on press
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(40, 0, 43, 0),
-                          child: Text(
-                            'Surah Quraisy',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20,
-                              letterSpacing: 0.0,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(0, 0),
-                          child: IconButton(
-                            icon: FaIcon(
-                              FontAwesomeIcons.volumeHigh,
-                              color: Colors.black,
-                              size: 30,
-                            ),
-                            onPressed: () {
-                            },
-                          ),
-                        ),
-                      ],
+    return Scaffold(
+      key: scaffoldKey,
+      backgroundColor: const Color(0xFFFAFDCB),
+      body: SafeArea(
+        top: false,
+        child: Column(
+          children: [
+            // === HEADER ===
+            Container(
+              width: width,
+              height: height * 0.15,
+              color: const Color(0xFF037A16),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 40, left: 12, right: 12),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back_ios_rounded,
+                          color: Colors.black, size: 28),
+                      onPressed: () => Navigator.pop(context),
                     ),
-                  ),
+                    Expanded(
+                      child: Text(
+                        'Surah Quraisy',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20,
+                            color: Colors.black),
+                      ),
+                    ),
+                    IconButton(
+                      icon: FaIcon(
+                        _isPlaying
+                            ? FontAwesomeIcons.volumeHigh
+                            : FontAwesomeIcons.volumeOff,
+                        color: Colors.black,
+                        size: 30,
+                      ),
+                      onPressed: _playPauseAudio,
+                    ),
+                  ],
                 ),
-                // Wrap ListView with Expanded to ensure it scrolls
-                Expanded(
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      Column(
+              ),
+            ),
+
+            // === BODY ===
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.all(16),
+                children: [
+                  // Ayat 1
+                  _buildAyatCard(
+                    width,
+                    1,
+                    RichText(
+                      textDirection: TextDirection.rtl,
+                      text: TextSpan(
+                        style: GoogleFonts.inter(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
                         children: [
-                          // Surah 1
-                          _buildSurahContainer(
-                            width,
-                            height,
-                            1, // Surah 1 (odd)
-                            'Liīlāfi quraisy(in)',
-                            'Disebabkan oleh kebiasaan orang- \n orang Quraisy,',
-                            'Mad Layin',
-                            'assets/images/S_Qurais1.png',
-                            0.3, // Default height factor
-                            0.50, // 60% width for Surah 1 image
-                            0.07, // 4% height for Surah 1 image
-                            30, // Padding for Surah 1
+                          const TextSpan(text: '١. '),
+                          TextSpan(
+                            text: 'لِاِيْلٰفِ ',
+                            style: const TextStyle(color: Colors.black),
                           ),
-                          // Surah 2
-                          _buildSurahContainer(
-                            width,
-                            height,
-                            2, // Surah 2 (even)
-                            'Ilāfihim rihlatasy-syitā i was-saif(i)',
-                            ' (yaitu) kebiasaan mereka bepergian \n pada  musim dingin dan musim panas \n (sehingga  mendapatkan banyak \n keuntungan),',
-                            ' Idhar Syafawi,  Alif Lam Syamyiah,\n Ali Lam Syamsyiah, Mad Layin',
-                            'assets/images/S_Qurais2.png',
-                            0.360, // Default height factor
-                            0.76, // Default width and height for Surah 2
-                            0.05,
-                            0, // No extra padding for Surah 2
-                          ),
-                          // Surah 3
-                          _buildSurahContainer(
-                            width,
-                            height,
-                            3, // Surah 3 (odd)
-                            'Falya‘budū rabba hāżal-bait(i)',
-                            ' maka hendaklah mereka menyembah \n Tuhan  (pemilik) rumah ini \n (Ka‘bah)',
-                            'Alif  Lam Qomariah, Mad Layin',
-                            'assets/images/S_Qurais3.png',
-                            0.280, // Default height factor
-                            0.70, // Default width for Surah 3
-                            0.06,
-                            0, // No extra padding for Surah 3
-                          ),
-                          // Surah 4
-                          _buildSurahContainer(
-                            width,
-                            height,
-                            4, // Surah 4 (even)
-                            'Allażī at‘amahum min jū‘(in), wa āmana- \n hum min khauf(in)',
-                            'yang telah memberi mereka makanan \n untuk menghilangkan lapar dan \n mengamankan mereka  dari rasa \n takut.',
-                            'Qolqolah Sughro, Idghom Mimi, Ikhfa \n ,  Idghom Bighunnah, Idhar Halqi. \n Mad Layin',
-                            'assets/images/S_Qurais4.png',
-                            0.480, // Default height factor
-                            0.78, // Default width and height for Surah 4
-                            0.099,
-                            0, // No extra padding for Surah 4
+                          TextSpan(
+                            text: 'قُرَيْشٍۙ ',
+                            recognizer: _quraisyMadLayin,
+                            style: const TextStyle(color: Color(0xFF1976D2)),
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  // Reusable widget for Surah container
-  Widget _buildSurahContainer(
-      double width,
-      double height,
-      int surahIndex, // Add index for each Surah
-      String surah,
-      String meaning,
-      String hukumBacaan,
-      String imagePath,
-      double heightFactor, // Parameter for height adjustment
-      double imageWidthPercentage, // Set width percentage for image
-      double imageHeightPercentage, // Set height percentage for image
-      double surahPadding // Padding for Surah 1
-      ) {
-    // Set background color for odd and even Surah
-    Color backgroundColor = (surahIndex % 2 == 0) ? Color(0xFFDDEB9D) : Color(0xFFFAFDCB);
-
-    // Calculate width and height of image based on percentage
-    double imageWidth = width * imageWidthPercentage; // Width in percentage
-    double imageHeight = height * imageHeightPercentage; // Height in percentage
-
-    // Initialize color for hukum bacaan
-    Color hukumBacaanColor = Colors.black;
-
-    // Set colors for different hukum bacaan
-    Map<String, Color> hukumBacaanColors = {
-      'Idhar halqi': Color(0xFFF6279C),
-      'Idhar safawi': Color(0xFF746C6C),
-      'Mad Layin': Color(0xFFF8BD00),
-      'Alif Lam Qomariyah': Color(0xFFEC7700),
-      'Alif Lam Syamsiyah': Color(0xFF587DBD),
-      'Mad arid lisukun': Color(0xFF3EC1D3),
-      'Idgham Mimi (Mithlain)': Color(0xFF746C6C),
-      'Mad lazim mutsaqqal kilmi': Color(0xFF107A88),
-    };
-
-    // Check if the hukumBacaan is in the map, otherwise default to black
-    hukumBacaanColor = hukumBacaanColors[hukumBacaan] ?? Colors.black;
-
-    return Container(
-      width: width * 2,
-      height: height * heightFactor,  // Dynamic height based on heightFactor
-      decoration: BoxDecoration(
-        color: backgroundColor,  // Use dynamic color based on surah index
-      ),
-      child: Padding(
-        padding: EdgeInsetsDirectional.only(top: surahPadding), // Set top padding for Surah 1
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(60, 20, 0, 0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      imagePath,
-                      width: imageWidth,  // Use dynamic width
-                      height: imageHeight,  // Use dynamic height
-                      fit: BoxFit.cover,
                     ),
+                    'Liīlāfi qurāyish(in).',
+                    'Disebabkan oleh kebiasaan orang-orang Quraisy.',
+                    'Mad Layin',
                   ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20, 25, 20, 0),
-              child: Row(
-                children: [
-                  Text(
-                    surah,
-                    style: GoogleFonts.notoNaskhArabic(
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF037A16),
-                      fontSize: 17,
-                      letterSpacing: 0.0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20, 8, 20, 0),
-              child: Row(
-                children: [
-                  Text(
-                    'Artinya: $meaning',
-                    style: GoogleFonts.notoNaskhArabic(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                      letterSpacing: 0.0,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 13, 0, 0),
-                    child: Text(
-                      'Hukum bacaan:',
-                      style: GoogleFonts.notoNaskhArabic(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                        fontSize: 12,
-                        letterSpacing: 0.0,
+                  const SizedBox(height: 16),
+
+                  // Ayat 2
+                  _buildAyatCard(
+                    width,
+                    2,
+                    RichText(
+                      textDirection: TextDirection.rtl,
+                      text: TextSpan(
+                        style: GoogleFonts.inter(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                        children: [
+                          const TextSpan(text: '٢. '),
+                          TextSpan(
+                            text: 'اٖلٰفِهِمْ رِِۚ',
+                            recognizer: _idharsafawi,
+                            style: const TextStyle(color: Color(0xFF746C6C)),
+                          ),
+                          TextSpan(
+                            text: 'حْلَةَ ا',
+                            style: const TextStyle(color: Colors.black),
+                          ),
+                          TextSpan(
+                            text: 'لشِّتَاۤءِ',
+                            recognizer: _alifLamSyamsiyah,
+                            style: const TextStyle(color: Color(0xFF587DBD)),
+                          ),
+                          TextSpan(
+                            text: 'وَالصَّيْفِۚ',
+                            recognizer: _alifLamSyamsiyah2,
+                            style: const TextStyle(color: Color(0xFF587DBD)),
+                          ),
+                        ],
                       ),
                     ),
+                    'Ilāfihim riḥlatasy-syitā i was-saif(i).',
+                    'Yaitu kebiasaan mereka bepergian pada musim dingin dan musim panas.',
+                    'Idhar Safawi, Alif Lam Syamsiyah, Mad Layin',
                   ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(3, 13, 0, 0),
-                    child: Text(
-                      hukumBacaan,
-                      style: GoogleFonts.notoNaskhArabic(
-                        fontWeight: FontWeight.w600,
-                        color: hukumBacaanColor,  // Use the dynamic color here
-                        fontSize: 12,
-                        letterSpacing: 0.0,
+                  const SizedBox(height: 16),
+
+                  // Ayat 3
+                  _buildAyatCard(
+                    width,
+                    3,
+                    RichText(
+                      textDirection: TextDirection.rtl,
+                      text: TextSpan(
+                        style: GoogleFonts.inter(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                        children: [
+                          const TextSpan(text: '٣. '),
+                          TextSpan(
+                            text: 'فَلْيَعْبُدُوْا رَبَّ هٰذَا',
+                            style: const TextStyle(color: Colors.black),
+                          ),
+                          TextSpan(
+                            text: 'الْبَيْتِۙ',
+                            recognizer: _alifLamQomariyah,
+                            style: const TextStyle(color: Color(0xFFEC7700)),
+                          ),
+                        ],
                       ),
                     ),
+                    'Faly‘budū rabba hāżal-bait(i).',
+                    'Maka hendaklah mereka menyembah Tuhan (pemilik) rumah ini (Ka‘bah).',
+                    'Alif Lam Qomariyah, Mad Layin',
+                  ),
+                  const SizedBox(height: 16),
+
+                  // 4th Ayah (New part)
+                  _buildAyatCard(
+                    width,
+                    4,
+                    RichText(
+                      textDirection: TextDirection.rtl,
+                      text: TextSpan(
+                        style: GoogleFonts.inter(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                        children: [
+                          const TextSpan(text: '٤. '),
+                          TextSpan(
+                            text: 'الَّذِيْٓ',
+                            style: const TextStyle(color: Colors.black),
+                          ),
+                          TextSpan(
+                            text: ' أَطْعَمَهُمْ',
+                            recognizer: _qolqolahSughra,
+                            style: const TextStyle(color: Color(0xFF037A16)),
+                          ),
+                          const TextSpan(text: ' '), // Add space between words
+                          TextSpan(
+                            text: 'مِنْ جُوْعٍ ',
+                            recognizer: _ikhfaHaqiqi,
+                            style: const TextStyle(color: Color(0xFF910D0D)),
+                          ),
+                          TextSpan(
+                            text: 'وَٰٓمَنَهُمْ',
+                            recognizer: _idghamMimi,
+                            style: const TextStyle(color: Color(0xFF910D0D)),
+                          ),
+                          const TextSpan(text: ' '), // Add space between words
+                          TextSpan(
+                            text: 'مِنْ خَوْفٍ',
+                            recognizer: _idharHalqi,
+                            style: const TextStyle(color: Color(0xFFF6279C)),
+                          ),
+                        ],
+                      ),
+                    ),
+                    'Allāzi aṭ‘amahuṁ min jū‘in wa āmanahum min khauf(in).',
+                    'Yang telah memberi mereka makanan untuk menghilangkan lapar dan mengamankan mereka dari rasa takut.',
+                    'Qolqolah Sughra, Idgham Mutamasilaen, Ikhfa Haqiqi, Idgham Bighunnah',
                   ),
                 ],
               ),
@@ -320,6 +417,82 @@ class _LearningQuraisfullWidgetState
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildAyatCard(
+      double width, int ayatIndex, dynamic arabic, String latin, String arti, String hukum) {
+    Color bgColor =
+    (ayatIndex % 2 != 0) ? const Color(0xFFFAFDCB) : const Color(0xFFDDEB9D);
+    return Container(
+      width: width,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: const [
+          BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(2, 4))
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          arabic,
+          const SizedBox(height: 12),
+          Text(
+            latin,
+            textAlign: TextAlign.justify,
+            style: GoogleFonts.inter(
+                fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            arti,
+            textAlign: TextAlign.justify,
+            style: GoogleFonts.inter(fontSize: 14),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Hukum Bacaan: $hukum',
+            textAlign: TextAlign.justify,
+            style: GoogleFonts.inter(
+                fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showWordDialog(BuildContext context,
+      {required String word,
+        required String arti,
+        required String hukum,
+        required String caraBaca}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: const Color(0xFFFAFDCB),
+          title: Text(word,
+              style: GoogleFonts.inter(fontWeight: FontWeight.bold)),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Arti: $arti'),
+              const SizedBox(height: 8),
+              Text('Hukum Bacaan:\n$hukum'),
+              const SizedBox(height: 8),
+              Text('Cara Membaca:\n$caraBaca'),
+            ],
+          ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Tutup')),
+          ],
+        );
+      },
     );
   }
 }
