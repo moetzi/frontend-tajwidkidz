@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:untitled/Game/view/game%20tajwid/game_tajwid.dart';
 import 'package:untitled/Game/view/game%20tajwid/game_tajwid_2.dart';
-import 'package:untitled/Game/view/susun%20huruf/susun_huruf_game.dart';
-import 'package:untitled/Game/view/susun%20huruf/susun_huruf_game_2.dart';
-import 'package:untitled/Game/view/susun%20huruf/susun_huruf_game_3.dart';
-
 import 'package:untitled/Game/widgets/level_card.dart';
 
 class GameTajwidLevelScreen extends StatelessWidget {

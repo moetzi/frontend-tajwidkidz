@@ -35,7 +35,8 @@ class QuestionAnswer {
 }
 
 class SusunHurufViewmodel2 extends ChangeNotifier {
-  final List<HijaiyahQuestion> _questions = susunHurufQuestions2;
+  final List<HijaiyahQuestion> _allQuestions = susunHurufQuestions2;
+  List<HijaiyahQuestion> _questions = [];
   int _currentQuestionIndex = 0;
   int _score = 0;
   int correctAnswers = 0;
@@ -53,6 +54,20 @@ class SusunHurufViewmodel2 extends ChangeNotifier {
   final Set<int> _answeredQuestions = {};
 
   VoidCallback? onGameFinished;
+
+  SusunHurufViewmodel2() {
+    _initializeGameQuestions();
+  }
+
+  // BARU: Method untuk mengacak dan menyiapkan soal untuk game
+  void _initializeGameQuestions() {
+    // 1. Buat salinan dari master data soal
+    final tempList = List<HijaiyahQuestion>.from(_allQuestions);
+    // 2. Acak urutan salinan tersebut
+    tempList.shuffle();
+    // 3. Gunakan list yang sudah diacak sebagai soal untuk game
+    _questions = tempList;
+  }
 
   List<HijaiyahQuestion> get questions => _questions;
   int get currentQuestionIndex => _currentQuestionIndex;
@@ -180,6 +195,7 @@ class SusunHurufViewmodel2 extends ChangeNotifier {
   }
 
   void resetGame() {
+    _initializeGameQuestions(); // <-- PASTIKAN baris ini sudah Anda tambahkan
     _currentQuestionIndex = 0;
     _score = 0;
     correctAnswers = 0;
