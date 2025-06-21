@@ -13,7 +13,8 @@ class TajwidAnswer2 {
 }
 
 class GameTajwid2ViewModel extends ChangeNotifier {
-  final List<TajwidLevel2Question> _questions = tajwidLevel2Questions;
+  final List<TajwidLevel2Question> _allQuestions = tajwidLevel2Questions;
+  List<TajwidLevel2Question> _questions = [];
   int _currentIndex = 0;
   int _score = 0;
   int _correctAnswers = 0;
@@ -34,6 +35,20 @@ class GameTajwid2ViewModel extends ChangeNotifier {
   bool get isQuestionAnswered => _answers.containsKey(_currentIndex);
 
   VoidCallback? onGameFinished;
+
+  GameTajwid2ViewModel() {
+    _initializeGameQuestions();
+  }
+
+  // BARU: Method untuk mengacak dan menyiapkan soal untuk game
+  void _initializeGameQuestions() {
+    // 1. Buat salinan dari master data soal
+    final tempList = List<TajwidLevel2Question>.from(_allQuestions);
+    // 2. Acak urutan salinan tersebut
+    tempList.shuffle();
+    // 3. Gunakan list yang sudah diacak sebagai soal untuk game
+    _questions = tempList;
+  }
 
   Future<void> startListening() async {
     if (isQuestionAnswered) return;
