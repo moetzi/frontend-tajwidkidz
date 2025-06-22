@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'm1ba.dart';  // Import LearningBaWidget for the previous level
 import 'm1tsa.dart';
 
@@ -19,7 +20,10 @@ class _LearningTaWidgetState extends State<LearningTaWidget> {
   final FocusNode _textFieldFocusNode = FocusNode();
 
   int selectedIndex = 1; // Index for the BottomNavigationBar
+  final AudioPlayer _audioPlayer = AudioPlayer(); // Buat final karena tidak diubah
+  bool _isPlaying = false; // Track audio playing state
 
+  // Function to handle bottom navigation
   void onTabTapped(int index) {
     setState(() {
       selectedIndex = index;
@@ -32,7 +36,20 @@ class _LearningTaWidgetState extends State<LearningTaWidget> {
   void dispose() {
     _textController.dispose();
     _textFieldFocusNode.dispose();
+    _audioPlayer.dispose();
     super.dispose();
+  }
+
+  // Function to play/pause audio
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await _audioPlayer.pause();
+    } else {
+      await _audioPlayer.play(AssetSource('audios/modul1/ta_3.wav'));
+    }
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
   }
 
   @override
@@ -73,9 +90,7 @@ class _LearningTaWidgetState extends State<LearningTaWidget> {
                           color: Colors.black,
                           size: 30,
                         ),
-                        onPressed: () {
-                          // TODO: Add play audio functionality here
-                        },
+                        onPressed: _playPauseAudio,
                       ),
                     ],
                   ),

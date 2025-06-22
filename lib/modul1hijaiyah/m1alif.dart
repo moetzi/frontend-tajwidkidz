@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'm1ba.dart'; // Import LearningBaWidget
-import 'package:audioplayers/audioplayers.dart'; // Import audioplayers package
 
 class LearningAlifWidget extends StatefulWidget {
   const LearningAlifWidget({super.key});
@@ -59,7 +59,7 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
       await _audioPlayer.pause();
     } else {
       // Perbaiki penggunaan volume icon dan play AssetSource dengan path relatif benar
-      await _audioPlayer.play(AssetSource('audios/alif_1.wav'));
+      await _audioPlayer.play(AssetSource('audios/modul1/alif_1.wav'));
     }
     setState(() {
       _isPlaying = !_isPlaying;

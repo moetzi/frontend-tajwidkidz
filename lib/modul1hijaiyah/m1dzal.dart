@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'm1dal.dart';  // Import LearningKhoWidget (previous level)
 import 'm1ra.dart';   // Import LearningRaWidget (next level)
 
@@ -19,6 +20,8 @@ class _LearningDzalWidgetState extends State<LearningDzalWidget> {
   final FocusNode _textFieldFocusNode = FocusNode();
 
   int selectedIndex = 1; // Index for the BottomNavigationBar
+  final AudioPlayer _audioPlayer = AudioPlayer(); // Buat final karena tidak diubah
+  bool _isPlaying = false; // Track audio playing state
 
   // Function to handle bottom navigation
   void onTabTapped(int index) {
@@ -33,7 +36,20 @@ class _LearningDzalWidgetState extends State<LearningDzalWidget> {
   void dispose() {
     _textController.dispose();
     _textFieldFocusNode.dispose();
+    _audioPlayer.dispose();
     super.dispose();
+  }
+
+  // Function to play/pause audio
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await _audioPlayer.pause();
+    } else {
+      await _audioPlayer.play(AssetSource('audios/modul1/dzal_8.wav'));
+    }
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
   }
 
   @override
@@ -76,9 +92,7 @@ class _LearningDzalWidgetState extends State<LearningDzalWidget> {
                           color: Colors.black,
                           size: 30,
                         ),
-                        onPressed: () {
-                          // TODO: Add play audio functionality here
-                        },
+                        onPressed: _playPauseAudio,
                       ),
                     ],
                   ),
