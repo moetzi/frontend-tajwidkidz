@@ -1,17 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:untitled/Game/models/question_model.dart';
 import 'package:untitled/Game/view/result_screen.dart';
 import 'package:untitled/Game/viewmodel/tebak%20huruf/tebak_huruf_viewmodel3.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 bool isArabic(String text) {
   final arabicRegex = RegExp(r'[\u0600-\u06FF]');
   return arabicRegex.hasMatch(text);
 }
 
-class TebakHurufGame3 extends StatelessWidget {
+class TebakHurufGame3 extends StatefulWidget {
   const TebakHurufGame3({super.key});
+
+  @override
+  State<TebakHurufGame3> createState() => _TebakHurufGame3State();
+}
+
+class _TebakHurufGame3State extends State<TebakHurufGame3> {
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
+  Future<void> _speak(String? fileName) async {
+    if (fileName == null || fileName.isEmpty) return;
+    await _audioPlayer.stop();
+    await _audioPlayer.play(AssetSource('audios/modul1/$fileName'));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +120,6 @@ class TebakHurufGame3 extends StatelessWidget {
   // UI Tipe 1: LIHAT HURUF VISUAL, PILIH OPSI AUDIO
   Widget _buildUI_LihatHurufPilihAudio(BuildContext context, TebakHurufViewmodel3 controller) {
     final question = controller.currentQuestion;
-    final flutterTts = FlutterTts();
     
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -119,7 +137,7 @@ class TebakHurufGame3 extends StatelessWidget {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, childAspectRatio: 2.0, crossAxisSpacing: 12, mainAxisSpacing: 12),
           itemBuilder: (context, index) {
-            return _buildAudioOptionBox(context, controller, question.options[index], flutterTts);
+            return _buildAudioOptionBox(context, controller, question.options[index], question.optionsAudioPath![index]);
           },
         ),
         const SizedBox(height: 20),
@@ -141,7 +159,6 @@ class TebakHurufGame3 extends StatelessWidget {
   // UI Tipe 2: DENGAR AUDIO + LIHAT GAMBAR/NOTES, PILIH OPSI TEKS
   Widget _buildUI_DengarAudioPilihTeks(BuildContext context, TebakHurufViewmodel3 controller) {
     final question = controller.currentQuestion;
-    final flutterTts = FlutterTts();
     
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -157,7 +174,7 @@ class TebakHurufGame3 extends StatelessWidget {
               ElevatedButton.icon(
                 icon: const Icon(Icons.volume_up),
                 label: const Text("Dengarkan Soal"),
-                onPressed: () => _speak(question.questionWord ?? '', flutterTts),
+                onPressed: () => _speak(question.audioPath),
               ),
               if (question.questionImagePath != null)
                 Padding(
@@ -210,7 +227,7 @@ class TebakHurufGame3 extends StatelessWidget {
     );
   }
 
-  Widget _buildAudioOptionBox(BuildContext context, TebakHurufViewmodel3 controller, String option, FlutterTts tts) {
+  Widget _buildAudioOptionBox(BuildContext context, TebakHurufViewmodel3 controller, String option, String optionAudioPath) {
     final isAnswered = controller.isAnswered;
     final isTentativelySelected = controller.tentativeSelectedAnswer == option;
     Color borderColor = Colors.grey.shade300;
@@ -229,7 +246,7 @@ class TebakHurufGame3 extends StatelessWidget {
     }
     return InkWell(
       onTap: isAnswered ? null : () {
-        _speak(option, tts);
+        _speak(optionAudioPath);
         controller.selectOption(option); // Memilih sementara
       },
       child: Container(
@@ -290,9 +307,4 @@ class TebakHurufGame3 extends StatelessWidget {
     );
   }
 
-  Future<void> _speak(String text, FlutterTts tts) async {
-    await tts.setLanguage("ar");
-    await tts.setPitch(1.0);
-    await tts.speak(text);
-  }
 }
