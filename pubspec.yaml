@@ -113,6 +113,8 @@ flutter:
     - assets/audios/susun_huruf/level1/
     - assets/audios/susun_huruf/level2/
     - assets/audios/susun_huruf/level3/
+    - assets/audios/tajwid/level1/
+    - assets/audios/tajwid/level2/
 #    - assets/videos/
 #    - assets/audios/
 #    - assets/rive_animations/
