@@ -79,11 +79,13 @@ class TajwidQuestion {
   final String question;
   final String word;
   final String correctAnswer;
+  final String audioPath;
 
   TajwidQuestion({
     required this.question,
     required this.word,
     required this.correctAnswer,
+    required this.audioPath,
   });
 }
 
@@ -106,6 +108,8 @@ class TajwidLevel2Question {
   // Feedback jika ucapan pengguna salah
   final String correctiveFeedback;
 
+  final String audioPath;
+
   TajwidLevel2Question({
     required this.ruleName,
     required this.verse,
@@ -113,5 +117,6 @@ class TajwidLevel2Question {
     required this.correctAnswer,
     required this.positiveFeedback,
     required this.correctiveFeedback,
+    required this.audioPath,
   });
 }

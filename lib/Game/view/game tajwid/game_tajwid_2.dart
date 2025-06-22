@@ -3,9 +3,29 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/Game/view/result_screen.dart';
 import 'package:untitled/Game/viewmodel/game_tajwid/game_tajwid_viewmodel2.dart';
+import 'package:audioplayers/audioplayers.dart';
 
-class GameTajwid2 extends StatelessWidget {
+class GameTajwid2 extends StatefulWidget {
   const GameTajwid2({super.key});
+
+  @override
+  State<GameTajwid2> createState() => _GameTajwid2State();
+}
+
+class _GameTajwid2State extends State<GameTajwid2> {
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
+  Future<void> _speak(String? fileName) async {
+    if (fileName == null || fileName.isEmpty) return;
+    await _audioPlayer.stop();
+    await _audioPlayer.play(AssetSource('audios/tajwid/level2/$fileName'));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,9 +106,8 @@ class GameTajwid2 extends StatelessWidget {
                               children: [
                                 _buildInteractionButton(
                                   iconPath: 'assets/images/icon_speaker.png',
-                                  onTap: () async {
-                                    await flutterTts.setLanguage("ar");
-                                    await flutterTts.speak(question.verse);
+                                  onTap: () {
+                                    _speak(question.audioPath);
                                   },
                                 ),
                                 const SizedBox(height: 24),
@@ -117,9 +136,10 @@ class GameTajwid2 extends StatelessWidget {
                               width: double.infinity,
                               height: 48,
                               child: ElevatedButton(
-                                onPressed: controller.isQuestionAnswered // PERBAIKAN DI SINI
-                                    ? () => controller.nextQuestion()
-                                    : null,
+                                // onPressed: controller.isQuestionAnswered // PERBAIKAN DI SINI
+                                //     ? () => controller.nextQuestion()
+                                //     : null,
+                                onPressed: () { controller.nextQuestion(); },
                                 child: const Text('Lanjut', style: TextStyle(fontSize: 16)),
                               ),
                             ),
