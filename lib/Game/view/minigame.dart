@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/Game/view/game%20tajwid/game_tajwid.dart';
 import 'package:untitled/Game/view/game%20tajwid/game_tajwid_level_screen.dart';
 import 'package:untitled/Game/view/susun%20huruf/susun_huruf_level_screen.dart';
 import 'package:untitled/Game/view/tebak%20huruf/tebak_huruf_level_screen.dart';
@@ -13,8 +12,17 @@ class MiniGameWidget extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(170, 219, 233, 1),
       appBar: AppBar(
-        title: Text('Mini Game'),
+        title: const Text(
+          'Mini Game',
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
         backgroundColor: Color(0xFF037A16),
+        elevation: 0,
+        centerTitle: true,
       ),
       
       body: SafeArea(
