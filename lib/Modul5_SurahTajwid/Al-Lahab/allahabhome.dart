@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// Pastikan import widget tujuan sudah benar dan file tersedia
-import 'allahab.dart'; // Contoh file tempat LearningAllahabfullWidget berada
-import 'allahab1.dart';    // Contoh file tempat LearningAllahab1Widget berada
+// Import the required widgets for routing
+import 'allahab.dart'; // Import LearningAlLahabFullWidget
+import 'allahab1.dart'; // Import LearningAllahab1Widget
 
 class LearningAllahabHomeWidget extends StatefulWidget {
   const LearningAllahabHomeWidget({super.key});
@@ -17,7 +16,8 @@ class LearningAllahabHomeWidget extends StatefulWidget {
       _LearningAllahabHomeWidgetState();
 }
 
-class _LearningAllahabHomeWidgetState extends State<LearningAllahabHomeWidget> {
+class _LearningAllahabHomeWidgetState
+    extends State<LearningAllahabHomeWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -31,13 +31,15 @@ class _LearningAllahabHomeWidgetState extends State<LearningAllahabHomeWidget> {
         backgroundColor: const Color(0xFFFAFDCB),
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              color: const Color(0xFFFAFDCB),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15),
+            child: Column(
+              children: [
+                // === HEADER with dark green background that reaches the top ===
+                Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * 0.18, // Reduced header height
+                  color: const Color(0xFF037A16), // Dark green header background
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Row(
                       children: [
                         IconButton(
@@ -46,105 +48,124 @@ class _LearningAllahabHomeWidgetState extends State<LearningAllahabHomeWidget> {
                             color: Colors.black,
                             size: 30,
                           ),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                        const Spacer(),
-                        IconButton(
-                          icon: const FaIcon(
-                            FontAwesomeIcons.volumeHigh,
-                            color: Colors.black,
-                            size: 30,
-                          ),
                           onPressed: () {
-                            // TODO: volume button action
+                            Navigator.pop(context);
                           },
                         ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'Level 5 : Belajar Membaca\nSurah dengan Tajwid',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 80),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Column(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                const LearningAllahabfullWidget(),
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFF2CE31),
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            textStyle: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            'Level 5 : Belajar Membaca\nSurah dengan Tajwid',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
                               color: Colors.black,
                             ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              Icon(Icons.library_books_sharp, size: 15),
-                              SizedBox(width: 5),
-                              Text('Surah Al - Lahab'),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                const LearningAllahab1Widget(),
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFF2CE31),
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            textStyle: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              Icon(Icons.library_books_sharp, size: 15),
-                              SizedBox(width: 5),
-                              Text('Belajar Membaca Surah Al - Lahab'),
-                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 30),
-                ],
-              ),
+                ),
+
+                // === CONTENT SECTION ===
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          '"Di level ini, kamu akan belajar membaca surat-surat pendek dalam Al-Qur’an dengan benar sesuai dengan hukum tajwid yang telah kamu pelajari sebelumnya."',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15,
+                            color: Colors.black, // Ensuring the text color is black
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 50),
+
+                // === BUTTONS ===
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      // Button for Learning Surah Al-Lahab
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                              const LearningAlLahabFullWidget(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFF2CE31),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Row(
+                          children: const [
+                            Icon(Icons.library_books_sharp, size: 15),
+                            SizedBox(width: 5),
+                            Text(
+                              'Surah Al - Lahab',
+                              style: TextStyle(
+                                fontSize: 18, // Adjusted font size for consistency
+                                color: Colors.black, // Text color set to black
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
+                      // Button for Learning Surah Al-Lahab 1
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                              const LearningAllahab1Widget(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFF2CE31),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Row(
+                          children: const [
+                            Icon(Icons.library_books_sharp, size: 15),
+                            SizedBox(width: 5),
+                            Text(
+                              'Belajar Membaca Surah Al - Lahab',
+                              style: TextStyle(
+                                fontSize: 18, // Adjusted font size for consistency
+                                color: Colors.black, // Text color set to black
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),

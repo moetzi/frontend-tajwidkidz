@@ -147,7 +147,7 @@ class _LearningAlasr1WidgetState extends State<LearningAlasr1Widget> {
 
                   Container(
                     width: width * 0.9,
-                    height: 430,
+                    height: 450,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),

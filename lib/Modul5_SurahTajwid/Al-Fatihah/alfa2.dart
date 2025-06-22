@@ -132,7 +132,7 @@ class _LearningAlfatihah2WidgetState extends State<LearningAlfatihah2Widget> {
                 const SizedBox(height: 20),
                 Container(
                   width: width * 0.9,
-                  height: height * 0.65,
+                  height: height * 0.6,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8),

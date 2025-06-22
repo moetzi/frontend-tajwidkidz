@@ -148,7 +148,7 @@ class _LearningQurais4WidgetState extends State<LearningQurais4Widget> {
 
                   Container(
                     width: width * 0.9,
-                    height: 1050,
+                    height: 1100,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),

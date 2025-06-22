@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/Game/view/minigame.dart';
-import 'homepage.dart';
+import 'package:untitled/Game/view/minigame.dart'; // Sesuaikan path ini
+import 'homepage.dart'; // Import HomePageWidget, sesuaikan pathnya
 
 void main() {
   runApp(const LeaderboardApp());
