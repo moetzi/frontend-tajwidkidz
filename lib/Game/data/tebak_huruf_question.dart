@@ -266,7 +266,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     questionWord: "ذ",
     options: ["za", "da", "dza", "tho"],
     correctAnswer: "dza",
-    feedbackImagePath: "assets/images/hijaiyah/dzal.png",
+    feedbackImagePath: "assets/images/hijaiyah/dza.png",
     feedbackNotes: "Keluar dari dua tepi ujung lidah dari arah permukaan atasnya menyentuh ujung dua gigi seri atas.",
     optionsAudioPath: ["za_10.wav","dal_7.wav","dzal_8.wav","tha_15.wav"],
   ),
