@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'hahihu1.dart';
-import 'package:audioplayers/audioplayers.dart'; // Import audioplayers package
+import 'package:audioplayers/audioplayers.dart'; // Ensure this is added to your pubspec.yaml
+import 'hahihu1.dart'; // Import the previous level widget // Import the next level widget
+import 'package:untitled/learning.dart';
 
 class LearningYaYiYuWidget extends StatefulWidget {
-  const  LearningYaYiYuWidget({super.key});
+  const LearningYaYiYuWidget    ({super.key});
 
   static String routeName = 'Learningyayiyu';
   static String routePath = '/learningyayiyu';
@@ -14,244 +15,160 @@ class LearningYaYiYuWidget extends StatefulWidget {
   State<LearningYaYiYuWidget> createState() => _LearningYaYiYuWidgetState();
 }
 
-class _LearningYaYiYuWidgetState extends State<LearningYaYiYuWidget>  {
-  final TextEditingController _textController = TextEditingController();
-  final FocusNode _textFieldFocusNode = FocusNode();
-
-  int selectedIndex = 1; // Index for the BottomNavigationBar
-  final AudioPlayer _audioPlayer = AudioPlayer(); // Buat final karena tidak diubah
+class _LearningYaYiYuWidgetState extends State<LearningYaYiYuWidget> {
+  final AudioPlayer _audioPlayer = AudioPlayer(); // Audio player instance
   bool _isPlaying = false; // Track audio playing state
 
-  // Function to handle bottom navigation
-  void onTabTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-
-    // Navigate to the corresponding screen
-    switch (index) {
-      case 0:
-        Navigator.pushNamed(context, '/home');
-        break;
-      case 1:
-      // current screen
-        break;
-      case 2:
-        Navigator.pushNamed(context, '/progress');
-        break;
-      case 3:
-        Navigator.pushNamed(context, '/account');
-        break;
-    }
-  }
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
-    super.dispose();
-  }
-
-  // Function to play/pause audio
-  void _playPauseAudio() async {
+  // Function to handle play/pause audio
+  Future<void> _playPauseAudio() async {
     if (_isPlaying) {
-      await _audioPlayer.pause();
+      await _audioPlayer.pause(); // Pause the audio
     } else {
-      // Perbaiki penggunaan volume icon dan play AssetSource dengan path relatif benar
-      await _audioPlayer.play(AssetSource('audios/alif_1.wav'));
+      await _audioPlayer.play(AssetSource('audios/modul3/Ya Yi Yu.mp4')); // Play the Ja Ji Ju sound
     }
     setState(() {
       _isPlaying = !_isPlaying;
     });
   }
 
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+
+  // Function to handle bottom navigation
+  void onTabTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose(); // Dispose audio player
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () {
         FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
         backgroundColor: const Color(0xFFFAFDCB),
         appBar: AppBar(
-          title: const Text('Level 3 Belajar Mengenal \n Huruf Hijaiyah Ba Bi Bu'),
           backgroundColor: const Color(0xFF037A16),
           elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_rounded, size: 30, color: Colors.white),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LearningWidget()), // Fix the navigation
+              );
+            },
+          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  'Level 3: Belajar mengenal \n Huruf Hijaiyah (Fonetik)',
+                  style: const TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(width: 10),
+              IconButton(
+                icon: FaIcon(
+                  _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onPressed: _playPauseAudio, // Play or pause audio when pressed
+              ),
+            ],
+          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(15, 47, 15, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+              decoration: const BoxDecoration(color: Color(0xFFFAFDCB)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+
+                  const SizedBox(height: 10),
+
+                  // Title and subtitle
+                  Column(
                     children: [
-                      IconButton(
-                        icon: const Icon(
-                          Icons.arrow_back_ios_rounded,
-                          color: Colors.black,
-                          size: 30,
+                      Text(
+                        'Belajar mengenal \n Huruf Hijaiyah (Ya Yi Yu)',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
                         ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+
                       ),
-                      IconButton(
-                        icon: FaIcon(
-                          _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff, // pakai volumeHigh bukan volumeUp
-                          color: Colors.black,
-                          size: 30,
+                      const SizedBox(height: 8),
+                      Text(
+                        'Ya',
+                        style: GoogleFonts.inter(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
                         ),
-                        onPressed: _playPauseAudio,
                       ),
                     ],
                   ),
-                ),
 
-                const SizedBox(height: 10),
+                  const SizedBox(height: 20),
 
-                Column(
-                  children: [
-                    Text(
-                      'Level 3: Belajar Mengenal Huruf \n Hijaiyah dengan Metode Fonetik',
-                      style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Ya',
-                      style: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 35),
-
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(60, 0, 60, 0),
-                  child: Row(
+                  // Navigation rewind and forward
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        icon: const Icon(
-                          Icons.fast_rewind,
-                          color: Colors.black,
-                          size: 25,
-                        ),
+                        icon: const Icon(Icons.fast_rewind, color: Colors.black, size: 30),
                         onPressed: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => LearningHaHiHu1Widget()),
+                            MaterialPageRoute(builder: (context) => const LearningHaHiHu1Widget()),
                           );
                         },
                       ),
                       IconButton(
-                        icon: const Icon(
-                          Icons.fast_forward,
-                          color: Colors.black,
-                          size: 25,
-                        ),
+                        icon: const Icon(Icons.fast_forward, color: Colors.black, size: 30),
                         onPressed: () {
                         },
                       ),
                     ],
                   ),
-                ),
 
-                const SizedBox(height: 20),
+                  const SizedBox(height: 10),
 
-                Container(
-                  width: MediaQuery.sizeOf(context).width * 0.9,
-                  height: 310,
-                  decoration: const BoxDecoration(color: Colors.white),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      'assets/images/Yayiyu.png',
-                      width: 333.9,
-                      height: 207.2,
-                      fit: BoxFit.cover,
+                  // Image
+                  Container(
+                    width: MediaQuery.sizeOf(context).width * 0.9,
+                    height: 320,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Theme.of(context).secondaryHeaderColor,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.asset(
+                        'assets/images/Yayiyu.png',
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-
-                const SizedBox(height: 15),
-
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(60, 0, 60, 0),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.mic_sharp,
-                        color: Colors.black,
-                        size: 30,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        'Coba Ucapkan Huruf \n Harakat!',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 15),
-
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(50, 0, 50, 0),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Feedback AI: ',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _textController,
-                          focusNode: _textFieldFocusNode,
-                          autofocus: false,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            hintText: '...............',
-                            hintStyle: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.transparent, width: 1),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.transparent, width: 1),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            filled: true,
-                            fillColor: const Color(0xFFFAFDCB),
-                          ),
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w600,
-                          ),
-                          cursorColor: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
