@@ -3,9 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'm1jim.dart';  // Import LearningJimWidget (previous material)
 import 'm1kho.dart';  // Import LearningKhoWidget (next material)
-import 'package:audioplayers/audioplayers.dart';
-import '../model/audio_model.dart';       // your AudioModel class
-import '../controller/audio_controller.dart';  // your AudioController class
+import 'package:audioplayers/audioplayers.dart'; // Import audioplayers package
+import 'package:TajwidKidz/learning.dart';
+
 class LearningHaWidget extends StatefulWidget {
   const LearningHaWidget({super.key});
 
@@ -21,24 +21,18 @@ class _LearningHaWidgetState extends State<LearningHaWidget> {
   final FocusNode _textFieldFocusNode = FocusNode();
 
   int selectedIndex = 1; // Index for the BottomNavigationBar
+  final AudioPlayer _audioPlayer = AudioPlayer(); // Audio player instance
   bool _isPlaying = false; // Track audio playing state
 
-  // Instantiate AudioModel and AudioController for Alif audio
-  late final AudioModel haAudioModel;
-  late final AudioController audioController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    haAudioModel = AudioModel(label: 'Ha', fileName: 'Modul1/ha_6.wav');
-    audioController = AudioController();
-
-    // Listen to player state changes to update UI
-    audioController.playerStateStream.listen((state) {
-      setState(() {
-        _isPlaying = state == PlayerState.playing;
-      });
+  // Function to handle play/pause audio for speaker button
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await _audioPlayer.pause(); // Pause the audio
+    } else {
+      await _audioPlayer.play(AssetSource('audios/modul1/ha_6.wav')); // Play the ha sound
+    }
+    setState(() {
+      _isPlaying = !_isPlaying;
     });
   }
 
@@ -47,20 +41,6 @@ class _LearningHaWidgetState extends State<LearningHaWidget> {
     setState(() {
       selectedIndex = index;
     });
-
-    switch (index) {
-      case 0:
-        Navigator.pushNamed(context, '/home');
-        break;
-      case 1:
-        break;
-      case 2:
-        Navigator.pushNamed(context, '/progress');
-        break;
-      case 3:
-        Navigator.pushNamed(context, '/account');
-        break;
-    }
   }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -69,17 +49,8 @@ class _LearningHaWidgetState extends State<LearningHaWidget> {
   void dispose() {
     _textController.dispose();
     _textFieldFocusNode.dispose();
-    // no need to dispose AudioController since it doesn't expose dispose
+    _audioPlayer.dispose(); // Dispose audio player
     super.dispose();
-  }
-
-  // Use AudioController to play/pause audio from model
-  void _playPauseAudio() async {
-    if (_isPlaying) {
-      await audioController.pause();
-    } else {
-      await audioController.play(haAudioModel.fileName);
-    }
   }
 
   @override
@@ -90,73 +61,80 @@ class _LearningHaWidgetState extends State<LearningHaWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Color(0xFFFAFDCB),
+        backgroundColor: const Color(0xFFFAFDCB),
         appBar: AppBar(
-          title: Text('Level 1 Belajar Huruf Hijaiyah'),
-          backgroundColor: Color(0xFF037A16),
+          backgroundColor: const Color(0xFF037A16),
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_rounded, size: 30, color: Colors.white),
+            onPressed: () {
+              // Navigate directly to Learning.dart when back button is pressed
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LearningWidget()), // Replace with LearningWidget
+              );
+            },
+          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'Level 1 Belajar Huruf \n Hijaiyah',
+                  style: const TextStyle(
+                    color: Colors.white,  // Set text color to white
+                  ),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,  // Handle long text
+                ),
+              ),
+              const SizedBox(width: 10),
+              // IconButton for speaker with play/pause functionality
+              IconButton(
+                icon: FaIcon(
+                  _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff,
+                  color: Colors.white , // White color for icon
+                  size: 25,
+                ),
+                onPressed: _playPauseAudio, // Play or pause audio when pressed
+              ),
+            ],
+          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(15, 47, 15, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.arrow_back_ios_rounded,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context); // Go back to the previous screen
-                        },
+                const SizedBox(height: 10),
+                Column(
+                  children: [
+                    Text(
+                      'Pengenalan Huruf Hijaiyah',
+                      style: GoogleFonts.inter(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
                       ),
-                      IconButton(
-                        icon: FaIcon(
-                          _isPlaying ? FontAwesomeIcons.volumeUp : FontAwesomeIcons.volumeOff,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        onPressed: _playPauseAudio,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Ha (H)',
+                      style: GoogleFonts.inter(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 35),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Level 1: Belajar Huruf Hijaiyah',
-                        style: GoogleFonts.inter(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                        child: Text(
-                          'Pengenalan Huruf Hijaiyah',
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(60, 35, 60, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(80, 0, 80, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // Fast Rewind Button to navigate to LearningJimWidget (previous level)
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.fast_rewind,
                           color: Colors.black,
                           size: 25,
@@ -166,14 +144,14 @@ class _LearningHaWidgetState extends State<LearningHaWidget> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LearningJimWidget(),
+                              builder: (context) => const LearningJimWidget(),
                             ),
                           );
                         },
                       ),
                       // Fast Forward Button to navigate to LearningKhoWidget (next level)
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.fast_forward,
                           color: Colors.black,
                           size: 25,
@@ -183,7 +161,7 @@ class _LearningHaWidgetState extends State<LearningHaWidget> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LearningKhaWidget(),
+                              builder: (context) => const LearningKhoWidget(),
                             ),
                           );
                         },
@@ -191,99 +169,98 @@ class _LearningHaWidgetState extends State<LearningHaWidget> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width * 0.9,
-                    height: 183.67,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.asset(
-                        'assets/images/Card Ha.png',
-                        width: 333.9,
-                        height: 207.2,
-                        fit: BoxFit.cover,
-                      ),
+                const SizedBox(height: 20),
+                Container(
+                  width: MediaQuery.sizeOf(context).width * 0.9,
+                  height: 183.67,
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'assets/images/Card Ha.png',
+                      width: 333.9,
+                      height: 207.2,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(60, 15, 60, 0),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.mic_sharp,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          print('Mic button pressed');
-                        },
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                        child: Text(
-                          'Coba Ucapkan Huruf \n Hijaiyah!',
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                const SizedBox(height: 15),
+
+                // Penjelasan untuk huruf Ha
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFDDEB9D),
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(),
+                        spreadRadius: 2,
+                        blurRadius: 5,
                       ),
                     ],
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(50, 15, 50, 0),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Feedback AI: ',
+                        'Penjelasan Huruf Ha (ح):',
                         style: GoogleFonts.inter(
-                          fontSize: 16,
+                          fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Expanded(
-                        child: SizedBox(
-                          width: 200,
-                          child: TextFormField(
-                            controller: _textController,
-                            focusNode: _textFieldFocusNode,
-                            autofocus: false,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              hintText: '...............',
-                              hintStyle: GoogleFonts.inter(
-                                fontWeight: FontWeight.w600,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              filled: true,
-                              fillColor: Color(0xFFFAFDCB),
-                            ),
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                            ),
-                            cursorColor: Colors.black,
-                          ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Tenggorokan Tengah',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Sifat-Sifatnya:',
+                        style: GoogleFonts.inter(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        '1. Nafas berhembus (Hams)',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      Text(
+                        '2. Lunak dan suara tidak tertahan (Rakhawah)',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      Text(
+                        '3. Lidah dibawah (Istifal)',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      Text(
+                        '4. Terbuka antara lidah dan langit-langit atas (Infitah)',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      Text(
+                        '5. Tidak lancar dan hati-hati (Ishmat)',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ],
@@ -292,42 +269,6 @@ class _LearningHaWidgetState extends State<LearningHaWidget> {
               ],
             ),
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Color(0xFFFAFDCB),
-          type: BottomNavigationBarType.fixed,
-          currentIndex: selectedIndex,
-          onTap: onTabTapped,
-          selectedItemColor: Color(0xFF037A16),
-          unselectedItemColor: Colors.black,
-          selectedLabelStyle: TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          unselectedLabelStyle: TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          items: const [
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu_book, size: 30),
-              label: 'Learning',
-            ),
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.chartBar, size: 30),
-              label: 'Progress',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined, size: 30),
-              label: 'Account',
-            ),
-          ],
         ),
       ),
     );

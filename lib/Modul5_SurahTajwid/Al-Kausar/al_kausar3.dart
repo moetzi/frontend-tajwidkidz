@@ -6,6 +6,8 @@ import 'package:audioplayers/audioplayers.dart';
 import '/model/audio_model.dart'; // Your AudioModel class file
 import '/controller/audio_controller.dart'; // Your AudioController class file
 import '/controller/audio_record_controller.dart';
+import '/controller/evaluation_controller.dart';
+import 'dart:math';
 
 class LearningAlkausar3Widget extends StatefulWidget {
   const LearningAlkausar3Widget ({super.key});
@@ -21,6 +23,7 @@ class _LearningAlkausar3WidgetState extends State<LearningAlkausar3Widget > {
   final TextEditingController _textController1 = TextEditingController();
   final FocusNode _textFieldFocusNode1 = FocusNode();
   final AudioRecordController _recordController = AudioRecordController();
+  final EvaluationController _evaluationController = EvaluationController();
   bool isRecording = false;
   AudioModel? currentAudio;
 
@@ -78,6 +81,38 @@ class _LearningAlkausar3WidgetState extends State<LearningAlkausar3Widget > {
       await audioController.pause();
     } else {
       await audioController.play(kausar3AudioModel.fileName);
+    }
+  }
+
+  final List<String> lowFeedbacks = [
+  'Pengucapan ghunnah pada “inna” terdengar kurang jelas. Coba latih dengungan agar lebih merata dan tidak terpotong.',
+  'Pantulan qalqalah pada “abtar” masih belum terdengar cukup kuat. Usahakan hentakan kecil dan jelas pada huruf ba.',
+  'Idgham syamsiyah pada “syaa” bisa lebih ditekan dan tanpa jeda dari alif lam. Hindari memisahkan antara “al” dan “syaa”.'
+  ];
+
+  final List<String> midFeedbacks = [
+    'Bacaanmu sudah cukup baik. Namun, pantulan qalqalah masih bisa lebih halus dan tidak terlalu keras.',
+    'Ghunnah terdengar, tapi bisa lebih natural. Cobalah latihan perlahan agar dengungan tidak terdengar dipaksakan.',
+    'Pelafalan lam syamsiyah sudah mendekati sempurna, tapi transisi dari “al” ke “shaad” masih bisa dilatih agar lebih mengalir.'
+  ];
+
+  final List<String> highFeedbacks = [
+    'MashaAllah! Ghunnah dan qalqalah dalam ayat ini terdengar jelas dan konsisten. Sangat baik!',
+    'Pelafalanmu sangat tepat. Idgham syamsiyah dan qalqalah dilakukan dengan baik tanpa kehilangan irama bacaan.',
+    'Tajwid dalam bacaan ini terdengar mengalir dan ringan, sesuai dengan standar bacaan tartil. Teruskan kualitas seperti ini!'
+  ];
+
+  String getRandomFeedback(List<String> rules, Map<String, double> scores) {
+    final expectedScores = rules.map((rule) => scores[rule] ?? 0.0).toList();
+
+    if (expectedScores.any((score) => score < 0.4)) {
+      return lowFeedbacks[Random().nextInt(lowFeedbacks.length)];
+    } else if (expectedScores.every((score) => score > 0.8)) {
+      return highFeedbacks[Random().nextInt(highFeedbacks.length)];
+    } else if (expectedScores.every((score) => score > 0.5)) {
+      return midFeedbacks[Random().nextInt(midFeedbacks.length)];
+    } else {
+      return lowFeedbacks[Random().nextInt(lowFeedbacks.length)];
     }
   }
 
@@ -206,7 +241,7 @@ class _LearningAlkausar3WidgetState extends State<LearningAlkausar3Widget > {
                             });
                           }
                         } else if (currentAudio != null) {
-                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5');
+                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5/Al-Kausar');
                           if (url != null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Uploaded! Link: $url')),
@@ -232,30 +267,65 @@ class _LearningAlkausar3WidgetState extends State<LearningAlkausar3Widget > {
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Feedback AI :',
                         style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 16),
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _textController1,
-                          focusNode: _textFieldFocusNode1,
-                          autofocus: false,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            hintText: '...............',
-                            filled: true,
-                            fillColor: const Color(0xFFFAFDCB),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        controller: _textController1,
+                        focusNode: _textFieldFocusNode1,
+                        autofocus: false,
+                        obscureText: false,
+                        readOnly: true,
+                        maxLines: null, // ← membuatnya fleksibel tinggi
+                        decoration: InputDecoration(
+                          hintText: '...............',
+                          filled: true,
+                          fillColor: const Color(0xFFFAFDCB),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 16),
-                          cursorColor: Colors.black,
+                          isDense: true,
+                          contentPadding: const EdgeInsets.all(12),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.refresh, color: Colors.black),
+                            onPressed: () async {
+                              if (currentAudio == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Belum ada audio untuk dievaluasi')),
+                                );
+                                return;
+                              }
+
+                              final fullPath = 'recordings/Module5/Al-Kausar/${currentAudio!.fileName}';
+                              final result = await _evaluationController.evaluateFromFirebasePath(fullPath);
+
+                              if (result != null) {
+                                  // Expected tajwid rules in this ayat
+                                  final expectedRules = ['Ghunnah']; // ubah sesuai ayat
+                                  final scores = {
+                                    'Mad': result.mad,
+                                    'Ghunnah': result.ghunnah,
+                                    'Ikhfaa': result.ikhfa,
+                                  };
+                                final feedback = getRandomFeedback(expectedRules, scores);
+                                setState(() {
+                                  _textController1.text = feedback.trim();
+                                });
+                                } else {
+                                  setState(() {
+                                    _textController1.text = 'Evaluasi gagal.';
+                                });
+                              }
+                            },
+                          ),
                         ),
+                        style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 16),
+                        cursorColor: Colors.black,
                       ),
                     ],
                   ),

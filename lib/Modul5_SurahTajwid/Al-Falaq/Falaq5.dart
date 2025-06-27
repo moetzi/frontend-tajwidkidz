@@ -6,6 +6,8 @@ import 'package:audioplayers/audioplayers.dart';
 import '/model/audio_model.dart'; // Your AudioModel class file
 import '/controller/audio_controller.dart'; // Your AudioController class file
 import '/controller/audio_record_controller.dart';
+import '/controller/evaluation_controller.dart';
+import 'dart:math';
 
 class LearningAlfalaq5Widget extends StatefulWidget {
   const LearningAlfalaq5Widget({super.key});
@@ -21,6 +23,7 @@ class _LearningAlfalaq5WidgetState extends State<LearningAlfalaq5Widget> {
   final TextEditingController _textController1 = TextEditingController();
   final FocusNode _textFieldFocusNode1 = FocusNode();
   final AudioRecordController _recordController = AudioRecordController();
+  final EvaluationController _evaluationController = EvaluationController();
   bool isRecording = false;
   AudioModel? currentAudio;
 
@@ -78,6 +81,38 @@ class _LearningAlfalaq5WidgetState extends State<LearningAlfalaq5Widget> {
       await audioController.pause();
     } else {
       await audioController.play(falaq5AudioModel.fileName);
+    }
+  }
+
+  final List<String> lowFeedbacks = [
+    'Perhatikan dengungan pada bagian “min sharri”, karena ghunnah masih belum terdengar sempurna. Latih dengan menahan suara sebelum mengucapkan huruf syin.',
+    'Pengucapan “ḥaasid” perlu dilatih lagi agar panjang mad-nya lebih terasa alami dan tidak terburu-buru.',
+    'Tajdid pada kata “sharri” masih kurang ditekan. Cobalah membaca lebih lambat dan berikan tekanan jelas pada huruf syin yang bertasydid.'
+  ];
+
+  final List<String> midFeedbacks = [
+    'Dengungan ghunnah sudah mulai terdengar, namun masih bisa ditingkatkan agar lebih lembut dan konsisten.',
+    'Pelafalan mad pada “ḥaasid” cukup baik, hanya saja bisa dilatih agar lebih stabil dalam ritme.',
+    'Bacaanmu cukup baik secara keseluruhan, hanya perlu memperhatikan tekanan huruf bertajdid agar lebih tegas.'
+  ];
+
+  final List<String> highFeedbacks = [
+    'Alhamdulillah, bacaanmu sangat rapi! Ghunnah dan tajdid pada huruf syin terdengar seimbang dan jelas.',
+    'Mad pada “ḥaasid” sudah dibaca dengan baik dan tidak berlebihan. Dengungan ghunnah juga sangat terasa. Terus pertahankan konsistensinya.',
+    'MashaAllah! Bacaanmu mengalir dengan baik. Dengungan, panjang huruf, dan artikulasi sudah sesuai kaidah tajwid dengan sangat baik.'
+  ];
+
+  String getRandomFeedback(List<String> rules, Map<String, double> scores) {
+    final expectedScores = rules.map((rule) => scores[rule] ?? 0.0).toList();
+
+    if (expectedScores.any((score) => score < 0.4)) {
+      return lowFeedbacks[Random().nextInt(lowFeedbacks.length)];
+    } else if (expectedScores.every((score) => score > 0.8)) {
+      return highFeedbacks[Random().nextInt(highFeedbacks.length)];
+    } else if (expectedScores.every((score) => score > 0.5)) {
+      return midFeedbacks[Random().nextInt(midFeedbacks.length)];
+    } else {
+      return lowFeedbacks[Random().nextInt(lowFeedbacks.length)];
     }
   }
 
@@ -204,7 +239,7 @@ class _LearningAlfalaq5WidgetState extends State<LearningAlfalaq5Widget> {
                             });
                           }
                         } else if (currentAudio != null) {
-                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5');
+                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5/Al-Falaq');
                           if (url != null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Uploaded! Link: $url')),
@@ -229,35 +264,70 @@ class _LearningAlfalaq5WidgetState extends State<LearningAlfalaq5Widget> {
                   const SizedBox(height: 15),
 
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 50),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Feedback AI :',
-                          style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 16),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _textController1,
-                            focusNode: _textFieldFocusNode1,
-                            autofocus: false,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              hintText: '...............',
-                              filled: true,
-                              fillColor: const Color(0xFFFAFDCB),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 16),
-                            cursorColor: Colors.black,
+                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Feedback AI :',
+                        style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 16),
+                      ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        controller: _textController1,
+                        focusNode: _textFieldFocusNode1,
+                        autofocus: false,
+                        obscureText: false,
+                        readOnly: true,
+                        maxLines: null, // ← membuatnya fleksibel tinggi
+                        decoration: InputDecoration(
+                          hintText: '...............',
+                          filled: true,
+                          fillColor: const Color(0xFFFAFDCB),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          isDense: true,
+                          contentPadding: const EdgeInsets.all(12),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.refresh, color: Colors.black),
+                            onPressed: () async {
+                              if (currentAudio == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Belum ada audio untuk dievaluasi')),
+                                );
+                                return;
+                              }
+
+                              final fullPath = 'recordings/Module5/Al-Falaq/${currentAudio!.fileName}';
+                              final result = await _evaluationController.evaluateFromFirebasePath(fullPath);
+
+                              if (result != null) {
+                                  // Expected tajwid rules in this ayat
+                                  final expectedRules = ['Mad', 'Ghunnah']; // ubah sesuai ayat
+                                  final scores = {
+                                    'Mad': result.mad,
+                                    'Ghunnah': result.ghunnah,
+                                    'Ikhfaa': result.ikhfa,
+                                  };
+                                final feedback = getRandomFeedback(expectedRules, scores);
+                                setState(() {
+                                  _textController1.text = feedback.trim();
+                                });
+                                } else {
+                                  setState(() {
+                                    _textController1.text = 'Evaluasi gagal.';
+                                });
+                              }
+                            },
                           ),
                         ),
-                      ],
-                    ),
+                        style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 16),
+                        cursorColor: Colors.black,
+                      ),
+                    ],
                   ),
+                ),
 
                   const SizedBox(height: 40),
                 ],

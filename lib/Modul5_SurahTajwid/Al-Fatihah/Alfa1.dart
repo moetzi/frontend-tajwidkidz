@@ -6,6 +6,8 @@ import 'package:audioplayers/audioplayers.dart';
 import '/model/audio_model.dart'; // Your AudioModel class file
 import '/controller/audio_controller.dart'; // Your AudioController class file
 import '/controller/audio_record_controller.dart';
+import '/controller/evaluation_controller.dart';
+import 'dart:math';
 
 class LearningAlfatihah1Widget extends StatefulWidget {
   const LearningAlfatihah1Widget({super.key});
@@ -21,6 +23,7 @@ class _LearningAlfatihah1WidgetState extends State<LearningAlfatihah1Widget> {
   final TextEditingController _textController1 = TextEditingController();
   final FocusNode _textFieldFocusNode1 = FocusNode();
   final AudioRecordController _recordController = AudioRecordController();
+  final EvaluationController _evaluationController = EvaluationController();
   bool isRecording = false;
   AudioModel? currentAudio;
 
@@ -81,6 +84,38 @@ class _LearningAlfatihah1WidgetState extends State<LearningAlfatihah1Widget> {
     }
   }
   
+
+  final List<String> lowFeedbacks = [
+    'Coba perhatikan kembali pengucapan panjang pendek huruf, terutama pada bacaan seperti " الرحمن ". Latih perlahan agar vokal tidak terdengar tergesa-gesa.',
+    'Bacaanmu masih membutuhkan perhatian lebih pada mad dan ghunnah. Luangkan waktu untuk mendengarkan contoh pelafalan dan ulangi dengan perlahan.',
+    'Kamu bisa mencoba membaca ayat ini dengan tempo lebih lambat dan fokus pada vokal panjang. Ini akan membantu menanamkan kebiasaan tajwid yang baik.'
+  ];
+
+  final List<String> midFeedbacks = [
+    'Sudah bagus! Namun kamu bisa lebih menekankan pada panjang vokal, terutama ketika mengucapkan mad. Coba tarik napas lebih stabil.',
+    'Pelafalanmu sudah cukup baik, tapi masih bisa ditingkatkan di bagian ghunnah. Latih dengungan agar terdengar lebih lembut dan tidak terlalu singkat.',
+    'Kamu sudah berada di jalur yang benar. Pertahankan ritme bacaan dan perhatikan agar tidak memotong panjang huruf secara tidak sengaja.'
+  ];
+
+  final List<String> highFeedbacks = [
+    'MashaAllah, bacaanmu sangat bagus! Panjang mad dan dengungan ghunnah sudah sangat rapi dan natural. Teruskan latihan rutin seperti ini.',
+    'Tajwid kamu untuk ayat ini sangat baik! Mad dan ghunnah terdengar jelas, tanpa terdengar tergesa. Pertahankan konsistensi ini.',
+    'Bacaanmu nyaris sempurna untuk ayat ini. Terus latih artikulasi huruf agar semakin fasih dan penuh makna.'
+  ];
+
+  String getRandomFeedback(List<String> rules, Map<String, double> scores) {
+    final expectedScores = rules.map((rule) => scores[rule] ?? 0.0).toList();
+
+    if (expectedScores.any((score) => score < 0.4)) {
+      return lowFeedbacks[Random().nextInt(lowFeedbacks.length)];
+    } else if (expectedScores.every((score) => score > 0.8)) {
+      return highFeedbacks[Random().nextInt(highFeedbacks.length)];
+    } else if (expectedScores.every((score) => score > 0.5)) {
+      return midFeedbacks[Random().nextInt(midFeedbacks.length)];
+    } else {
+      return lowFeedbacks[Random().nextInt(lowFeedbacks.length)];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -204,10 +239,10 @@ class _LearningAlfatihah1WidgetState extends State<LearningAlfatihah1Widget> {
                             });
                           }
                         } else if (currentAudio != null) {
-                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5');
+                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5/Al-Fatihah');
                           if (url != null) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Uploaded! Link: $url')),
+                            SnackBar(content: Text('Uploaded!')),
                           );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -228,37 +263,71 @@ class _LearningAlfatihah1WidgetState extends State<LearningAlfatihah1Widget> {
 
                 const SizedBox(height: 15),
 
-                Padding(
+               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Feedback AI :',
                         style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 16),
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _textController1,
-                          focusNode: _textFieldFocusNode1,
-                          autofocus: false,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            hintText: '...............',
-                            filled: true,
-                            fillColor: const Color(0xFFFAFDCB),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        controller: _textController1,
+                        focusNode: _textFieldFocusNode1,
+                        autofocus: false,
+                        obscureText: false,
+                        readOnly: true,
+                        maxLines: null, // ← membuatnya fleksibel tinggi
+                        decoration: InputDecoration(
+                          hintText: '...............',
+                          filled: true,
+                          fillColor: const Color(0xFFFAFDCB),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 16),
-                          cursorColor: Colors.black,
+                          isDense: true,
+                          contentPadding: const EdgeInsets.all(12),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.refresh, color: Colors.black),
+                            onPressed: () async {
+                              if (currentAudio == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Belum ada audio untuk dievaluasi')),
+                                );
+                                return;
+                              }
+
+                              final fullPath = 'recordings/Module5/Al-Fatihah/${currentAudio!.fileName}';
+                              final result = await _evaluationController.evaluateFromFirebasePath(fullPath);
+
+                              if (result != null) {
+                                  // Expected tajwid rules in this ayat
+                                  final expectedRules = ['Mad', 'Ghunnah']; // ubah sesuai ayat
+                                  final scores = {
+                                    'Mad': result.mad,
+                                    'Ghunnah': result.ghunnah,
+                                    'Ikhfaa': result.ikhfa,
+                                  };
+                                final feedback = getRandomFeedback(expectedRules, scores);
+                                setState(() {
+                                  _textController1.text = feedback.trim();
+                                });
+                                } else {
+                                  setState(() {
+                                    _textController1.text = 'Evaluasi gagal.';
+                                });
+                              }
+                            },
+                          ),
                         ),
+                        style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 16),
+                        cursorColor: Colors.black,
                       ),
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 40),
               ],
             ),

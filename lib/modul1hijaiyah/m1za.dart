@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'm1ra.dart';
 import 'm1sin.dart';
 import 'package:audioplayers/audioplayers.dart';
-import '../model/audio_model.dart';       // your AudioModel class
-import '../controller/audio_controller.dart';  // your AudioController class
+import 'package:TajwidKidz/learning.dart';
+
 class LearningZaWidget extends StatefulWidget {
   const LearningZaWidget({super.key});
 
@@ -17,69 +17,26 @@ class LearningZaWidget extends StatefulWidget {
 }
 
 class _LearningZaWidgetState extends State<LearningZaWidget> {
-  final TextEditingController _textController = TextEditingController();
-  final FocusNode _textFieldFocusNode = FocusNode();
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  bool _isPlaying = false;
 
-  int selectedIndex = 1; // Index for the BottomNavigationBar
-  bool _isPlaying = false; // Track audio playing state
-
-  // Instantiate AudioModel and AudioController for Alif audio
-  late final AudioModel zaAudioModel;
-  late final AudioController audioController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    zaAudioModel = AudioModel(label: 'Za', fileName: 'Modul1/za_10.wav');
-    audioController = AudioController();
-
-    // Listen to player state changes to update UI
-    audioController.playerStateStream.listen((state) {
-      setState(() {
-        _isPlaying = state == PlayerState.playing;
-      });
-    });
-  }
-
-  // Function to handle bottom navigation
-  void onTabTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-
-    switch (index) {
-      case 0:
-        Navigator.pushNamed(context, '/home');
-        break;
-      case 1:
-        break;
-      case 2:
-        Navigator.pushNamed(context, '/progress');
-        break;
-      case 3:
-        Navigator.pushNamed(context, '/account');
-        break;
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await _audioPlayer.pause();
+    } else {
+      await _audioPlayer.play(AssetSource('audios/modul1/za_10.wav'));
     }
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
   }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
-    // no need to dispose AudioController since it doesn't expose dispose
+    _audioPlayer.dispose();
     super.dispose();
-  }
-
-  // Use AudioController to play/pause audio from model
-  void _playPauseAudio() async {
-    if (_isPlaying) {
-      await audioController.pause();
-    } else {
-      await audioController.play(zaAudioModel.fileName);
-    }
   }
 
   @override
@@ -90,240 +47,174 @@ class _LearningZaWidgetState extends State<LearningZaWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Color(0xFFFAFDCB),
+        backgroundColor: const Color(0xFFFAFDCB),
         appBar: AppBar(
-          title: Text('Level 1 Belajar Huruf Hijaiyah'),
-          backgroundColor: Color(0xFF037A16),
+          backgroundColor: const Color(0xFF037A16),
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_rounded, size: 30, color: Colors.white),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LearningWidget()),
+              );
+            },
+          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'Level 1 Belajar Huruf \n Hijaiyah',
+                  style: const TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(width: 10),
+              IconButton(
+                icon: FaIcon(
+                  _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onPressed: _playPauseAudio,
+              ),
+            ],
+          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
+                const SizedBox(height: 10),
+                Text(
+                  'Pengenalan Huruf Hijaiyah',
+                  style: GoogleFonts.inter(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Za (Z)',
+                  style: GoogleFonts.inter(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 35),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(15, 47, 15, 0),
+                  padding: const EdgeInsets.symmetric(horizontal: 80),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        icon: Icon(
-                          Icons.arrow_back_ios_rounded,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context); // Go back to the previous screen
-                        },
-                      ),
-                      IconButton(
-                        icon: FaIcon(
-                          _isPlaying ? FontAwesomeIcons.volumeUp : FontAwesomeIcons.volumeOff,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        onPressed: _playPauseAudio,
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Level 1: Belajar Huruf Hijaiyah',
-                        style: GoogleFonts.inter(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                        child: Text(
-                          'Pengenalan Huruf Hijaiyah',
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(60, 35, 60, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.fast_rewind,
-                          color: Colors.black,
-                          size: 25,
-                        ),
+                        icon: const Icon(Icons.fast_rewind, color: Colors.black, size: 25),
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => LearningRaWidget(),
-                            ),
+                            MaterialPageRoute(builder: (context) => const LearningRaWidget()),
                           );
                         },
                       ),
                       IconButton(
-                        icon: Icon(
-                          Icons.fast_forward,
-                          color: Colors.black,
-                          size: 25,
-                        ),
+                        icon: const Icon(Icons.fast_forward, color: Colors.black, size: 25),
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => LearningSinWidget(), // Next level
-                            ),
+                            MaterialPageRoute(builder: (context) => const LearningSinWidget()),
                           );
                         },
                       ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width * 0.9,
-                    height: 183.67,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
+                const SizedBox(height: 20),
+                Container(
+                  width: MediaQuery.sizeOf(context).width * 0.9,
+                  height: 183.67,
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'assets/images/Card Za.png',
+                      fit: BoxFit.cover,
                     ),
+                  ),
+                ),
+
+                // Gambar tenggorokan cara baca Ta (With the throat image)
+                const SizedBox(height: 30),
+                Center(
+                  child: SizedBox(
+                    width: MediaQuery.sizeOf(context).width * 0.9, // Restrict the width to screen size
+                    height: 200.0, // Fixed height to fit the layout better
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.asset(
-                        'assets/images/Card Za.png',
-                        width: 333.9,
-                        height: 207.2,
-                        fit: BoxFit.cover,
+                        'assets/images/m1/m1za.png', // Path to your image of the throat position for Ta
+                        fit: BoxFit.contain,  // Adjusts the image to fit within the box
                       ),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(60, 15, 60, 0),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.mic_sharp,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          print('Mic button pressed');
-                        },
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                        child: Text(
-                          'Coba Ucapkan Huruf \n Hijaiyah!',
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                const SizedBox(height: 15),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFDDEB9D),
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(),
+                        spreadRadius: 2,
+                        blurRadius: 5,
                       ),
                     ],
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(50, 15, 50, 0),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Feedback AI:',
+                        'Penjelasan Huruf Za (ز):',
                         style: GoogleFonts.inter(
-                          fontSize: 16,
+                          fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Expanded(
-                        child: SizedBox(
-                          width: 200,
-                          child: TextFormField(
-                            controller: _textController,
-                            focusNode: _textFieldFocusNode,
-                            autofocus: false,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              hintText: '...............',
-                              hintStyle: GoogleFonts.inter(
-                                fontWeight: FontWeight.w600,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              filled: true,
-                              fillColor: Color(0xFFFAFDCB),
-                            ),
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                            ),
-                            cursorColor: Colors.black,
-                          ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Antara ujung lidah dan halaman dua gigi muka atas',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Sifat-Sifatnya:',
+                        style: GoogleFonts.inter(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text('1. Nafas ditahan (Jahr)', style: GoogleFonts.inter(fontSize: 16)),
+                      Text('2. Lunak dan suara tidak tertahan (Rakhawah)', style: GoogleFonts.inter(fontSize: 16)),
+                      Text('3. Lidah dibawah (Istifal)', style: GoogleFonts.inter(fontSize: 16)),
+                      Text('4. Terbuka antara lidah dan langit-langit atas (Infitah)', style: GoogleFonts.inter(fontSize: 16)),
+                      Text('5. Tidak lancar dan hati-hati (Ishmat)', style: GoogleFonts.inter(fontSize: 16)),
+                      Text('6. Suara berdesis (Shafir)', style: GoogleFonts.inter(fontSize: 16)),
                     ],
                   ),
                 ),
+                const SizedBox(height: 35),
               ],
             ),
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Color(0xFFFAFDCB),
-          type: BottomNavigationBarType.fixed,
-          currentIndex: selectedIndex,
-          onTap: onTabTapped,
-          selectedItemColor: Color(0xFF037A16),
-          unselectedItemColor: Colors.black,
-          selectedLabelStyle: TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          unselectedLabelStyle: TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          items: const [
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.home, size: 30),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu_book, size: 30),
-              label: 'Learning',
-            ),
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.chartBar, size: 30),
-              label: 'Progress',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined, size: 30),
-              label: 'Account',
-            ),
-          ],
         ),
       ),
     );

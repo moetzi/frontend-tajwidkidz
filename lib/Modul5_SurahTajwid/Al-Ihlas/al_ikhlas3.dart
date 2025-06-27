@@ -7,6 +7,8 @@ import 'package:audioplayers/audioplayers.dart';
 import '/model/audio_model.dart'; // Your AudioModel class file
 import '/controller/audio_controller.dart'; // Your AudioController class file
 import '/controller/audio_record_controller.dart';
+import '/controller/evaluation_controller.dart';
+import 'dart:math';
 
 class LearningAlikhlas3Widget extends StatefulWidget {
   const LearningAlikhlas3Widget({super.key});
@@ -22,6 +24,7 @@ class _LearningAlikhlas3WidgetState extends State<LearningAlikhlas3Widget> {
   final TextEditingController _textController1 = TextEditingController();
   final FocusNode _textFieldFocusNode1 = FocusNode();
   final AudioRecordController _recordController = AudioRecordController();
+  final EvaluationController _evaluationController = EvaluationController();
   bool isRecording = false;
   AudioModel? currentAudio;
 
@@ -79,6 +82,38 @@ class _LearningAlikhlas3WidgetState extends State<LearningAlikhlas3Widget> {
       await audioController.pause();
     } else {
       await audioController.play(ikhlas3AudioModel.fileName);
+    }
+  }
+
+  final List<String> lowFeedbacks = [
+    'Pantulan suara pada huruf qalqalah seperti dal belum cukup mantap. Cobalah latih bacaan “yalid” dan “yūlad” agar terdengar lebih tegas di akhir huruf.',
+    'Dengungan pada ghunnah seperti dalam pengucapan “lam yalid” terdengar kurang natural. Coba latih dengan menahan bunyi “m” sedikit lebih lama.',
+    'Masih ada ketidakteraturan dalam pelafalan akhir lafaz. Coba lebih menekankan bunyi pantulan pada huruf qalqalah secara singkat dan jelas.'
+  ];
+
+  final List<String> midFeedbacks = [
+    'Pelafalan huruf dal sudah mulai terasa pantulannya, namun masih bisa ditingkatkan agar lebih bersih di akhir lafaz.',
+    'Ghunnah pada “lam yalid” cukup baik, tapi coba latihan agar dengungannya tidak terlalu cepat atau terlalu lemah.',
+    'Kamu sudah berada di jalur yang baik! Pastikan akhir lafaz seperti “yūlad” tidak diucapkan terlalu cepat agar qalqalah terdengar.'
+  ];
+
+  final List<String> highFeedbacks = [
+    'Bacaanmu sangat rapi! Qalqalah dan ghunnah terdengar seimbang dan alami. Pertahankan irama seperti ini dalam bacaanmu.',
+    'Transisi antar huruf sangat halus dan penekanan pada huruf dal di akhir kata sudah tepat. MashaAllah, sangat baik!',
+    'Pelafalan ghunnah dan pantulan huruf di akhir lafaz terdengar sempurna. Bacaanmu menunjukkan pemahaman tajwid yang bagus.'
+  ];
+
+  String getRandomFeedback(List<String> rules, Map<String, double> scores) {
+    final expectedScores = rules.map((rule) => scores[rule] ?? 0.0).toList();
+
+    if (expectedScores.any((score) => score < 0.4)) {
+      return lowFeedbacks[Random().nextInt(lowFeedbacks.length)];
+    } else if (expectedScores.every((score) => score > 0.8)) {
+      return highFeedbacks[Random().nextInt(highFeedbacks.length)];
+    } else if (expectedScores.every((score) => score > 0.5)) {
+      return midFeedbacks[Random().nextInt(midFeedbacks.length)];
+    } else {
+      return lowFeedbacks[Random().nextInt(lowFeedbacks.length)];
     }
   }
 
@@ -207,7 +242,7 @@ class _LearningAlikhlas3WidgetState extends State<LearningAlikhlas3Widget> {
                             });
                           }
                         } else if (currentAudio != null) {
-                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5');
+                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5/Al-Ikhlas');
                           if (url != null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Uploaded! Link: $url')),
@@ -233,35 +268,69 @@ class _LearningAlikhlas3WidgetState extends State<LearningAlikhlas3Widget> {
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Feedback AI :',
                         style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 16),
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _textController1,
-                          focusNode: _textFieldFocusNode1,
-                          autofocus: false,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            hintText: '...............',
-                            filled: true,
-                            fillColor: const Color(0xFFFAFDCB),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        controller: _textController1,
+                        focusNode: _textFieldFocusNode1,
+                        autofocus: false,
+                        obscureText: false,
+                        readOnly: true,
+                        maxLines: null, // ← membuatnya fleksibel tinggi
+                        decoration: InputDecoration(
+                          hintText: '...............',
+                          filled: true,
+                          fillColor: const Color(0xFFFAFDCB),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 16),
-                          cursorColor: Colors.black,
+                          isDense: true,
+                          contentPadding: const EdgeInsets.all(12),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.refresh, color: Colors.black),
+                            onPressed: () async {
+                              if (currentAudio == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Belum ada audio untuk dievaluasi')),
+                                );
+                                return;
+                              }
+
+                              final fullPath = 'recordings/Module5/Al-Ikhlas/${currentAudio!.fileName}';
+                              final result = await _evaluationController.evaluateFromFirebasePath(fullPath);
+
+                              if (result != null) {
+                                  // Expected tajwid rules in this ayat
+                                  final expectedRules = ['Ghunnah']; // ubah sesuai ayat
+                                  final scores = {
+                                    'Mad': result.mad,
+                                    'Ghunnah': result.ghunnah,
+                                    'Ikhfaa': result.ikhfa,
+                                  };
+                                final feedback = getRandomFeedback(expectedRules, scores);
+                                setState(() {
+                                  _textController1.text = feedback.trim();
+                                });
+                                } else {
+                                  setState(() {
+                                    _textController1.text = 'Evaluasi gagal.';
+                                });
+                              }
+                            },
+                          ),
                         ),
+                        style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 16),
+                        cursorColor: Colors.black,
                       ),
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 40),
               ],
             ),

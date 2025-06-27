@@ -1,10 +1,10 @@
-import 'package:TajwidKidz/Leaderboard.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'learning.dart' as mylearning; // Import halaman LearningWidget dengan prefix
-import 'minigame.dart'; // Import halaman MiniGame
+import 'package:TajwidKidz/account/account.dart';
+import 'learning.dart'; // Import halaman LearningWidget
+import 'Game/view/minigame.dart'; // Import halaman MiniGame
+import 'leaderboard.dart'; // Import halaman Leaderboard
 import 'progress.dart'; // Import halaman ProgressPage
-import 'account.dart';
 
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({super.key});
@@ -33,11 +33,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       case 0: // Home
         return buildHomePage();
       case 1: // Learning
-        return mylearning.LearningWidget();
-      case 2: // progress
-        return ProgressPageWidget(); // Halaman Progres
-      case 3: // Akun
-        return AccountWidget(); // Halaman Akun
+        return LearningWidget();
+      case 2: // Mini Game
+        return ProgressPageWidget(); // Halaman MiniGame
+      case 3: // Leaderboard
+        return AccountWidget(); // Halaman Leaderboard
+      case 4: // Progress
+        return LearningWidget(); // Halaman Progress Saya
       default:
         return buildHomePage(); // Default ke Home
     }
@@ -105,7 +107,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => mylearning.LearningWidget(),
+                          builder: (context) => LearningWidget(),
                         ),
                       );
                     },
@@ -113,7 +115,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       width: 146,
                       height: 146,
                       decoration: BoxDecoration(
-                        color: Color(0xFFDDEB9D),
+                        color: Color(0xFFBCDEA8),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
@@ -164,7 +166,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       width: 146,
                       height: 146,
                       decoration: BoxDecoration(
-                        color: Color(0xFFDDEB9D),
+                        color: Color(0xFF8EC448),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
@@ -224,7 +226,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       width: 146,
                       height: 146,
                       decoration: BoxDecoration(
-                        color: Color(0xFFDDEB9D),
+                        color: Color(0xFF8EC448),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
@@ -275,7 +277,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       width: 146,
                       height: 146,
                       decoration: BoxDecoration(
-                        color: Color(0xFFDDEB9D),
+                        color: Color(0xFFBCDEA8),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(

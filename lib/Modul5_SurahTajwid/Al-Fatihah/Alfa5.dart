@@ -7,6 +7,8 @@ import 'package:audioplayers/audioplayers.dart';
 import '/model/audio_model.dart'; // Your AudioModel class file
 import '/controller/audio_controller.dart'; // Your AudioController class file
 import '/controller/audio_record_controller.dart';
+import '/controller/evaluation_controller.dart';
+import 'dart:math';
 
 class LearningAlfatihah5Widget extends StatefulWidget {
   const LearningAlfatihah5Widget({super.key});
@@ -22,6 +24,7 @@ class _LearningAlfatihah5WidgetState extends State<LearningAlfatihah5Widget> {
   final TextEditingController _textController1 = TextEditingController();
   final FocusNode _textFieldFocusNode1 = FocusNode();
   final AudioRecordController _recordController = AudioRecordController();
+  final EvaluationController _evaluationController = EvaluationController();
   bool isRecording = false;
   AudioModel? currentAudio;
 
@@ -96,6 +99,38 @@ class _LearningAlfatihah5WidgetState extends State<LearningAlfatihah5Widget> {
           MaterialPageRoute(builder: (_) => const LearningAlfatihah6Widget()),
         );
         break;
+    }
+  }
+
+  final List<String> lowFeedbacks = [
+    'Perhatikan pelafalan huruf shad dan lam syamsiyah, karena masih terdengar kurang jelas. Cobalah latih pelafalan “ash-shiraath” secara perlahan.',
+    'Qalqalah pada huruf seperti “qaaf” atau “daal” belum cukup mantap. Coba latih pantulan suara agar lebih tegas dan tidak terlalu datar.',
+    'Masih terdengar ketidakteraturan dalam panjang pendek vokal. Fokuskan perhatian pada pelafalan huruf mad dan idgham agar bacaan terasa lebih tenang.'
+  ];
+
+  final List<String> midFeedbacks = [
+    'Kamu sudah berada di jalur yang baik! Namun, pelafalan huruf tajwid seperti shad dan lam bisa lebih ditegaskan agar terdengar lebih fasih.',
+    'Qalqalahmu sudah cukup terasa, tapi bisa dilatih agar tidak terlalu keras atau terlalu lemah. Jaga juga keseimbangan panjang vokal di setiap lafadz.',
+    'Secara umum bacaanmu bagus, tapi masih bisa ditingkatkan di bagian lam syamsiyah. Coba ulangi “ash-shiraath” dan perhatikan penekanan hurufnya.'
+  ];
+
+  final List<String> highFeedbacks = [
+    'Bacaanmu sangat baik! Pelafalan tajwid seperti idgham syamsiyah dan mad sudah tepat dan terasa alami. Terus lanjutkan dengan konsistensi.',
+    'MashaAllah! Huruf-huruf berat seperti shad dan qaf dilafalkan dengan baik. Transisi antar huruf pun terdengar halus dan tepat.',
+    'Artikulasi bacaanmu sangat bagus. Mad dan qalqalah terdengar jelas tanpa berlebihan, dan irama bacaan sangat tenang dan mantap.'
+  ];
+
+  String getRandomFeedback(List<String> rules, Map<String, double> scores) {
+    final expectedScores = rules.map((rule) => scores[rule] ?? 0.0).toList();
+
+    if (expectedScores.any((score) => score < 0.4)) {
+      return lowFeedbacks[Random().nextInt(lowFeedbacks.length)];
+    } else if (expectedScores.every((score) => score > 0.8)) {
+      return highFeedbacks[Random().nextInt(highFeedbacks.length)];
+    } else if (expectedScores.every((score) => score > 0.5)) {
+      return midFeedbacks[Random().nextInt(midFeedbacks.length)];
+    } else {
+      return lowFeedbacks[Random().nextInt(lowFeedbacks.length)];
     }
   }
 
@@ -215,7 +250,7 @@ class _LearningAlfatihah5WidgetState extends State<LearningAlfatihah5Widget> {
                             });
                           }
                         } else if (currentAudio != null) {
-                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5');
+                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5/Al-Fatihah');
                           if (url != null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Uploaded! Link: $url')),
@@ -242,30 +277,65 @@ class _LearningAlfatihah5WidgetState extends State<LearningAlfatihah5Widget> {
                 // Feedback AI input
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Feedback AI :',
                         style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 16),
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _textController1,
-                          focusNode: _textFieldFocusNode1,
-                          decoration: InputDecoration(
-                            hintText: '...............',
-                            filled: true,
-                            fillColor: const Color(0xFFFAFDCB),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        controller: _textController1,
+                        focusNode: _textFieldFocusNode1,
+                        autofocus: false,
+                        obscureText: false,
+                        readOnly: true,
+                        maxLines: null, // ← membuatnya fleksibel tinggi
+                        decoration: InputDecoration(
+                          hintText: '...............',
+                          filled: true,
+                          fillColor: const Color(0xFFFAFDCB),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 16),
-                          cursorColor: Colors.black,
-                          autofocus: false,
-                          obscureText: false,
+                          isDense: true,
+                          contentPadding: const EdgeInsets.all(12),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.refresh, color: Colors.black),
+                            onPressed: () async {
+                              if (currentAudio == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Belum ada audio untuk dievaluasi')),
+                                );
+                                return;
+                              }
+
+                              final fullPath = 'recordings/Module5/Al-Fatihah/${currentAudio!.fileName}';
+                              final result = await _evaluationController.evaluateFromFirebasePath(fullPath);
+
+                              if (result != null) {
+                                  // Expected tajwid rules in this ayat
+                                  final expectedRules = ['Mad']; // ubah sesuai ayat
+                                  final scores = {
+                                    'Mad': result.mad,
+                                    'Ghunnah': result.ghunnah,
+                                    'Ikhfaa': result.ikhfa,
+                                  };
+                                final feedback = getRandomFeedback(expectedRules, scores);
+                                setState(() {
+                                  _textController1.text = feedback.trim();
+                                });
+                                } else {
+                                  setState(() {
+                                    _textController1.text = 'Evaluasi gagal.';
+                                });
+                              }
+                            },
+                          ),
                         ),
+                        style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 16),
+                        cursorColor: Colors.black,
                       ),
                     ],
                   ),

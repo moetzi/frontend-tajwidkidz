@@ -6,6 +6,8 @@ import 'package:audioplayers/audioplayers.dart'; // Tambah audioplayers
 import '/model/audio_model.dart'; // Your AudioModel class file
 import '/controller/audio_controller.dart'; // Your AudioController class file
 import '/controller/audio_record_controller.dart';
+import '/controller/evaluation_controller.dart';
+import 'dart:math';
 
 class LearningAlfalaq1Widget extends StatefulWidget {
   const LearningAlfalaq1Widget({super.key});
@@ -21,6 +23,7 @@ class _LearningAlfalaq1WidgetState extends State<LearningAlfalaq1Widget> {
   final TextEditingController _textController1 = TextEditingController();
   final FocusNode _textFieldFocusNode1 = FocusNode();
   final AudioRecordController _recordController = AudioRecordController();
+  final EvaluationController _evaluationController = EvaluationController();
   bool isRecording = false;
   AudioModel? currentAudio;
 
@@ -42,6 +45,38 @@ class _LearningAlfalaq1WidgetState extends State<LearningAlfalaq1Widget> {
         _isPlaying = state == PlayerState.playing;
       });
     });
+  }
+
+  final List<String> lowFeedbacks = [
+    'Perhatikan huruf qalqalah seperti “qaaf” pada akhir lafaz “al-falaq”. Pantulannya masih terdengar lemah. Cobalah ulangi dengan tekanan yang lebih mantap.',
+    'Bacaan masih terdengar terburu-buru pada bagian awal. Coba tarik napas lebih dalam agar pelafalan menjadi lebih stabil dan jelas.',
+    'Huruf-huruf tebal seperti “qaaf” dan huruf dalam idgham syamsiyah perlu latihan khusus. Fokus pada artikulasi agar tidak terdengar samar.'
+  ];
+
+  final List<String> midFeedbacks = [
+    'Bacaanmu cukup baik, namun pantulan pada huruf qalqalah bisa lebih hidup. Latihan dengan menahan suara sejenak sebelum melepaskan huruf pantul bisa membantu.',
+    'Kamu sudah membaca dengan cukup tenang. Coba fokuskan latihan pada pelafalan akhir ayat agar tetap terdengar jelas dan tidak melemah.',
+    'Secara keseluruhan baik, namun pelafalan “a’udzu” bisa ditingkatkan agar transisinya lebih halus dan ghunnah-nya lebih seimbang.'
+  ];
+
+  final List<String> highFeedbacks = [
+    'Bacaanmu sangat baik! Qalqalah terdengar mantap dan tidak berlebihan. Pelafalan setiap huruf tajwid juga rapi dan teratur.',
+    'MashaAllah, pengucapan “a’udzu” dan “birabbil-falaq” sudah sangat bagus. Irama bacaan pun enak didengar dan tajwidnya pas.',
+    'Bacaan ayat ini terdengar fasih dan terlatih. Huruf-huruf tajwid dilafalkan dengan jelas, dan suara tidak goyah meski pendek.'
+  ];
+
+  String getRandomFeedback(List<String> rules, Map<String, double> scores) {
+    final expectedScores = rules.map((rule) => scores[rule] ?? 0.0).toList();
+
+    if (expectedScores.any((score) => score < 0.4)) {
+      return lowFeedbacks[Random().nextInt(lowFeedbacks.length)];
+    } else if (expectedScores.every((score) => score > 0.8)) {
+      return highFeedbacks[Random().nextInt(highFeedbacks.length)];
+    } else if (expectedScores.every((score) => score > 0.5)) {
+      return midFeedbacks[Random().nextInt(midFeedbacks.length)];
+    } else {
+      return lowFeedbacks[Random().nextInt(lowFeedbacks.length)];
+    }
   }
 
   @override
@@ -198,7 +233,7 @@ class _LearningAlfalaq1WidgetState extends State<LearningAlfalaq1Widget> {
                             });
                           }
                         } else if (currentAudio != null) {
-                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5');
+                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5/Al-Falaq');
                           if (url != null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Uploaded! Link: $url')),
@@ -223,42 +258,70 @@ class _LearningAlfalaq1WidgetState extends State<LearningAlfalaq1Widget> {
                   const SizedBox(height: 15),
 
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 50),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Feedback AI: ',
-                          style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 16),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _textController1,
-                            focusNode: _textFieldFocusNode1,
-                            autofocus: false,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              hintText: '...............',
-                              hintStyle: GoogleFonts.inter(fontWeight: FontWeight.w600),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.transparent, width: 1),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.transparent, width: 1),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              filled: true,
-                              fillColor: const Color(0xFFFAFDCB),
-                            ),
-                            style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 16),
-                            cursorColor: Colors.black,
+                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Feedback AI :',
+                        style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 16),
+                      ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        controller: _textController1,
+                        focusNode: _textFieldFocusNode1,
+                        autofocus: false,
+                        obscureText: false,
+                        readOnly: true,
+                        maxLines: null, // ← membuatnya fleksibel tinggi
+                        decoration: InputDecoration(
+                          hintText: '...............',
+                          filled: true,
+                          fillColor: const Color(0xFFFAFDCB),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          isDense: true,
+                          contentPadding: const EdgeInsets.all(12),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.refresh, color: Colors.black),
+                            onPressed: () async {
+                              if (currentAudio == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Belum ada audio untuk dievaluasi')),
+                                );
+                                return;
+                              }
+
+                              final fullPath = 'recordings/Module5/Al-Falaq/${currentAudio!.fileName}';
+                              final result = await _evaluationController.evaluateFromFirebasePath(fullPath);
+
+                              if (result != null) {
+                                  // Expected tajwid rules in this ayat
+                                  final expectedRules = ['Ghunnah']; // ubah sesuai ayat
+                                  final scores = {
+                                    'Mad': result.mad,
+                                    'Ghunnah': result.ghunnah,
+                                    'Ikhfaa': result.ikhfa,
+                                  };
+                                final feedback = getRandomFeedback(expectedRules, scores);
+                                setState(() {
+                                  _textController1.text = feedback.trim();
+                                });
+                                } else {
+                                  setState(() {
+                                    _textController1.text = 'Evaluasi gagal.';
+                                });
+                              }
+                            },
                           ),
                         ),
-                      ],
-                    ),
+                        style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 16),
+                        cursorColor: Colors.black,
+                      ),
+                    ],
                   ),
+                ),
                 ],
               ),
             ),

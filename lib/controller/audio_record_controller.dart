@@ -15,10 +15,18 @@ class AudioRecordController {
     if (!await _requestPermission()) return null;
 
     final dir = await getTemporaryDirectory();
-    final fileName = 'audio_${DateTime.now().millisecondsSinceEpoch}.m4a';
+    final fileName = 'audio_${DateTime.now().millisecondsSinceEpoch}.wav';
     final fullPath = '${dir.path}/$fileName';
 
-    await _recorder.start(const RecordConfig(), path: fullPath);
+    // Konfigurasi untuk WAV 16-bit mono, 11025 Hz
+    final config = RecordConfig(
+      encoder: AudioEncoder.wav,
+      sampleRate: 11025,
+      bitRate: 128000,
+      numChannels: 1,
+    );
+
+    await _recorder.start(config, path: fullPath);
 
     return AudioModel(
       label: 'Recording started at ${DateTime.now()}',
@@ -27,21 +35,21 @@ class AudioRecordController {
   }
 
   Future<String?> stopAndUpload(AudioModel audio, {String folderPath = 'recordings'}) async {
-  final path = await _recorder.stop();
-  if (path == null) return null;
+    final path = await _recorder.stop();
+    if (path == null) return null;
 
-  final file = File(path);
+    final file = File(path);
 
-  try {
-    final ref = FirebaseStorage.instance.ref().child('$folderPath/${audio.fileName}');
-    await ref.putFile(file);
-    final url = await ref.getDownloadURL();
-    return url;
-  } catch (e) {
-    print('Upload failed: $e');
-    return null;
-  } finally {
-    await _recorder.dispose();
-  } 
- }
+    try {
+      final ref = FirebaseStorage.instance.ref().child('$folderPath/${audio.fileName}');
+      await ref.putFile(file);
+      final url = await ref.getDownloadURL();
+      return url;
+    } catch (e) {
+      print('Upload failed: $e');
+      return null;
+    } finally {
+      await _recorder.dispose();
+    }
+  }
 }

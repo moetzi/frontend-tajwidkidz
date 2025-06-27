@@ -7,6 +7,8 @@ import 'package:audioplayers/audioplayers.dart';
 import '/model/audio_model.dart'; // Your AudioModel class file
 import '/controller/audio_controller.dart'; // Your AudioController class file
 import '/controller/audio_record_controller.dart';
+import '/controller/evaluation_controller.dart';
+import 'dart:math';
 
 class LearningAlfatihah2Widget extends StatefulWidget {
   const LearningAlfatihah2Widget({super.key});
@@ -22,6 +24,7 @@ class _LearningAlfatihah2WidgetState extends State<LearningAlfatihah2Widget> {
   final TextEditingController _textController1 = TextEditingController();
   final FocusNode _textFieldFocusNode1 = FocusNode();
   final AudioRecordController _recordController = AudioRecordController();
+  final EvaluationController _evaluationController = EvaluationController();
   bool isRecording = false;
   AudioModel? currentAudio;
 
@@ -79,6 +82,38 @@ class _LearningAlfatihah2WidgetState extends State<LearningAlfatihah2Widget> {
       await audioController.pause();
     } else {
       await audioController.play(alfa1AudioModel.fileName);
+    }
+  }
+
+    final List<String> lowFeedbacks = [
+    'Cobalah mengatur tempo bacaanmu dengan lebih tenang agar harakat panjang seperti pada kata “الرَّحْمَـٰنِ” terdengar lebih jelas. Fokuskan pada kestabilan napas saat membaca bagian mad.',
+    'Bacaanmu masih terdengar sedikit terburu-buru, terutama saat melewati huruf yang membutuhkan dengungan. Latihan perlahan dengan mendengarkan contoh guru bisa sangat membantu.',
+    'Untuk meningkatkan tajwid pada ayat ini, pastikan suara tidak langsung terputus pada huruf nun dan mim. Dengungan yang kurang bisa membuat bacaan terdengar datar. Latih irama bacaan dengan tarikan napas yang lebih stabil.'
+  ];
+
+  final List<String> midFeedbacks = [
+    'Kamu sudah berada di jalur yang tepat! Sekarang cobalah untuk lebih memperhalus transisi antar huruf terutama saat membacakan mad. Kelembutan dalam pelafalan akan meningkatkan keindahan bacaanmu.',
+    'Bagus! Bacaanmu cukup jelas, namun kamu bisa mencoba memperkuat ghunnah agar lebih terasa dengungannya. Pelafalan yang stabil akan membuat ayat ini terdengar lebih hidup.',
+    'Tajwidmu pada ayat ini sudah mendekati baik, tetapi irama bacaan bisa ditingkatkan lagi. Usahakan agar panjang pendek vokal tetap proporsional dan tidak terlalu datar.'
+  ];
+
+  final List<String> highFeedbacks = [
+    'Bacaanmu sangat indah! Pelafalan mad dan ghunnah terdengar seimbang dan merdu. Teruskan cara bacaan ini, kamu sudah membaca seperti yang diajarkan para guru.',
+    'Sangat baik! Panjang vokal dan kualitas dengungan dalam bacaanmu menunjukkan pemahaman tajwid yang dalam. Pertahankan teknik ini untuk ayat-ayat berikutnya.',
+    'MashaAllah, kamu berhasil membacakan ayat ini dengan sangat bagus. Irama, tempo, dan pelafalan semuanya berjalan harmonis. Lanjutkan dengan semangat belajar yang sama!'
+  ];
+
+  String getRandomFeedback(List<String> rules, Map<String, double> scores) {
+    final expectedScores = rules.map((rule) => scores[rule] ?? 0.0).toList();
+
+    if (expectedScores.any((score) => score < 0.4)) {
+      return lowFeedbacks[Random().nextInt(lowFeedbacks.length)];
+    } else if (expectedScores.every((score) => score > 0.8)) {
+      return highFeedbacks[Random().nextInt(highFeedbacks.length)];
+    } else if (expectedScores.every((score) => score > 0.5)) {
+      return midFeedbacks[Random().nextInt(midFeedbacks.length)];
+    } else {
+      return lowFeedbacks[Random().nextInt(lowFeedbacks.length)];
     }
   }
 
@@ -200,7 +235,7 @@ class _LearningAlfatihah2WidgetState extends State<LearningAlfatihah2Widget> {
                             });
                           }
                         } else if (currentAudio != null) {
-                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5');
+                          final url = await _recordController.stopAndUpload(currentAudio!, folderPath: 'recordings/Module5/Al-Fatihah');
                           if (url != null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Uploaded! Link: $url')),
@@ -224,30 +259,65 @@ class _LearningAlfatihah2WidgetState extends State<LearningAlfatihah2Widget> {
                 const SizedBox(height: 15),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Feedback AI :',
                         style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 16),
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _textController1,
-                          focusNode: _textFieldFocusNode1,
-                          autofocus: false,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            hintText: '...............',
-                            filled: true,
-                            fillColor: const Color(0xFFFAFDCB),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        controller: _textController1,
+                        focusNode: _textFieldFocusNode1,
+                        autofocus: false,
+                        obscureText: false,
+                        readOnly: true,
+                        maxLines: null, // ← membuatnya fleksibel tinggi
+                        decoration: InputDecoration(
+                          hintText: '...............',
+                          filled: true,
+                          fillColor: const Color(0xFFFAFDCB),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 16),
-                          cursorColor: Colors.black,
+                          isDense: true,
+                          contentPadding: const EdgeInsets.all(12),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.refresh, color: Colors.black),
+                            onPressed: () async {
+                              if (currentAudio == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Belum ada audio untuk dievaluasi')),
+                                );
+                                return;
+                              }
+
+                              final fullPath = 'recordings/Module5/Al-Fatihah/${currentAudio!.fileName}';
+                              final result = await _evaluationController.evaluateFromFirebasePath(fullPath);
+
+                              if (result != null) {
+                                  // Expected tajwid rules in this ayat
+                                  final expectedRules = ['Mad', 'Ghunnah']; // ubah sesuai ayat
+                                  final scores = {
+                                    'Mad': result.mad,
+                                    'Ghunnah': result.ghunnah,
+                                    'Ikhfaa': result.ikhfa,
+                                  };
+                                final feedback = getRandomFeedback(expectedRules, scores);
+                                setState(() {
+                                  _textController1.text = feedback.trim();
+                                });
+                                } else {
+                                  setState(() {
+                                    _textController1.text = 'Evaluasi gagal.';
+                                });
+                              }
+                            },
+                          ),
                         ),
+                        style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 16),
+                        cursorColor: Colors.black,
                       ),
                     ],
                   ),
