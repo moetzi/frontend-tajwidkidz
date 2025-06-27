@@ -106,12 +106,8 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/images/m1/
     - assets/images/hijaiyah/
     - assets/audios/
-    - assets/audios/modul1/
-    - assets/audios/modul2/
-    - assets/audios/modul3/
     - assets/audios/modul6/
 #    - assets/videos/
 #    - assets/audios/

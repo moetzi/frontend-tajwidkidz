@@ -35,15 +35,16 @@ class QuestionAnswer {
 }
 
 class SusunHurufViewmodel extends ChangeNotifier {
-  final List<HijaiyahQuestion> _questions = susunHurufQuestions;
+  // DIUBAH: Buat 2 list: satu untuk master data, satu untuk soal di game
+  final List<HijaiyahQuestion> _allQuestions = susunHurufQuestions; // Master data semua soal
+  List<HijaiyahQuestion> _questions = []; // Daftar soal yang sudah diacak untuk game saat ini
+
   int _currentQuestionIndex = 0;
   int _score = 0;
   int correctAnswers = 0;
   
-  // Store answers for each question
   final Map<int, QuestionAnswer> _questionAnswers = {};
-  
-  // Current question state
+
   List<String> _userAnswer = [];
   List<int> _usedIndices = [];
   bool _isCorrect = false;
@@ -53,6 +54,20 @@ class SusunHurufViewmodel extends ChangeNotifier {
   final Set<int> _answeredQuestions = {};
 
   VoidCallback? onGameFinished;
+  // DIUBAH: Panggil method untuk mengacak soal di constructor
+  SusunHurufViewmodel() {
+    _initializeGameQuestions();
+  }
+
+  // BARU: Method untuk mengacak dan menyiapkan soal untuk game
+  void _initializeGameQuestions() {
+    // 1. Buat salinan dari master data soal
+    final tempList = List<HijaiyahQuestion>.from(_allQuestions);
+    // 2. Acak urutan salinan tersebut
+    tempList.shuffle();
+    // 3. Gunakan list yang sudah diacak sebagai soal untuk game
+    _questions = tempList;
+  }
 
   List<HijaiyahQuestion> get questions => _questions;
   int get currentQuestionIndex => _currentQuestionIndex;
@@ -152,7 +167,7 @@ class SusunHurufViewmodel extends ChangeNotifier {
   }
 
   void nextQuestion() {
-    // Save current answer before moving to next question
+
     if (_isAnswerComplete) {
       _saveCurrentAnswer();
     }
@@ -168,7 +183,7 @@ class SusunHurufViewmodel extends ChangeNotifier {
 
   void previousQuestion() {
     if (_currentQuestionIndex > 0) {
-      // Save current answer before moving to previous question
+
       if (_isAnswerComplete || _userAnswer.isNotEmpty) {
         _saveCurrentAnswer();
       }
@@ -178,8 +193,10 @@ class SusunHurufViewmodel extends ChangeNotifier {
       notifyListeners();
     }
   }
-
+  
+  // DIUBAH: Tambahkan pemanggilan method pengacakan soal di sini
   void resetGame() {
+    _initializeGameQuestions(); // <--- BARU: Acak lagi soalnya saat reset
     _currentQuestionIndex = 0;
     _score = 0;
     correctAnswers = 0;

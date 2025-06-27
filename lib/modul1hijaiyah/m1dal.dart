@@ -3,8 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'm1kho.dart';  // Import LearningKhoWidget (previous level)
 import 'm1dzal.dart'; // Import LearningDzalWidget (next level)
-import 'package:audioplayers/audioplayers.dart'; // Import audioplayers package
-import 'package:untitled/learning.dart';
 
 class LearningDalWidget extends StatefulWidget {
   const LearningDalWidget({super.key});
@@ -17,17 +15,15 @@ class LearningDalWidget extends StatefulWidget {
 }
 
 class _LearningDalWidgetState extends State<LearningDalWidget> {
-  final AudioPlayer _audioPlayer = AudioPlayer();
-  bool _isPlaying = false;
+  final TextEditingController _textController = TextEditingController();
+  final FocusNode _textFieldFocusNode = FocusNode();
 
-  void _playPauseAudio() async {
-    if (_isPlaying) {
-      await _audioPlayer.pause();
-    } else {
-      await _audioPlayer.play(AssetSource('audios/modul1/dal_7.wav'));
-    }
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+
+  // Function to handle bottom navigation
+  void onTabTapped(int index) {
     setState(() {
-      _isPlaying = !_isPlaying;
+      selectedIndex = index;
     });
   }
 
@@ -35,7 +31,8 @@ class _LearningDalWidgetState extends State<LearningDalWidget> {
 
   @override
   void dispose() {
-    _audioPlayer.dispose();
+    _textController.dispose();
+    _textFieldFocusNode.dispose();
     super.dispose();
   }
 
@@ -47,211 +44,245 @@ class _LearningDalWidgetState extends State<LearningDalWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: const Color(0xFFFAFDCB),
+        backgroundColor: Color(0xFFFAFDCB),
         appBar: AppBar(
-          backgroundColor: const Color(0xFF037A16),
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_rounded, size: 30, color: Colors.white),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const LearningWidget()),
-              );
-            },
-          ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  'Level 1 Belajar Huruf \n Hijaiyah',
-                  style: const TextStyle(color: Colors.white),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              const SizedBox(width: 10),
-              IconButton(
-                icon: FaIcon(
-                  _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff,
-                  color: Colors.white,
-                  size: 25,
-                ),
-                onPressed: _playPauseAudio,
-              ),
-            ],
-          ),
+          title: Text('Level 1 Belajar Huruf Hijaiyah'),
+          backgroundColor: Color(0xFF037A16),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 10),
-                Text(
-                  'Pengenalan Huruf Hijaiyah',
-                  style: GoogleFonts.inter(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Dal (D)',
-                  style: GoogleFonts.inter(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 35),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 80),
+                  padding: EdgeInsetsDirectional.fromSTEB(15, 47, 15, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.fast_rewind, color: Colors.black, size: 25),
+                        icon: Icon(
+                          Icons.arrow_back_ios_rounded,
+                          color: Colors.black,
+                          size: 30,
+                        ),
                         onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => const LearningKhoWidget()),
-                          );
+                          Navigator.pop(context); // Go back to the previous screen
                         },
                       ),
                       IconButton(
-                        icon: const Icon(Icons.fast_forward, color: Colors.black, size: 25),
+                        icon: FaIcon(
+                          FontAwesomeIcons.volumeHigh,
+                          color: Colors.black,
+                          size: 30,
+                        ),
                         onPressed: () {
+                          // TODO: Add play audio functionality here
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Level 1: Belajar Huruf Hijaiyah',
+                        style: GoogleFonts.inter(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                        child: Text(
+                          'Pengenalan Huruf Hijaiyah',
+                          style: GoogleFonts.inter(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(60, 35, 60, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Fast Rewind Button to navigate to LearningKhoWidget (previous level)
+                      IconButton(
+                        icon: Icon(
+                          Icons.fast_rewind,
+                          color: Colors.black,
+                          size: 25,
+                        ),
+                        onPressed: () {
+                          // Navigate to LearningKhoWidget (previous level)
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => const LearningDzalWidget()),
+                            MaterialPageRoute(
+                              builder: (context) => LearningKhoWidget(),
+                            ),
+                          );
+                        },
+                      ),
+                      // Fast Forward Button to navigate to LearningDzalWidget (next level)
+                      IconButton(
+                        icon: Icon(
+                          Icons.fast_forward,
+                          color: Colors.black,
+                          size: 25,
+                        ),
+                        onPressed: () {
+                          // Navigate to LearningDzalWidget (next level)
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LearningDzalWidget(),
+                            ),
                           );
                         },
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
-                Container(
-                  width: MediaQuery.sizeOf(context).width * 0.9,
-                  height: 183.67,
-                  decoration: const BoxDecoration(color: Colors.white),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      'assets/images/Card Dal.png',
-                      fit: BoxFit.cover,
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                  child: Container(
+                    width: MediaQuery.sizeOf(context).width * 0.9,
+                    height: 183.67,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
                     ),
-                  ),
-                ),
-
-
-                // Gambar tenggorokan cara baca Ta (With the throat image)
-                const SizedBox(height: 30),
-                Center(
-                  child: SizedBox(
-                    width: MediaQuery.sizeOf(context).width * 0.9, // Restrict the width to screen size
-                    height: 200.0, // Fixed height to fit the layout better
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.asset(
-                        'assets/images/m1/m1dal.png', // Path to your image of the throat position for Ta
-                        fit: BoxFit.contain,  // Adjusts the image to fit within the box
+                        'assets/images/Card Dal.png',
+                        width: 333.9,
+                        height: 207.2,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 15),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-                  padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFDDEB9D),
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(60, 15, 60, 0),
+                  child: Row(
                     children: [
-                      Text(
-                        'Penjelasan Huruf Dal (د):',
-                        style: GoogleFonts.inter(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                      IconButton(
+                        icon: Icon(
+                          Icons.mic_sharp,
+                          color: Colors.black,
+                          size: 30,
                         ),
+                        onPressed: () {
+                        },
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        'Antara punggung ujung lidah dan pangkal dua gigi muka yang atas',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        'Sifat-Sifatnya:',
-                        style: GoogleFonts.inter(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        '1. Nafas ditahan (Jahr)',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      Text(
-                        '2. Suara tertahan (Syiddah)',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      Text(
-                        '3. Lidah dibawah (Istifal)',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      Text(
-                        '4. Terbuka antara lidah dan langit-langit atas (Infitah)',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      Text(
-                        '5. Tidak lancar dan hati-hati (Ishmat)',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      Text(
-                        '6. Memantul suara tambahan (Qolqolah)',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                        child: Text(
+                          'Coba Ucapkan Huruf \n Hijaiyah!',
+                          style: GoogleFonts.inter(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 35),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(50, 15, 50, 0),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Feedback AI: ',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          width: 200,
+                          child: TextFormField(
+                            controller: _textController,
+                            focusNode: _textFieldFocusNode,
+                            autofocus: false,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              isDense: true,
+                              hintText: '...............',
+                              hintStyle: GoogleFonts.inter(
+                                fontWeight: FontWeight.w600,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              filled: true,
+                              fillColor: Color(0xFFFAFDCB),
+                            ),
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w600,
+                            ),
+                            cursorColor: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Color(0xFFFAFDCB),
+          type: BottomNavigationBarType.fixed,
+          currentIndex: selectedIndex,
+          onTap: onTabTapped,
+          selectedItemColor: Color(0xFF037A16),
+          unselectedItemColor: Colors.black,
+          selectedLabelStyle: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+          unselectedLabelStyle: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+          items: const [
+            BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.house, size: 30),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.menu_book, size: 30),
+              label: 'Learning',
+            ),
+            BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.chartBar, size: 30),
+              label: 'Progress',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle_outlined, size: 30),
+              label: 'Account',
+            ),
+          ],
         ),
       ),
     );

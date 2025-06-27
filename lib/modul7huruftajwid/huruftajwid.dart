@@ -416,18 +416,18 @@ class _LatihanHurufTajwidPageState extends State<LatihanHurufTajwidPage> {
         backgroundColor: const Color(0xFF037A16),
         centerTitle: true,
         title: Text(
-          ' Level 7 Latihan Pengu \n capan Huruf Tajwid',
-          style: GoogleFonts.inter(fontWeight: FontWeight.w600, color: Colors.white),
+          'Latihan Pengucapan \n Huruf dengan Tajwid',
+          style: GoogleFonts.inter(fontWeight: FontWeight.w600),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.menu, color: Colors.white),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               _scaffoldKey.currentState?.openEndDrawer();
             },

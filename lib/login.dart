@@ -45,245 +45,292 @@ class LoginWidget extends StatelessWidget {
           FocusManager.instance.primaryFocus?.unfocus();
         },
         child: Scaffold(
-          backgroundColor: Color(0xFFFAFFCA),
+          backgroundColor: Color(0xFFFAFDCB),
           body: SafeArea(
             top: true,
-            child: Consumer<LoginModel>(builder: (context, model, child) {
-              return SingleChildScrollView( // Membuat tampilan bisa di-scroll
-                child: Center(
+            child: Consumer<LoginModel>(
+              builder: (context, model, child) {
+                return Container(
+                  width: MediaQuery.of(context).size.width * 3.8,
+                  height: MediaQuery.of(context).size.height * 8.44,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFFAFDCB),
+                  ),
                   child: Column(
                     children: [
-                      SizedBox(height: 80), // Memberikan jarak agar TajwidKidz tidak terlalu dekat dengan atas
-                      // Tulisan TajwidKidz di luar kotak
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 150, 0, 0),
                         child: Text(
-                          'TajwidKidz', // Nama aplikasi
+                          'Login',
                           style: TextStyle(
                             fontFamily: 'Inter',
-                            fontSize: 36,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black, // Warna gelap untuk kontras
+                            fontSize: 40,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
-                      // Kotak Login
+                      Align(
+                        alignment: AlignmentDirectional(-1, 0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(45, 25, 0, 10),
+                          child: Text(
+                            'Email',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 20,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.90, // Mengubah menjadi 75% dari lebar layar
-                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                        width: MediaQuery.of(context).size.width * 0.838,
+                        height: MediaQuery.of(context).size.height * 0.06,
                         decoration: BoxDecoration(
-                          color: Color(0xFFb9d4aa), // Latar belakang hijau muda
-                          borderRadius: BorderRadius.circular(20), // Sudut membulat
+                          color: Colors.white,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.greenAccent.withOpacity(0.3),
-                              spreadRadius: 2,
-                              blurRadius: 10,
-                              offset: Offset(0, 3),
+                              color: Color(0xFF037A16),
+                              offset: Offset(
+                                0,
+                                2,
+                              ),
                             )
                           ],
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
                           children: [
-                            Text(
-                              'Selamat Datang Kembali', // Pesan sambutan
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black, // Warna hitam
+                            Expanded(
+                              child: SizedBox(
+                                width: 200,
+                                child: TextFormField(
+                                  controller: model.textController1,
+                                  focusNode: model.textFieldFocusNode1,
+                                  autofocus: false,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    labelStyle: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 16,
+                                    ),
+                                    hintText: 'Email\n',
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                  ),
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                  ),
+                                  cursorColor: Colors.black,
+                                ),
                               ),
                             ),
-                            SizedBox(height: 10),
+                          ],
+                        ),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(-1, 0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(45, 25, 0, 0),
+                          child: Text(
+                            'Password',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 20,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(12),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.838,
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color(0xFF037A16),
+                                offset: Offset(
+                                  0,
+                                  2,
+                                ),
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: SizedBox(
+                                  width: 200,
+                                  child: TextFormField(
+                                    controller: model.textController2,
+                                    focusNode: model.textFieldFocusNode2,
+                                    autofocus: false,
+                                    obscureText: !model.isPasswordVisible, // Toggle visibility
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      labelStyle: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 16,
+                                      ),
+                                      hintText: 'Password\n',
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                    ),
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 16,
+                                    ),
+                                    cursorColor: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: IconButton(
+                                  icon: Icon(
+                                    model.isPasswordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Colors.black,
+                                    size: 24,
+                                  ),
+                                  onPressed: () {
+                                    model.togglePasswordVisibility(); // Toggle password visibility
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(3, 5, 0, 0),
+                          child: Text(
+                            'Lupa Password ?',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontSize: 16,
+                              letterSpacing: 0.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.838,
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Perform login logic here
+                              // Navigate to Home page after successful login
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => HomePageWidget()),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF037A16),
+                              foregroundColor: Colors.black,
+                              textStyle: TextStyle(
+                                fontFamily: 'Inter Tight',
+                                fontSize: 24,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              elevation: 0,
+                            ),
+                            child: Text('Login'),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(10, 20, 10, 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
                             Text(
-                              'Isi data di bawah ini untuk mengakses akun Anda.',
+                              'Don’t have an account ? ',
                               style: TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 16,
-                                color: Colors.black.withOpacity(0.7), // Sedikit transparan untuk memberi kesan modern
                               ),
                             ),
-                            SizedBox(height: 40),
-                            Text(
-                              'Email', // Label untuk email
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 18,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            // Email text field with box shadow
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0xFF037A16), // Shadow color
-                                    offset: Offset(0, 2), // Shadow position
-                                  ),
-                                ],
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: TextFormField(
-                                controller: model.textController1,
-                                focusNode: model.textFieldFocusNode1,
-                                decoration: InputDecoration(
-                                  hintText: 'Masukkan email Anda',
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.green,
-                                      width: 2.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.green.withOpacity(0.5),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                            Text(
-                              'Kata Sandi', // Label untuk password
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 18,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            // Password text field with box shadow
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0xFF037A16), // Shadow color
-                                    offset: Offset(0, 2), // Shadow position
-                                  ),
-                                ],
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: TextFormField(
-                                controller: model.textController2,
-                                focusNode: model.textFieldFocusNode2,
-                                obscureText: !model.isPasswordVisible, // Toggle password visibility
-                                decoration: InputDecoration(
-                                  hintText: 'Masukkan kata sandi Anda',
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.green,
-                                      width: 2.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.green.withOpacity(0.5),
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      model.isPasswordVisible
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: model.togglePasswordVisibility, // Toggle password visibility
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 20),
                             Align(
-                              alignment: Alignment.center,
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.75, // Menambah lebar tombol
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    // Navigate to HomePage after successful login
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => HomePageWidget()),
-                                    );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xFF037A16), // Tombol dengan warna hijau
-                                    foregroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    padding: EdgeInsets.symmetric(vertical: 12), // Tinggi tombol
+                              alignment: AlignmentDirectional(0, 0),
+                              child: TextButton(
+                                onPressed: () {
+                                  // Navigate to Sign Up page
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => SignupWidget()),
+                                  );
+                                },
+                                child: Text(
+                                  ' Sign Up',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
                                   ),
-                                  child: Text('Masuk', style: TextStyle(fontSize: 25)),
                                 ),
                               ),
-                            ),
-                            SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Belum punya akun? ',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => SignupWidget()),
-                                    );
-                                  },
-                                  child: Text(
-                                    'Daftar',
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('Atau masuk dengan', style: TextStyle(fontSize: 16)),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                  child: FaIcon(
-                                    FontAwesomeIcons.google,
-                                    color: Colors.redAccent,
-                                    size: 20,
-                                  ),
-                                ),
-                              ],
                             ),
                           ],
+                        ),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(-1, 0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(80, 30, 80, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Align(
+                                alignment: AlignmentDirectional(0, 0),
+                                child: Text(
+                                  'Login With',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                                child: FaIcon(
+                                  FontAwesomeIcons.google,
+                                  color: Color(0xFFB5584E),
+                                  size: 20,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
-              );
-            }),
+                );
+              },
+            ),
           ),
         ),
       ),

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'tatitu.dart'; // Import TaTitu Widget for back navigation
-import 'jajiju.dart'; // Import next level widget for forward navigation
+import 'tatitu.dart';
+import 'jajiju.dart';
 import 'package:audioplayers/audioplayers.dart'; // Import audioplayers package
-import 'package:untitled/learning.dart';
 
 class LearningTsaTsiTsuWidget extends StatefulWidget {
-  const LearningTsaTsiTsuWidget({super.key});
+  const LearningTsaTsiTsuWidget ({super.key});
 
   static String routeName = 'Learningtsatsitsu';
   static String routePath = '/learningtsatsitsu';
@@ -17,34 +16,55 @@ class LearningTsaTsiTsuWidget extends StatefulWidget {
 }
 
 class _LearningTsaTsiTsuWidgetState extends State<LearningTsaTsiTsuWidget> {
-  final AudioPlayer _audioPlayer = AudioPlayer(); // Audio player instance
-  bool _isPlaying = false; // Track audio playing state
-
-  // Function to handle play/pause audio
-  void _playPauseAudio() async {
-    if (_isPlaying) {
-      await _audioPlayer.pause(); // Pause the audio
-    } else {
-      await _audioPlayer.play(AssetSource('audios/modul3/Tsa Tsi Tsu.mp4')); // Play the Tsa sound
-    }
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
-  }
+  final TextEditingController _textController = TextEditingController();
+  final FocusNode _textFieldFocusNode = FocusNode();
 
   int selectedIndex = 1; // Index for the BottomNavigationBar
+  final AudioPlayer _audioPlayer = AudioPlayer(); // Buat final karena tidak diubah
+  bool _isPlaying = false; // Track audio playing state
 
   // Function to handle bottom navigation
   void onTabTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
+
+    // Navigate to the corresponding screen
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, '/home');
+        break;
+      case 1:
+      // current screen
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/progress');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/account');
+        break;
+    }
   }
 
   @override
   void dispose() {
-    _audioPlayer.dispose(); // Dispose audio player
+    _textController.dispose();
+    _textFieldFocusNode.dispose();
+    _audioPlayer.dispose();
     super.dispose();
+  }
+
+  // Function to play/pause audio
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await _audioPlayer.pause();
+    } else {
+      // Perbaiki penggunaan volume icon dan play AssetSource dengan path relatif benar
+      await _audioPlayer.play(AssetSource('audios/alif_1.wav'));
+    }
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
   }
 
   @override
@@ -56,75 +76,70 @@ class _LearningTsaTsiTsuWidgetState extends State<LearningTsaTsiTsuWidget> {
       child: Scaffold(
         backgroundColor: const Color(0xFFFAFDCB),
         appBar: AppBar(
+          title: const Text('Level 3 Belajar Mengenal \n Huruf Hijaiyah Ba Bi Bu'),
           backgroundColor: const Color(0xFF037A16),
           elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_rounded, size: 30, color: Colors.white),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const LearningWidget()),
-              );
-            },
-          ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Text(
-                  'Level 3:Belajar Mengenal \n Huruf Hijaiyah  ( Fonetik) ',
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              const SizedBox(width: 10),
-              IconButton(
-                icon: FaIcon(
-                  _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff,
-                  color: Colors.white,
-                  size: 25,
-                ),
-                onPressed: _playPauseAudio, // Play or pause audio when pressed
-              ),
-            ],
-          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(15, 47, 15, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: const Icon(
+                          Icons.arrow_back_ios_rounded,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      IconButton(
+                        icon: FaIcon(
+                          _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff, // pakai volumeHigh bukan volumeUp
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                        onPressed: _playPauseAudio,
+                      ),
+                    ],
+                  ),
+                ),
+
                 const SizedBox(height: 10),
+
                 Column(
                   children: [
                     Text(
-                      'Belajar mengenal  Huruf Hijaiyah (Tsa Tsi Tsu)',
+                      'Level 3: Belajar Mengenal Huruf \n Hijaiyah dengan Metode Fonetik',
                       style: GoogleFonts.inter(
-                        fontSize: 18,
+                        fontSize: 20,
                         fontWeight: FontWeight.w600,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 4),
                     Text(
                       'Tsa',
                       style: GoogleFonts.inter(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
+
                 const SizedBox(height: 35),
+
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(60, 0, 60, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Fast Rewind Button to navigate to LearningTaTituWidget (previous level)
                       IconButton(
                         icon: const Icon(
                           Icons.fast_rewind,
@@ -132,15 +147,12 @@ class _LearningTsaTsiTsuWidgetState extends State<LearningTsaTsiTsuWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => const LearningTaTituWidget(),
-                            ),
+                            MaterialPageRoute(builder: (context) => LearningTaTituWidget()),
                           );
                         },
                       ),
-                      // Fast Forward Button to navigate to LearningJaJiJuWidget (next level)
                       IconButton(
                         icon: const Icon(
                           Icons.fast_forward,
@@ -148,18 +160,18 @@ class _LearningTsaTsiTsuWidgetState extends State<LearningTsaTsiTsuWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => const LearningJaJiJuWidget(),
-                            ),
+                            MaterialPageRoute(builder: (context) => LearningJaJiJuWidget()),
                           );
                         },
                       ),
                     ],
                   ),
                 ),
+
                 const SizedBox(height: 20),
+
                 Container(
                   width: MediaQuery.sizeOf(context).width * 0.9,
                   height: 310,
@@ -174,7 +186,76 @@ class _LearningTsaTsiTsuWidgetState extends State<LearningTsaTsiTsuWidget> {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 15),
+
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(60, 0, 60, 0),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.mic_sharp,
+                        color: Colors.black,
+                        size: 30,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        'Coba Ucapkan Huruf \n Harakat!',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 15),
+
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(50, 0, 50, 0),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Feedback AI: ',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _textController,
+                          focusNode: _textFieldFocusNode,
+                          autofocus: false,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: '...............',
+                            hintStyle: GoogleFonts.inter(
+                              fontWeight: FontWeight.w600,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.transparent, width: 1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.transparent, width: 1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            filled: true,
+                            fillColor: const Color(0xFFFAFDCB),
+                          ),
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w600,
+                          ),
+                          cursorColor: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

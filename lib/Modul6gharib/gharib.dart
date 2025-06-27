@@ -223,21 +223,18 @@ class _BacaanGharibPageState extends State<BacaanGharibPage> {
         backgroundColor: const Color(0xFF037A16),
         centerTitle: true,
         title: Text(
-          'Level 6 Gharib',
-          style: GoogleFonts.inter(
-            fontWeight: FontWeight.w600,
-            color: Colors.white,  // Set title text color to white
-          ),
+          'Gharib',
+          style: GoogleFonts.inter(fontWeight: FontWeight.w600),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.menu, color: Colors.white),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               _scaffoldKey.currentState?.openEndDrawer();
             },

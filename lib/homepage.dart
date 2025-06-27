@@ -115,7 +115,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       width: 146,
                       height: 146,
                       decoration: BoxDecoration(
-                        color: Color(0xFFBCDEA8),
+                        color: Color(0xFFDDEB9D),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
@@ -166,7 +166,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       width: 146,
                       height: 146,
                       decoration: BoxDecoration(
-                        color: Color(0xFF8EC448),
+                        color: Color(0xFFDDEB9D),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
@@ -226,7 +226,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       width: 146,
                       height: 146,
                       decoration: BoxDecoration(
-                        color: Color(0xFF8EC448),
+                        color: Color(0xFFDDEB9D),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
@@ -277,7 +277,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       width: 146,
                       height: 146,
                       decoration: BoxDecoration(
-                        color: Color(0xFFBCDEA8),
+                        color: Color(0xFFDDEB9D),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(

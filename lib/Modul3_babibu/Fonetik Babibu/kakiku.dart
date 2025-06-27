@@ -1,49 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:audioplayers/audioplayers.dart'; // Ensure this is added to your pubspec.yaml
-import 'qoqiqu.dart'; // Import the previous level widget
-import 'lalilu.dart'; // Import the next level widget
-import 'package:untitled/learning.dart';
+import 'package:audioplayers/audioplayers.dart'; // Pastikan sudah ditambahkan di pubspec.yaml
+import 'qoqiqu.dart';
+import 'lalilu.dart';
 
 class LearningKaKiKuWidget extends StatefulWidget {
-  const LearningKaKiKuWidget   ({super.key});
+  const LearningKaKiKuWidget({super.key});
 
-  static String routeName = 'Learningkakiku';
-  static String routePath = '/learningkakiku';
+  static String routeName = 'Learningqoqiqu';
+  static String routePath = '/learningqoqiqu';
 
   @override
   State<LearningKaKiKuWidget> createState() => _LearningKaKiKuWidgetState();
 }
 
 class _LearningKaKiKuWidgetState extends State<LearningKaKiKuWidget> {
-  final AudioPlayer _audioPlayer = AudioPlayer(); // Audio player instance
-  bool _isPlaying = false; // Track audio playing state
+  final TextEditingController _textController = TextEditingController();
+  final FocusNode _textFieldFocusNode = FocusNode();
 
-  // Function to handle play/pause audio
+  int selectedIndex = 1;
+
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  bool _isPlaying = false;
+
+  void onTabTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, '/home');
+        break;
+      case 1:
+      // Current screen
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/progress');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/account');
+        break;
+    }
+  }
+
   Future<void> _playPauseAudio() async {
     if (_isPlaying) {
-      await _audioPlayer.pause(); // Pause the audio
+      await _audioPlayer.pause();
     } else {
-      await _audioPlayer.play(AssetSource('audios/modul3/Ka Ki Ku.mp4')); // Play the Ja Ji Ju sound
+      // Ganti dengan path file audio yang sesuai
+      await _audioPlayer.play(AssetSource('audios/kakiku_audio.mp3'));
     }
     setState(() {
       _isPlaying = !_isPlaying;
     });
   }
 
-  int selectedIndex = 1; // Index for the BottomNavigationBar
-
-  // Function to handle bottom navigation
-  void onTabTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
-
   @override
   void dispose() {
-    _audioPlayer.dispose(); // Dispose audio player
+    _textController.dispose();
+    _textFieldFocusNode.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
@@ -58,39 +76,9 @@ class _LearningKaKiKuWidgetState extends State<LearningKaKiKuWidget> {
       child: Scaffold(
         backgroundColor: const Color(0xFFFAFDCB),
         appBar: AppBar(
+          title: const Text('Level 3: Belajar mengenal \n Huruf Hijaiyah (Ba Bi Bu)'),
           backgroundColor: const Color(0xFF037A16),
           elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_rounded, size: 30, color: Colors.white),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const LearningWidget()), // Fix the navigation
-              );
-            },
-          ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Text(
-                  'Level 3: Belajar mengenal \n Huruf  Hijaiyah (Fonetik)',
-                  style: const TextStyle(color: Colors.white),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              const SizedBox(width: 10),
-              IconButton(
-                icon: FaIcon(
-                  _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff,
-                  color: Colors.white,
-                  size: 25,
-                ),
-                onPressed: _playPauseAudio, // Play or pause audio when pressed
-              ),
-            ],
-          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -101,27 +89,44 @@ class _LearningKaKiKuWidgetState extends State<LearningKaKiKuWidget> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  // Back & Volume Buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.black, size: 30),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                      IconButton(
+                        icon: FaIcon(
+                          _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                        onPressed: _playPauseAudio,
+                      ),
+                    ],
+                  ),
 
                   const SizedBox(height: 10),
 
-                  // Title and subtitle
+                  // Title and Subtitle
                   Column(
                     children: [
                       Text(
-                        'Belajar mengenal \n Huruf Hijaiyah (Ka Ki Ku) ',
+                        'Level 3: Belajar mengenal Huruf \n Hijaiyah dengan Metode Fonetik',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inter(
-                          fontSize: 18,
+                          fontSize: 20,
                           fontWeight: FontWeight.w600,
                         ),
-
                       ),
                       const SizedBox(height: 8),
                       Text(
                         'Kaf',
                         style: GoogleFonts.inter(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ],
@@ -129,36 +134,39 @@ class _LearningKaKiKuWidgetState extends State<LearningKaKiKuWidget> {
 
                   const SizedBox(height: 20),
 
-                  // Navigation rewind and forward
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.fast_rewind, color: Colors.black, size: 30),
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => const LearningQoQiQuWidget()),
-                          );
-                        },
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.fast_forward, color: Colors.black, size: 30),
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => const LearningLaLiLuWidget()),
-                          );
-                        },
-                      ),
-                    ],
+                  // Navigation Buttons rewind and forward
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 60),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.fast_rewind, color: Colors.black, size: 30),
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => const LearningQoQiQuWidget()),
+                            );
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.fast_forward, color: Colors.black, size: 30),
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => const LearningLaLiLuWidget()),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
 
                   const SizedBox(height: 10),
 
-                  // Image
+                  // Main image
                   Container(
-                    width: MediaQuery.sizeOf(context).width * 0.9,
+                    width: MediaQuery.of(context).size.width * 0.9,
                     height: 320,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
@@ -171,6 +179,61 @@ class _LearningKaKiKuWidgetState extends State<LearningKaKiKuWidget> {
                         fit: BoxFit.cover,
                       ),
                     ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  // Mic and instruction text
+                  Row(
+                    children: [
+                      const Icon(Icons.mic_sharp, color: Colors.black, size: 30),
+                      const SizedBox(width: 10),
+                      Text(
+                        'Coba Ucapkan Harakat!',
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  // Feedback AI input
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Feedback AI:',
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _textController,
+                          focusNode: _textFieldFocusNode,
+                          autofocus: false,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: '...............',
+                            filled: true,
+                            fillColor: const Color(0xFFFAFDCB),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w600,
+                          ),
+                          cursorColor: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

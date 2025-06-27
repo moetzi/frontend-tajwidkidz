@@ -156,21 +156,12 @@ class _LearningWidgetState extends State<LearningWidget> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            'Learning',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,// Mengubah warna teks menjadi putih
-              fontSize: 25,         // Menyesuaikan ukuran font jika perlu
-            ),
-          ),
+          title: Text('Learning'),
           backgroundColor: Color(0xFF037A16),
-          centerTitle: true, // Menempatkan teks di tengah
         ),
         body: SafeArea(
           top: true,
           child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(vertical: 10), // Padding atas dan bawah
             child: Column(
               children: [
                 // Level 1
@@ -744,7 +735,7 @@ class _LearningWidgetState extends State<LearningWidget> {
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 5),
                               child: Text(
-                                'Latihan Pengucapan Huruf dengan Hukum Tajwid',
+                                'Latihan Pengucapan Huruf dengan Hukum-Hukum Tajwid',
                                 style: GoogleFonts.inter(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 16,

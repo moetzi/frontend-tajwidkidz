@@ -10,6 +10,7 @@ class AccountSettingsPage extends StatefulWidget {
 
 class _AccountSettingsPageState extends State<AccountSettingsPage> {
   String _selectedLanguage = 'ID';
+  bool _isDarkMode = false;
   bool _isSoundEnabled = true;
   bool _isNotificationsEnabled = true;
 
@@ -23,6 +24,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _selectedLanguage = prefs.getString('language') ?? 'ID';
+      _isDarkMode = prefs.getBool('isDarkMode') ?? false;
       _isSoundEnabled = prefs.getBool('isSoundEnabled') ?? true;
       _isNotificationsEnabled = prefs.getBool('isNotificationsEnabled') ?? true;
     });
@@ -34,6 +36,14 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
       _selectedLanguage = language;
     });
     prefs.setString('language', language);
+  }
+
+  void _toggleTheme(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isDarkMode = value;
+    });
+    prefs.setBool('isDarkMode', value);
   }
 
   void _toggleSound(bool value) async {
@@ -55,22 +65,30 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFAFDCB),
+      backgroundColor: const Color(0xFFFAFDCB), // Set background color here
       appBar: AppBar(
         backgroundColor: const Color(0xFF037A16),
-        title: const Text(
-          'Pengaturan Akun',
-          style: TextStyle(color: Colors.white),
-        ),
-        iconTheme: const IconThemeData(color: Colors.white), // warna ikon back
+        title: const Text('Pengaturan Akun'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
+            // Mode Gelap/Terang
+            ListTile(
+              tileColor: const Color(0xFFFAFDCB), // Set background color for ListTile
+              leading: const Icon(Icons.brightness_6),
+              title: const Text('Mode Gelap / Terang'),
+              trailing: Switch(
+                value: _isDarkMode,
+                onChanged: _toggleTheme,
+              ),
+            ),
+            const Divider(),
+
             // Pengaturan Bahasa
             ListTile(
-              tileColor: const Color(0xFFFAFDCB),
+              tileColor: const Color(0xFFFAFDCB), // Set background color for ListTile
               leading: const Icon(Icons.language),
               title: const Text('Bahasa'),
               subtitle: Text(_selectedLanguage == 'ID' ? 'Bahasa Indonesia' : 'English'),
@@ -108,7 +126,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
 
             // Pengaturan Suara
             ListTile(
-              tileColor: const Color(0xFFFAFDCB),
+              tileColor: const Color(0xFFFAFDCB), // Set background color for ListTile
               leading: const Icon(Icons.volume_up),
               title: const Text('Aktifkan Suara'),
               trailing: Switch(
@@ -120,7 +138,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
 
             // Pengaturan Notifikasi
             ListTile(
-              tileColor: const Color(0xFFFAFDCB),
+              tileColor: const Color(0xFFFAFDCB), // Set background color for ListTile
               leading: const Icon(Icons.notifications),
               title: const Text('Aktifkan Notifikasi'),
               trailing: Switch(

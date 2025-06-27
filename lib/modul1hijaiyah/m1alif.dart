@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:untitled/learning.dart';
 import 'm1ba.dart'; // Import LearningBaWidget
 import 'package:audioplayers/audioplayers.dart'; // Import audioplayers package
 
@@ -59,7 +58,8 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
     if (_isPlaying) {
       await _audioPlayer.pause();
     } else {
-      await _audioPlayer.play(AssetSource('audios/modul1/alif_1.wav'));
+      // Perbaiki penggunaan volume icon dan play AssetSource dengan path relatif benar
+      await _audioPlayer.play(AssetSource('audios/alif_1.wav'));
     }
     setState(() {
       _isPlaying = !_isPlaying;
@@ -75,57 +75,47 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
       child: Scaffold(
         backgroundColor: const Color(0xFFFAFDCB),
         appBar: AppBar(
+          title: const Text('Level 1 Belajar Huruf Hijaiyah'),
           backgroundColor: const Color(0xFF037A16),
           elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_rounded, size: 30, color: Colors.white),
-            onPressed: () {
-              // Navigate directly to Learning.dart when back button is pressed
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => LearningWidget()), // Add LearningPage here
-              );
-            },
-          ),
-          // The default back button is already present on the AppBar.
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              // Removed the extra back arrow icon
-              const SizedBox(width: 10),
-              // Wrap Text with Expanded to prevent overflow
-              Expanded(
-                child: Text(
-                  'Level 1 Belajar Huruf \n Hijaiyah',
-                  style: const TextStyle(
-                    color: Colors.white, // Set text color to white
-                  ),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,  // Handle long text
-                ),
-              ),
-              const SizedBox(width: 10),
-              // IconButton for speaker with play/pause functionality
-              IconButton(
-                icon: FaIcon(
-                  _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff,
-                  color: Colors.white, // White color for icon
-                  size: 25,
-                ),
-                onPressed: _playPauseAudio,
-              ),
-            ],
-          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(15, 47, 15, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: const Icon(
+                          Icons.arrow_back_ios_rounded,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      IconButton(
+                        icon: FaIcon(
+                          _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff, // pakai volumeHigh bukan volumeUp
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                        onPressed: _playPauseAudio,
+                      ),
+                    ],
+                  ),
+                ),
+
                 const SizedBox(height: 10),
+
                 Column(
                   children: [
                     Text(
-                      'Pengenalan Huruf Hijaiyah',
+                      'Level 1: Belajar Huruf Hijaiyah',
                       style: GoogleFonts.inter(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
@@ -133,17 +123,19 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Alif (A)',
+                      'Pengenalan Huruf Hijaiyah',
                       style: GoogleFonts.inter(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
                 ),
+
                 const SizedBox(height: 35),
+
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(80, 0, 80, 0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(60, 0, 60, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -151,7 +143,7 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                         icon: const Icon(
                           Icons.fast_rewind,
                           color: Colors.black,
-                          size: 30,
+                          size: 25,
                         ),
                         onPressed: () {
                           // print dihapus dari production, kalau ingin debug gunakan log package
@@ -161,7 +153,7 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                         icon: const Icon(
                           Icons.fast_forward,
                           color: Colors.black,
-                          size: 30,
+                          size: 25,
                         ),
                         onPressed: () {
                           Navigator.push(
@@ -173,7 +165,9 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                     ],
                   ),
                 ),
+
                 const SizedBox(height: 20),
+
                 Container(
                   width: MediaQuery.sizeOf(context).width * 0.9,
                   height: 183.67,
@@ -188,70 +182,71 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
                     ),
                   ),
                 ),
-                // Gambar tenggorokan cara baca Ta (With the throat image)
-                const SizedBox(height: 30),
-                Center(
-                  child: SizedBox(
-                    width: MediaQuery.sizeOf(context).width * 0.9, // Restrict the width to screen size
-                    height: 200.0, // Fixed height to fit the layout better
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.asset(
-                        'assets/images/m1/m1alif.png', // Path to your image of the throat position for Ta
-                        fit: BoxFit.contain,  // Adjusts the image to fit within the box
-                      ),
-                    ),
-                  ),
-                ),
+
                 const SizedBox(height: 15),
 
-                // Kotak informasi Makhraj dan Sifat-Sifatnya
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-                  padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color:Color(0xFFDDEB9D),
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(),  // Reverted back to withOpacity()
-                        spreadRadius: 2,
-                        blurRadius: 5,
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(60, 0, 60, 0),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.mic_sharp,
+                        color: Colors.black,
+                        size: 30,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        'Coba Ucapkan Huruf \n Hijaiyah!',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ],
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                ),
+
+                const SizedBox(height: 15),
+
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(50, 0, 50, 0),
+                  child: Row(
                     children: [
                       Text(
-                        'Makhraj:',
+                        'Feedback AI: ',
                         style: GoogleFonts.inter(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        '1. Al Jaufu (Rongga Mulut)',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        'Sifat-Sifatnya:',
-                        style: GoogleFonts.inter(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        'Tebal tipisnya mengikuti huruf sebelumnya',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: TextFormField(
+                          controller: _textController,
+                          focusNode: _textFieldFocusNode,
+                          autofocus: false,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            hintText: '...............',
+                            hintStyle: GoogleFonts.inter(
+                              fontWeight: FontWeight.w600,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.transparent, width: 1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.transparent, width: 1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            filled: true,
+                            fillColor: const Color(0xFFFAFDCB),
+                          ),
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w600,
+                          ),
+                          cursorColor: Colors.black,
                         ),
                       ),
                     ],
@@ -260,6 +255,42 @@ class _LearningAlifWidgetState extends State<LearningAlifWidget> {
               ],
             ),
           ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: const Color(0xFFFAFDCB),
+          type: BottomNavigationBarType.fixed,
+          currentIndex: selectedIndex,
+          onTap: onTabTapped,
+          selectedItemColor: const Color(0xFF037A16),
+          unselectedItemColor: Colors.black,
+          selectedLabelStyle: const TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+          unselectedLabelStyle: const TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+          items: const [
+            BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.house, size: 30), // 'home' deprecated, gunakan 'house'
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.menu_book, size: 30),
+              label: 'Learning',
+            ),
+            BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.chartBar, size: 30),
+              label: 'Progress',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle_outlined, size: 30),
+              label: 'Account',
+            ),
+          ],
         ),
       ),
     );

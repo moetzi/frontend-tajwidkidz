@@ -19,7 +19,20 @@ class TebakHurufGame2 extends StatelessWidget {
       create: (_) => TebakHurufViewmodel2(),
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(170, 219, 233, 1),
-        appBar: AppBar(title: const Text('Mini Game'), backgroundColor: const Color(0xFF037A16)),
+        appBar: AppBar(
+        title: const Text(
+          'Mini Game',
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        // 3. Buat AppBar juga transparan dan hilangkan shadow
+        backgroundColor: Color(0xFF037A16),
+        elevation: 0,
+        centerTitle: true,
+      ),
         body: SafeArea(
           child: LayoutBuilder(
             builder: (context, viewportConstraints) {

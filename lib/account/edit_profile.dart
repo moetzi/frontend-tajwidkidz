@@ -19,13 +19,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
+      // Menyimpan gambar di penyimpanan lokal
       final Directory directory = await getApplicationDocumentsDirectory();
       final String filePath = '${directory.path}/${pickedFile.name}';
       final File localFile = File(filePath);
+
+      // Menyalin gambar yang dipilih ke penyimpanan lokal
       await localFile.writeAsBytes(await pickedFile.readAsBytes());
 
       setState(() {
-        _imageFile = XFile(localFile.path);
+        _imageFile = XFile(localFile.path); // Menyimpan path gambar
       });
     }
   }
@@ -49,25 +52,18 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFAFDCB),
+      backgroundColor: const Color(0xFFFAFDCB), // Mengubah warna latar belakang ke #FAFDCB
       appBar: AppBar(
         backgroundColor: const Color(0xFF037A16),
-        elevation: 0,
-        title: const Text(
-          'Edit Profil',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-        iconTheme: const IconThemeData(color: Colors.white), // Ikon di AppBar jadi putih
+        title: const Text('Edit Profil'),
+        elevation: 0, // Flat AppBar
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Foto Profil
             GestureDetector(
               onTap: _pickImage,
               child: Center(
@@ -89,41 +85,44 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             const SizedBox(height: 24),
 
+            // Edit Username
             TextField(
               controller: _usernameController,
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Colors.white,
-                labelText: 'Nama Lengkap ',
-                hintText: 'Masukkan Nama Lengkap atau Username baru',
+                fillColor: Colors.grey.shade100,
+                labelText: 'Username',
+                hintText: 'Masukkan username baru',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
                   borderSide: BorderSide.none,
                 ),
-                contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
+                contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
               ),
             ),
             const SizedBox(height: 20),
 
+            // Edit Email
             TextField(
               controller: _emailController,
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: Colors.grey.shade100,
                 labelText: 'Email',
                 hintText: 'Masukkan email baru (jika diperlukan)',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
                   borderSide: BorderSide.none,
                 ),
-                contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
+                contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
               ),
             ),
             const SizedBox(height: 30),
 
+            // Simpan Button
             Center(
               child: SizedBox(
-                width: double.infinity,
+                width: double.infinity, // Ensures the button takes full width
                 child: ElevatedButton(
                   onPressed: _saveChanges,
                   style: ElevatedButton.styleFrom(
@@ -131,11 +130,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    backgroundColor: const Color(0xFF037A16),
+                    backgroundColor: const Color(0xFF037A16), // Button color
                   ),
                   child: const Text(
                     'Simpan Perubahan',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: TextStyle(fontSize: 16, color: Colors.black), // Black text color
                   ),
                 ),
               ),

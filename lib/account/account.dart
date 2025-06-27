@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'edit_profile.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:untitled/login.dart';
-import 'help_support.dart';
-import 'settings.dart';
+import 'feedback_ai.dart'; // Mengimpor halaman Feedback AI
+import 'edit_profile.dart'; // Mengimpor halaman Edit Profile
+import 'package:shared_preferences/shared_preferences.dart'; // SharedPreferences untuk logout
+import 'package:untitled/login.dart'; // Pastikan halaman login sudah ada
+import 'help_support.dart'; // Mengimpor halaman Bantuan & Dukungan
+import 'settings.dart'; // Mengimpor halaman Pengaturan Akun
 
 class AccountWidget extends StatefulWidget {
   const AccountWidget({super.key});
@@ -14,81 +15,39 @@ class AccountWidget extends StatefulWidget {
 
 class _AccountWidgetState extends State<AccountWidget> {
 
+  // Fungsi logout
   Future<void> _logout(BuildContext context) async {
+    // Menampilkan dialog konfirmasi logout
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Keluar',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  'Yakin mau keluar? Kamu harus login lagi untuk mengakses akun ini',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, color: Colors.black54),
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        style: OutlinedButton.styleFrom(
-                          side: const BorderSide(color: Color(0xFF037A16), width: 2),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          backgroundColor: Colors.white,
-                        ),
-                        child: const Text(
-                          'Batal',
-                          style: TextStyle(color: Color(0xFF037A16)),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
-                          await prefs.remove('auth_token');
-
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (context) => LoginWidget()),
-                                (route) => false,
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF037A16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                        ),
-                        child: const Text(
-                          'Ya, Keluar',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
+        return AlertDialog(
+          title: const Text('Konfirmasi Logout'),
+          content: const Text('Apakah Anda yakin ingin keluar?'),
+          actions: [
+            // Tombol Batal
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Menutup dialog jika batal
+              },
+              child: const Text('Batal'),
             ),
-          ),
+            // Tombol Ya (Logout)
+            TextButton(
+              onPressed: () async {
+                // Hapus token atau data sesi lainnya
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.remove('auth_token'); // Hapus token atau data sesi
+
+                // Arahkan ke halaman login setelah logout
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginWidget()),
+                );
+              },
+              child: const Text('Ya'),
+            ),
+          ],
         );
       },
     );
@@ -103,11 +62,7 @@ class _AccountWidgetState extends State<AccountWidget> {
         elevation: 0,
         title: const Text(
           'Akun Saya',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontSize: 25,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -117,6 +72,7 @@ class _AccountWidgetState extends State<AccountWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // Card untuk Profil Pengguna
               Card(
                 elevation: 8,
                 shape: RoundedRectangleBorder(
@@ -127,6 +83,7 @@ class _AccountWidgetState extends State<AccountWidget> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      // Avatar
                       CircleAvatar(
                         radius: 50,
                         backgroundColor: Colors.green.shade700,
@@ -137,6 +94,7 @@ class _AccountWidgetState extends State<AccountWidget> {
                         ),
                       ),
                       const SizedBox(width: 16),
+                      // Nama dan Email
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
@@ -160,6 +118,8 @@ class _AccountWidgetState extends State<AccountWidget> {
                 ),
               ),
               const SizedBox(height: 30),
+
+              // List menu fitur
               Expanded(
                 child: ListView(
                   children: [
@@ -171,6 +131,24 @@ class _AccountWidgetState extends State<AccountWidget> {
                           context,
                           MaterialPageRoute(builder: (context) => EditProfilePage()),
                         );
+                      },
+                    ),
+                    _buildMenuItem(
+                      icon: Icons.assistant,
+                      label: 'Feedback AI',
+                      onTap: () {
+                        // Navigasi ke halaman Feedback AI
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const FeedbackAIPage()),
+                        );
+                      },
+                    ),
+                    _buildMenuItem(
+                      icon: Icons.star,
+                      label: 'Tantangan & Pencapaian',
+                      onTap: () {
+                        // Navigasi ke halaman Tantangan dan Pencapaian
                       },
                     ),
                     _buildMenuItem(
@@ -197,9 +175,9 @@ class _AccountWidgetState extends State<AccountWidget> {
                       icon: Icons.logout,
                       label: 'Keluar',
                       onTap: () {
-                        _logout(context);
+                        _logout(context); // Panggil fungsi logout dengan konfirmasi
                       },
-                      backgroundColor: const Color(0xFFDDEB9D),
+                      backgroundColor: Colors.red.shade100, // Warna logout lebih menonjol
                     ),
                   ],
                 ),
@@ -211,21 +189,22 @@ class _AccountWidgetState extends State<AccountWidget> {
     );
   }
 
+  // Menu Item dengan background lebih lembut
   Widget _buildMenuItem({
     required IconData icon,
     required String label,
     required VoidCallback onTap,
-    Color backgroundColor = const Color(0xFFE8F5E9),
+    Color backgroundColor = const Color(0xFFE8F5E9), // Warna latar belakang lembut
   }) {
     return Card(
-      color: backgroundColor,
+      color: backgroundColor, // Ganti warna latar belakang item
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12), // Membuat sudut lebih halus
       ),
-      elevation: 4,
+      elevation: 4, // Sedikit bayangan untuk elemen yang lebih modern
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
-        leading: Icon(icon, color: Colors.green.shade700),
+        leading: Icon(icon, color: Colors.green.shade700), // Warna ikon lebih cerah
         title: Text(
           label,
           style: const TextStyle(fontSize: 16, color: Colors.black87),
