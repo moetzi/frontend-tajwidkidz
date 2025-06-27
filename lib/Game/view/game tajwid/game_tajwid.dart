@@ -35,9 +35,18 @@ class _GameTajwidState extends State<GameTajwid> {
       child: Scaffold(
         backgroundColor: const Color(0xFFAADBE9),
         appBar: AppBar(
-            title: Text('Mini Game'),
-            backgroundColor: Color(0xFF037A16),
+          title: const Text(
+            'Mini Game',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
+          backgroundColor: Color(0xFF037A16),
+          elevation: 0,
+          centerTitle: true,
+        ),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
