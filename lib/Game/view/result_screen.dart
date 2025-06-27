@@ -94,7 +94,7 @@ class ResultScreen extends StatelessWidget {
                   children: [
                     // Button "Ulangi Kuis"
                     SizedBox(
-                      width: 163,
+                      width: 150,
                       height: 59,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -118,7 +118,7 @@ class ResultScreen extends StatelessWidget {
                     const SizedBox(width: 12),
                     // Button "Menu Utama"
                     SizedBox(
-                      width: 163,
+                      width: 150,
                       height: 59,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(

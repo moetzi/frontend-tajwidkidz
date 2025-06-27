@@ -1,11 +1,31 @@
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/Game/view/result_screen.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:untitled/Game/viewmodel/susun%20huruf/susun_huruf_viewmodel3.dart';
+import 'package:audioplayers/audioplayers.dart';
 
-class SusunHurufGame3 extends StatelessWidget {
+class SusunHurufGame3 extends StatefulWidget {
   const SusunHurufGame3({super.key});
+
+  @override
+  State<SusunHurufGame3> createState() => _SusunHurufGame3State();
+}
+
+class _SusunHurufGame3State extends State<SusunHurufGame3> {
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
+  Future<void> _speak(String? fileName) async {
+    if (fileName == null || fileName.isEmpty) return;
+    await _audioPlayer.stop();
+    await _audioPlayer.play(AssetSource('audios/susun_huruf/level3/$fileName'));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +39,18 @@ class SusunHurufGame3 extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(170, 219, 233, 1),
         appBar: AppBar(
-          title: const Text('Mini Game'),
-          backgroundColor: const Color(0xFF037A16),
+          title: const Text(
+            'Mini Game',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          // 3. Buat AppBar juga transparan dan hilangkan shadow
+          backgroundColor: Color(0xFF037A16),
+          elevation: 0,
+          centerTitle: true,
         ),
         body: SafeArea(
           child: LayoutBuilder(
@@ -36,7 +66,6 @@ class SusunHurufGame3 extends StatelessWidget {
                       child: Consumer<SusunHurufViewmodel3>(
                         builder: (context, controller, _) {
                           final question = controller.currentQuestion;
-                          final FlutterTts flutterTts = FlutterTts();
 
                           controller.setOnGameFinished(() {
                             Navigator.pushReplacement(
@@ -147,7 +176,7 @@ class SusunHurufGame3 extends StatelessWidget {
                                                 child: IconButton(
                                                   icon: const Icon(Icons.volume_up, color: Colors.white, size: 32),
                                                   onPressed: () {
-                                                    _speak(question.word, flutterTts);
+                                                    _speak(question.audioPath);
                                                   },
                                                 ),
                                               ),
@@ -314,12 +343,6 @@ class SusunHurufGame3 extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _speak(String text, FlutterTts tts) async {
-    await tts.setLanguage("ar");
-    await tts.setPitch(1.0);
-    await tts.speak(text);
   }
 
   Widget _buildLetterOption(

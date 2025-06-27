@@ -5,6 +5,7 @@ class HijaiyahQuestion {
   final List<String> options;
   final String? notes;
   final String? correctImagePath;
+  final String? audioPath;
 
   HijaiyahQuestion({
     required this.text,
@@ -13,6 +14,7 @@ class HijaiyahQuestion {
     required this.options,
     this.notes,
     this.correctImagePath,
+    this.audioPath,
   });
 }
 
@@ -38,16 +40,22 @@ class HijaiyahQuestion2 {
   final String? feedbackImagePath;
   final String? feedbackNotes;
 
+  final String? audioPath;
+  final List<String>? optionsAudioPath;
+
   HijaiyahQuestion2({
     required this.type,
     required this.text,
     required this.options,
     required this.correctAnswer,
+
     this.questionWord,
     this.questionImagePath,
     this.questionNotes,
     this.feedbackImagePath,
     this.feedbackNotes,
+    this.audioPath,
+    this.optionsAudioPath,
   });
 }
 

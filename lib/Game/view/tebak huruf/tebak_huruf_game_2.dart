@@ -4,14 +4,34 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:untitled/Game/models/question_model.dart';
 import 'package:untitled/Game/view/result_screen.dart';
 import 'package:untitled/Game/viewmodel/tebak%20huruf/tebak_huruf_viewmodel2.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 bool isArabic(String text) {
   final arabicRegex = RegExp(r'[\u0600-\u06FF]');
   return arabicRegex.hasMatch(text);
 }
 
-class TebakHurufGame2 extends StatelessWidget {
+class TebakHurufGame2 extends StatefulWidget {
   const TebakHurufGame2({super.key});
+
+  @override
+  State<TebakHurufGame2> createState() => _TebakHurufGame2State();
+}
+
+class _TebakHurufGame2State extends State<TebakHurufGame2> {
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
+  Future<void> _speak(String? fileName) async {
+    if (fileName == null || fileName.isEmpty) return;
+    await _audioPlayer.stop();
+    await _audioPlayer.play(AssetSource('audios/modul1/$fileName'));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +39,20 @@ class TebakHurufGame2 extends StatelessWidget {
       create: (_) => TebakHurufViewmodel2(),
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(170, 219, 233, 1),
-        appBar: AppBar(title: const Text('Mini Game'), backgroundColor: const Color(0xFF037A16)),
+        appBar: AppBar(
+        title: const Text(
+          'Mini Game',
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        // 3. Buat AppBar juga transparan dan hilangkan shadow
+        backgroundColor: Color(0xFF037A16),
+        elevation: 0,
+        centerTitle: true,
+      ),
         body: SafeArea(
           child: LayoutBuilder(
             builder: (context, viewportConstraints) {
@@ -35,17 +68,17 @@ class TebakHurufGame2 extends StatelessWidget {
 
                           controller.setOnGameFinished(() {
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ResultScreen(
-                                  score: controller.score,
-                                  totalQuestions: controller.questions.length,
-                                  benar: controller.correctAnswers,
-                                  onRetry: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const TebakHurufGame2())),
-                                ),
-                              ),
+                              score: controller.score,
+                              totalQuestions: controller.questions.length,
+                              benar: controller.correctAnswers,
+                              onRetry: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const TebakHurufGame2())),
+                            ),
+                            ),
                             );
                           });
 
                           final question = controller.currentQuestion;
-                          
+
                           return Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(16),
@@ -63,7 +96,7 @@ class TebakHurufGame2 extends StatelessWidget {
                                   _buildUI_LihatHurufPilihAudio(context, controller)
                                 else
                                   _buildUI_DengarAudioPilihTeks(context, controller),
-                                
+
                                 _buildFeedbackArea(context, controller),
                                 const SizedBox(height: 24),
                                 _buildNextButton(controller),
@@ -102,7 +135,7 @@ class TebakHurufGame2 extends StatelessWidget {
   Widget _buildUI_LihatHurufPilihAudio(BuildContext context, TebakHurufViewmodel2 controller) {
     final question = controller.currentQuestion;
     final flutterTts = FlutterTts();
-    
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -119,7 +152,7 @@ class TebakHurufGame2 extends StatelessWidget {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, childAspectRatio: 2.0, crossAxisSpacing: 12, mainAxisSpacing: 12),
           itemBuilder: (context, index) {
-            return _buildAudioOptionBox(context, controller, question.options[index], flutterTts);
+            return _buildAudioOptionBox(context, controller, question.options[index], question.optionsAudioPath?[index]);
           },
         ),
         const SizedBox(height: 20),
@@ -142,7 +175,7 @@ class TebakHurufGame2 extends StatelessWidget {
   Widget _buildUI_DengarAudioPilihTeks(BuildContext context, TebakHurufViewmodel2 controller) {
     final question = controller.currentQuestion;
     final flutterTts = FlutterTts();
-    
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -157,7 +190,7 @@ class TebakHurufGame2 extends StatelessWidget {
               ElevatedButton.icon(
                 icon: const Icon(Icons.volume_up),
                 label: const Text("Dengarkan Soal"),
-                onPressed: () => _speak(question.questionWord ?? '', flutterTts),
+                onPressed: () => _speak(question.audioPath),
               ),
               if (question.questionImagePath != null)
                 Padding(
@@ -187,7 +220,7 @@ class TebakHurufGame2 extends StatelessWidget {
       ],
     );
   }
-  
+
   // --- Widget Opsi Jawaban & Feedback ---
 
   Widget _buildTextOptionBox(BuildContext context, TebakHurufViewmodel2 controller, String option) {
@@ -213,7 +246,7 @@ class TebakHurufGame2 extends StatelessWidget {
     );
   }
 
-  Widget _buildAudioOptionBox(BuildContext context, TebakHurufViewmodel2 controller, String option, FlutterTts tts) {
+  Widget _buildAudioOptionBox(BuildContext context, TebakHurufViewmodel2 controller, String option, String? optionAudioPath) {
     // ... (kode dari respons sebelumnya, sudah benar) ...
     final isAnswered = controller.isAnswered;
     final isTentativelySelected = controller.tentativeSelectedAnswer == option;
@@ -233,7 +266,7 @@ class TebakHurufGame2 extends StatelessWidget {
     }
     return InkWell(
       onTap: isAnswered ? null : () {
-        _speak(option, tts);
+        _speak(optionAudioPath);
         controller.selectOption(option); // Memilih sementara
       },
       child: Container(
@@ -248,7 +281,7 @@ class TebakHurufGame2 extends StatelessWidget {
     if (!controller.isAnswered) return const SizedBox.shrink();
 
     final isCorrect = controller.selectedAnswer == question.correctAnswer;
-    
+
     // Untuk Tipe 1 (listenAndChooseText), tampilkan feedback lengkap jika benar
     if (question.type == QuestionType.listenAndChooseText && isCorrect) {
       return Container(
@@ -270,7 +303,7 @@ class TebakHurufGame2 extends StatelessWidget {
         ),
       );
     }
-    
+
     // Untuk semua kasus salah ATAU kasus benar pada Tipe 2, tampilkan teks simpel
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
@@ -281,7 +314,7 @@ class TebakHurufGame2 extends StatelessWidget {
       ),
     );
   }
-  
+
   Widget _buildNextButton(TebakHurufViewmodel2 controller) {
     return SizedBox(
       width: double.infinity,
@@ -294,9 +327,4 @@ class TebakHurufGame2 extends StatelessWidget {
     );
   }
 
-  Future<void> _speak(String text, FlutterTts tts) async {
-    await tts.setLanguage("ar");
-    await tts.setPitch(1.0);
-    await tts.speak(text);
-  }
 }

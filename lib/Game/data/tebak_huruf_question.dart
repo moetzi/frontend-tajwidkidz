@@ -10,6 +10,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "ب",
     notes: "Keluar dari dua bibir dengan merapatkannya.",
     correctImagePath: "assets/images/hijaiyah/ba.png",
+    audioPath: "ba_2.wav",
   ),
   // 2. Ta
   HijaiyahQuestion(
@@ -19,6 +20,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "ت",
     notes: "Keluar dari punggung ujung lidah menyentuh pangkal dua gigi seri atas.",
     correctImagePath: "assets/images/hijaiyah/ta.png",
+    audioPath: "ta_3.wav",
   ),
   // 3. Tsa
   HijaiyahQuestion(
@@ -28,6 +30,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "ث",
     notes: "Keluar dari dua tepi ujung lidah dari arah permukaan atasnya menyentuh ujung dua gigi seri atas.",
     correctImagePath: "assets/images/hijaiyah/tsa.png",
+    audioPath: "tsa_4.wav",
   ),
   // 4. Jim
   HijaiyahQuestion(
@@ -37,6 +40,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "ج",
     notes: "Keluar dari tengah lidah bersama dengan langit langit atas.",
     correctImagePath: "assets/images/hijaiyah/jim.png",
+    audioPath: "jim_5.wav",
   ),
   // 5. Kha
   HijaiyahQuestion(
@@ -46,6 +50,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "خ",
     notes: "Keluar dari tenggorokan atas.",
     correctImagePath: "assets/images/hijaiyah/kha.png",
+    audioPath: "kha_6.wav",
   ),
   // 6. Dal
   HijaiyahQuestion(
@@ -55,6 +60,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "د",
     notes: "Keluar dari punggung ujung lidah menyentuh pangkal dua gigi seri atas.",
     correctImagePath: "assets/images/hijaiyah/dal.png",
+    audioPath: "dal_7.wav",
   ),
   // 7. Zai
   HijaiyahQuestion(
@@ -64,6 +70,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "ز",
     notes: "Terletak pada akhir ujung lidah yang bertemu dengan dinding bagian dalam dari gigi seri bawah.",
     correctImagePath: "assets/images/hijaiyah/zai.png",
+    audioPath: "za_10.wav",
   ),
   // 8. Sin
   HijaiyahQuestion(
@@ -73,6 +80,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "س",
     notes: "Keluar dari ujung lidah diletakkan pada dinding bagian dalam dua gigi seri bawah sehingga suara keluar melalui celah antara gigi atas dan bawah.",
     correctImagePath: "assets/images/hijaiyah/sin.png",
+    audioPath: "sin_11.wav",
   ),
   // 9. Qof
   HijaiyahQuestion(
@@ -82,6 +90,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "ق",
     notes: "Keluar dari pangkal lidah menyentuh langit langit atas bagian daging.",
     correctImagePath: "assets/images/hijaiyah/qof.png",
+    audioPath: "qaf_20.wav",
   ),
   // 10. Nun
   HijaiyahQuestion(
@@ -91,6 +100,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "ن",
     notes: "Keluar dari dua tepi ujung lidah menyentuh ujung langit langit atas.",
     correctImagePath: "assets/images/hijaiyah/nun.png",
+    audioPath: "nun_23.wav",
   ),
   // 11. Huruf: ر
   HijaiyahQuestion(
@@ -100,6 +110,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "ro",
     notes: "Terletak pada ujung lidah yang bertemu dengan apa yang sejajar dengannya dari gusi gigi atas sedikit masuk ke punggung lidah dekat dengan makhraj huruf nun.",
     correctImagePath: "assets/images/hijaiyah/ro.png",
+    audioPath: "ra_9.wav",
   ),
   // 12. Huruf: ح
   HijaiyahQuestion(
@@ -109,6 +120,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "ha",
     notes: "Terletak pada tengah tenggorokan.",
     correctImagePath: "assets/images/hijaiyah/ha.png",
+    audioPath: "ha_6.wav",
   ),
   // 13. Huruf: ذ
   HijaiyahQuestion(
@@ -118,6 +130,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "dza",
     notes: "Keluar dari dua tepi ujung lidah dari arah permukaan atasnya menyentuh ujung dua gigi seri atas.",
     correctImagePath: "assets/images/hijaiyah/dza.png",
+    audioPath: "dzal_8.wav",
   ),
   // 14. Huruf: ش
   HijaiyahQuestion(
@@ -127,6 +140,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "sha",
     notes: "Keluar dari tengah lidah bersama langit langit atas.",
     correctImagePath: "assets/images/hijaiyah/sha.png", // atau shin.png
+    audioPath: "syin_12.wav",
   ),
   // 15. Huruf: ص
   HijaiyahQuestion(
@@ -136,6 +150,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "shad",
     notes: "Keluar dari ujung lidah diletakkan pada dinding bagian dalam dua gigi seri bawah sehingga suara keluar melalui celah antara gigi atas dan bawah.",
     correctImagePath: "assets/images/hijaiyah/shad.png",
+    audioPath: "shad_13.wav",
   ),
   // 16. Huruf: ك
   HijaiyahQuestion(
@@ -149,6 +164,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     // Notes yang lebih umum untuk Kaf: "Pangkal lidah (setelah makhraj Qaf), menyentuh langit-langit antara bagian keras dan lunak."
     notes: "Keluar dari pangkal lidah menyentuh langit langit atas bagian daging.",
     correctImagePath: "assets/images/hijaiyah/kaf.png",
+    audioPath: "kaf_21.wav",
   ),
   // 17. Huruf: ف
   HijaiyahQuestion(
@@ -158,6 +174,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "fa",
     notes: "Terletak pada pertemuan antara ujung gigi seri atas yang bertemu dengan perut bibir bawah.",
     correctImagePath: "assets/images/hijaiyah/fa.png",
+    audioPath: "fa_19.wav",
   ),
   // 18. Huruf: م
   HijaiyahQuestion(
@@ -167,6 +184,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "mim",
     notes: "Terletak pada pertemuan antara 2 bibir yang disertai dengan ghunnah.",
     correctImagePath: "assets/images/hijaiyah/mim.png",
+    audioPath: "mim_22.wav",
   ),
   // 19. Huruf: ي
   HijaiyahQuestion(
@@ -176,6 +194,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "ya",
     notes: "Keluar dari tengah lidah bersama langit langit atas.",
     correctImagePath: "assets/images/hijaiyah/ya.png",
+    audioPath: "ya_28.wav",
   ),
   // 20. Huruf: غ
   HijaiyahQuestion(
@@ -185,6 +204,7 @@ final List<HijaiyahQuestion> tebakHurufQuestions = [
     correctAnswer: "ghain",
     notes: "Terletak pada atas tenggorokan.",
     correctImagePath: "assets/images/hijaiyah/ghain.png",
+    audioPath: "ghain_18.wav",
   ),
 ];
 
@@ -200,6 +220,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     correctAnswer: "ja",
     feedbackImagePath: "assets/images/hijaiyah/jim.png",
     feedbackNotes: "Keluar dari tengah lidah bersama dengan langit-langit atas.",
+    optionsAudioPath: ["kha_6.wav","jim_5.wav","ha_6","tsa_4.wav"],
   ),
 
   // 2. Soal: Huruf "ص"
@@ -211,6 +232,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     correctAnswer: "shad",
     feedbackImagePath: "assets/images/hijaiyah/shad.png",
     feedbackNotes: "Keluar dari ujung lidah diletakkan pada dinding bagian dalam dua gigi seri bawah sehingga suara keluar melalui celah antara gigi atas dan bawah.",
+    optionsAudioPath: ["sin_11.wav","shad_13.wav","tha_15.wav","ra_9.wav"],
   ),
 
   // 3. Soal: Huruf "خ"
@@ -222,6 +244,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     correctAnswer: "kha",
     feedbackImagePath: "assets/images/hijaiyah/kha.png",
     feedbackNotes: "Keluar dari tenggorokan atas.",
+    optionsAudioPath: ["kha_6.wav","ha_6.wav","ain_17.wav","qaf_20.wav"],
   ),
 
   // 4. Soal: Huruf "ث"
@@ -233,6 +256,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     correctAnswer: "tsa",
     feedbackImagePath: "assets/images/hijaiyah/tsa.png",
     feedbackNotes: "Keluar dari dua tepi ujung lidah dari arah permukaan atasnya menyentuh ujung dua gigi seri atas.",
+    optionsAudioPath: ["ta_3.wav","tsa_4.wav","dzal_8.wav","sin_11.wav"],
   ),
 
   // 5. Soal: Huruf "ذ"
@@ -244,6 +268,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     correctAnswer: "dza",
     feedbackImagePath: "assets/images/hijaiyah/dza.png",
     feedbackNotes: "Keluar dari dua tepi ujung lidah dari arah permukaan atasnya menyentuh ujung dua gigi seri atas.",
+    optionsAudioPath: ["za_10.wav","dal_7.wav","dzal_8.wav","tha_15.wav"],
   ),
 
   // 6. Soal: Huruf "ض"
@@ -255,6 +280,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     correctAnswer: "dhod",
     feedbackImagePath: "assets/images/hijaiyah/dhod.png",
     feedbackNotes: "Keluar dari dua sisi lidah atau salah satunya menyentuh dinding bagian dalam gigi geraham atas.",
+    optionsAudioPath: ["tha_15.wav","shad_13.wav","dhad_14.wav","ra_9.wav"],
   ),
 
   // 7. Soal: Huruf "ع"
@@ -266,6 +292,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     correctAnswer: "ain",
     feedbackImagePath: "assets/images/hijaiyah/ain.png",
     feedbackNotes: "Terletak pada tengah-tengah tenggorokan.",
+    optionsAudioPath: ["ain_17.wav","ghain_18.wav","ha_6.wav","ya_28.wav"],
   ),
 
   // 8. Soal: Huruf "غ"
@@ -277,6 +304,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     correctAnswer: "ghain",
     feedbackImagePath: "assets/images/hijaiyah/ghain.png",
     feedbackNotes: "Terletak pada atas tenggorokan.",
+    optionsAudioPath: ["ain_17.wav","ghain_18.wav","kha_6.wav","qaf_20.wav"],
   ),
 
   // 9. Soal: Huruf "ق"
@@ -288,6 +316,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     correctAnswer: "qof",
     feedbackImagePath: "assets/images/hijaiyah/qof.png",
     feedbackNotes: "Keluar dari pangkal lidah menyentuh langit-langit atas bagian daging.",
+    optionsAudioPath: ["kaf_21.wav","qaf_20.wav","fa_19.wav","kha_6.wav"],
   ),
 
   // 10. Soal: Huruf "ر"
@@ -299,6 +328,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     correctAnswer: "ra",
     feedbackImagePath: "assets/images/hijaiyah/ro.png",
     feedbackNotes: "Terletak pada ujung lidah yang bertemu dengan apa yang sejajar dengannya dari gusi gigi atas sedikit masuk ke punggung lidah dekat dengan makhraj huruf nun.",
+    optionsAudioPath: ["ra_9.wav","za_10.wav","dal_7.wav","zha_16.wav"],
   ),
 
   // ======================================================================
@@ -318,6 +348,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     questionNotes: "Terletak pada pertemuan antara ujung gigi seri atas yang bertemu dengan perut bibir bawah.", // Catatan soal
     options: ["ف", "ق", "ك", "ت"],
     correctAnswer: "ف",
+    audioPath: "fa_19.wav",
   ),
 
   // 12. Soal: Audio "ba"
@@ -329,6 +360,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     questionNotes: "Keluar dari dua bibir dengan merapatkannya.",
     options: ["ب", "م", "ن", "ت"],
     correctAnswer: "ب",
+    audioPath: "ba_2.wav",
   ),
 
   // 13. Soal: Audio "kha"
@@ -340,6 +372,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     questionNotes: "Keluar dari tenggorokan atas.",
     options: ["خ", "ح", "غ", "ع"],
     correctAnswer: "خ",
+    audioPath: "kha_6.wav",
   ),
 
   // 14. Soal: Audio "qof"
@@ -351,6 +384,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     questionNotes: "Keluar dari pangkal lidah menyentuh langit-langit atas bagian daging.",
     options: ["ق", "ك", "ف", "ج"],
     correctAnswer: "ق",
+    audioPath: "qaf_20.wav",
   ),
 
   // 15. Soal: Audio "sha"
@@ -362,6 +396,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     questionNotes: "Keluar dari tengah lidah bersama langit-langit atas.",
     options: ["ش", "س", "ص", "ث"],
     correctAnswer: "ش",
+    audioPath: "syin_12.wav",
   ),
 
   // 16. Soal: Audio "'ain"
@@ -373,6 +408,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     questionNotes: "Terletak pada tengah-tengah tenggorokan.",
     options: ["ع", "غ", "ح", "هـ"],
     correctAnswer: "ع",
+    audioPath: "ain_17.wav",
   ),
 
   // 17. Soal: Audio "tsa"
@@ -384,6 +420,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     questionNotes: "Keluar dari dua tepi ujung lidah dari arah permukaan atasnya menyentuh ujung dua gigi seri atas.",
     options: ["ث", "ت", "ذ", "س"],
     correctAnswer: "ث",
+    audioPath: "tsa_4.wav",
   ),
 
   // 18. Soal: Audio "ja"
@@ -395,6 +432,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     questionNotes: "Keluar dari tengah lidah bersama dengan langit-langit atas.",
     options: ["ج", "ز", "ض", "ذ"],
     correctAnswer: "ج",
+    audioPath: "jim_5.wav",
   ),
 
   // 19. Soal: Audio "dhod"
@@ -406,6 +444,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     questionNotes: "Keluar dari dua sisi lidah atau salah satunya menyentuh dinding bagian dalam gigi geraham atas.",
     options: ["ض", "ص", "ط", "د"],
     correctAnswer: "ض",
+    audioPath: "dhad_14.wav",
   ),
   
   // 20. Soal: Audio "dzho"
@@ -418,6 +457,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions2 = [
     questionNotes: "Terletak pada ujung lidah yang bertemu dengan apa yang sejajar dengannya dari gusi gigi atas sedikit masuk ke punggung lidah dekat dengan makhraj huruf nun.",
     options: ["ظ", "ذ", "ز", "ض"],
     correctAnswer: "ظ",
+    audioPath: "zha_16.wav",
   ),
 ];
 
@@ -432,6 +472,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     correctAnswer: "dza",
     feedbackImagePath: "assets/images/hijaiyah/dza.png",
     feedbackNotes: "Keluar dari dua tepi ujung lidah dari arah permukaan atasnya menyentuh ujung dua gigi seri atas.",
+    optionsAudioPath: ["dzal_8.wav", "zha_16.wav", "za_10.wav", "dhad_14.wav"],
   ),
 
   // 2. Soal: Huruf "د"
@@ -443,6 +484,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     correctAnswer: "dal",
     feedbackImagePath: "assets/images/hijaiyah/dal.png",
     feedbackNotes: "Keluar dari punggung ujung lidah menyentuh pangkal dua gigi seri atas.",
+    optionsAudioPath: ["dal_7.wav", "dzal_8.wav", "dhad_14.wav", "ta_3.wav"],
   ),
 
   // 3. Soal: Huruf "ح"
@@ -454,6 +496,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     correctAnswer: "ha",
     feedbackImagePath: "assets/images/hijaiyah/ha.png",
     feedbackNotes: "Terletak pada tengah tenggorokan.",
+    optionsAudioPath: ["ha_6.wav", "haa_25.wav", "kha_6.wav", "ain_17.wav"],
   ),
 
   // 4. Soal: Huruf "ظ"
@@ -465,6 +508,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     correctAnswer: "dzho",
     feedbackImagePath: "assets/images/hijaiyah/dzho.png",
     feedbackNotes: "Terletak pada ujung lidah yang bertemu dengan apa yang sejajar dengannya dari gusi gigi atas sedikit masuk ke punggung lidah dekat dengan makhraj huruf nun.",
+    optionsAudioPath: ["zha_16.wav", "dzal_8.wav", "dhad_14.wav", "za_10.wav"],
   ),
 
   // 5. Soal: Huruf "س"
@@ -476,6 +520,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     correctAnswer: "sin",
     feedbackImagePath: "assets/images/hijaiyah/sin.png",
     feedbackNotes: "Keluar dari ujung lidah diletakkan pada dinding bagian dalam dua gigi seri bawah sehingga suara keluar melalui celah antara gigi atas dan bawah.",
+    optionsAudioPath: ["sin_11.wav", "shad_13.wav", "tsa_4.wav", "za_10.wav"],
   ),
 
   // 6. Soal: Huruf "ص"
@@ -487,6 +532,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     correctAnswer: "shad",
     feedbackImagePath: "assets/images/hijaiyah/shad.png",
     feedbackNotes: "Keluar dari ujung lidah diletakkan pada dinding bagian dalam dua gigi seri bawah sehingga suara keluar melalui celah antara gigi atas dan bawah.",
+    optionsAudioPath: ["shad_13.wav", "sin_11.wav", "dhad_14.wav", "tha_15.wav"],
   ),
 
   // 7. Soal: Huruf "ض"
@@ -498,6 +544,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     correctAnswer: "dhod",
     feedbackImagePath: "assets/images/hijaiyah/dhod.png",
     feedbackNotes: "Keluar dari dua sisi lidah atau salah satunya menyentuh dinding bagian dalam gigi geraham atas.",
+    optionsAudioPath: ["dhad_14.wav", "shad_13.wav", "zha_16.wav", "tha_15.wav"],
   ),
 
   // 8. Soal: Huruf "ث"
@@ -509,6 +556,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     correctAnswer: "tsa",
     feedbackImagePath: "assets/images/hijaiyah/tsa.png",
     feedbackNotes: "Keluar dari dua tepi ujung lidah dari arah permukaan atasnya menyentuh ujung dua gigi seri atas.",
+    optionsAudioPath: ["tsa_4.wav", "ta_3.wav", "sin_11.wav", "shad_13.wav"],
   ),
 
   // 9. Soal: Huruf "ت"
@@ -520,6 +568,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     correctAnswer: "ta",
     feedbackImagePath: "assets/images/hijaiyah/ta.png",
     feedbackNotes: "Keluar dari punggung ujung lidah menyentuh pangkal dua gigi seri atas.",
+    optionsAudioPath: ["ta_3.wav", "tha_15.wav", "tsa_4.wav", "dal_7.wav"],
   ),
 
   // 10. Soal: Huruf "ز"
@@ -531,6 +580,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     correctAnswer: "zai",
     feedbackImagePath: "assets/images/hijaiyah/zai.png",
     feedbackNotes: "Terletak pada akhir ujung lidah yang bertemu dengan dinding bagian dalam dari gigi seri bawah.",
+    optionsAudioPath: ["za_10.wav", "dzal_8.wav", "dhad_14.wav", "zha_16.wav"],
   ),
 
 
@@ -547,6 +597,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     questionNotes: "Keluar dari dua tepi ujung lidah dari arah permukaan atasnya menyentuh ujung dua gigi seri atas.",
     options: ["ذ", "د", "ز", "ض"],
     correctAnswer: "ذ",
+    audioPath: "dzal_8.wav",
   ),
 
   // 12. Soal: Audio "tha"
@@ -558,6 +609,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     questionNotes: "Keluar dari punggung ujung lidah menyentuh pangkal dua gigi seri atas.",
     options: ["ط", "ت", "ث", "ض"],
     correctAnswer: "ط",
+    audioPath: "tha_15.wav",
   ),
 
   // 13. Soal: Audio "shad"
@@ -569,6 +621,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     questionNotes: "Keluar dari ujung lidah diletakkan pada dinding bagian dalam dua gigi seri bawah sehingga suara keluar melalui celah antara gigi atas dan bawah.",
     options: ["ص", "س", "ض", "ط"],
     correctAnswer: "ص",
+    audioPath: "shad_13.wav",
   ),
 
   // 14. Soal: Audio "tsa"
@@ -580,6 +633,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     questionNotes: "Keluar dari dua tepi ujung lidah dari arah permukaan atasnya menyentuh ujung dua gigi seri atas.",
     options: ["ث", "س", "ش", "ت"],
     correctAnswer: "ث",
+    audioPath: "tsa_4.wav",
   ),
 
   // 15. Soal: Audio "zai"
@@ -591,6 +645,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     questionNotes: "Terletak pada akhir ujung lidah yang bertemu dengan dinding bagian dalam dari gigi seri bawah.",
     options: ["ز", "ذ", "ض", "ر"],
     correctAnswer: "ز",
+    audioPath: "za_10.wav",
   ),
 
   // 16. Soal: Audio "dzho"
@@ -602,6 +657,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     questionNotes: "Terletak pada ujung lidah yang bertemu dengan apa yang sejajar dengannya dari gusi gigi atas sedikit masuk ke punggung lidah dekat dengan makhraj huruf nun.",
     options: ["ظ", "ض", "ذ", "ز"], // Menggunakan list pilihan kedua yang Anda berikan
     correctAnswer: "ظ",
+    audioPath: "zha_16.wav",
   ),
 
   // 17. Soal: Audio "dal"
@@ -613,6 +669,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     questionNotes: "Keluar dari punggung ujung lidah menyentuh pangkal dua gigi seri atas.",
     options: ["د", "ذ", "ر", "ط"],
     correctAnswer: "د",
+    audioPath: "dal_7.wav",
   ),
 
   // 18. Soal: Audio "ha" (ح)
@@ -625,6 +682,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     questionNotes: "Terletak pada tengah tenggorokan.",
     options: ["ح", "ه", "خ", "ع"],
     correctAnswer: "ح",
+    audioPath: "ha_6.wav",
   ),
 
   // 19. Soal: Audio "dhod"
@@ -636,6 +694,7 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     questionNotes: "Keluar dari dua sisi lidah atau salah satunya menyentuh dinding bagian dalam gigi geraham atas.",
     options: ["ض", "ص", "ظ", "د"],
     correctAnswer: "ض",
+    audioPath: "dhad_14.wav",
   ),
 
   // 20. Soal: Audio "sin"
@@ -647,5 +706,6 @@ final List<HijaiyahQuestion2> tebakHurufQuestions3 = [
     questionNotes: "Keluar dari ujung lidah diletakkan pada dinding bagian dalam dua gigi seri bawah sehingga suara keluar melalui celah antara gigi atas dan bawah.",
     options: ["س", "ش", "ص", "ث"],
     correctAnswer: "س",
+    audioPath: "sin_11.wav",
   ),
 ];

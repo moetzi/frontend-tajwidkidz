@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/Game/view/result_screen.dart';
-import 'package:untitled/Game/viewmodel/susun%20huruf/susun_huruf_viewmodel.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:untitled/Game/viewmodel/susun%20huruf/susun_huruf_viewmodel2.dart';
+import 'package:audioplayers/audioplayers.dart';
 
-class SusunHurufGame2 extends StatelessWidget {
+class SusunHurufGame2 extends StatefulWidget {
   const SusunHurufGame2({super.key});
+
+  @override
+  State<SusunHurufGame2> createState() => _SusunHurufGame2State();
+}
+
+class _SusunHurufGame2State extends State<SusunHurufGame2> {
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
+  Future<void> _speak(String? fileName) async {
+    if (fileName == null || fileName.isEmpty) return;
+    await _audioPlayer.stop();
+    await _audioPlayer.play(AssetSource('audios/susun_huruf/level2/$fileName'));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +37,19 @@ class SusunHurufGame2 extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(170, 219, 233, 1),
         appBar: AppBar(
-            title: Text('Mini Game'),
-            backgroundColor: Color(0xFF037A16),
+          title: const Text(
+            'Mini Game',
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
+          // 3. Buat AppBar juga transparan dan hilangkan shadow
+          backgroundColor: Color(0xFF037A16),
+          elevation: 0,
+          centerTitle: true,
+        ),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
@@ -29,7 +57,6 @@ class SusunHurufGame2 extends StatelessWidget {
               child: Consumer<SusunHurufViewmodel2>(
                 builder: (context, controller, _) {
                   final question = controller.currentQuestion;
-                  final FlutterTts flutterTts = FlutterTts();
 
                   controller.setOnGameFinished(() {
                     Navigator.pushReplacement(
@@ -158,7 +185,7 @@ class SusunHurufGame2 extends StatelessWidget {
                                         child: IconButton(
                                           icon: const Icon(Icons.volume_up, color: Colors.white, size: 28),
                                           onPressed: () {
-                                            _speak(question.word, flutterTts);
+                                            _speak(question.audioPath);
                                           },
                                         ),
                                       ),
@@ -176,55 +203,48 @@ class SusunHurufGame2 extends StatelessWidget {
                                   ],
                                 ),
                                 const SizedBox(height: 16),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: List.generate(
-                                    question.correctAnswer.length,
-                                    (index) {
-                                      int reversedIndex = question.correctAnswer.length - 1 - index;
-                                      String letter = '';
-                                      if (reversedIndex < controller.userAnswer.length) {
-                                        letter = controller.userAnswer[reversedIndex];
-                                      }
-                                      bool isCorrect = false;
-                                      if (reversedIndex < controller.letterCorrectness.length) {
-                                        isCorrect = controller.letterCorrectness[reversedIndex];
-                                      }
-
-                                      Color color = const Color.fromRGBO(224, 224, 224, 1);
-                                      if (controller.isAnswerComplete && letter.isNotEmpty) {
-                                        color = isCorrect
-                                            ? const Color.fromRGBO(90, 193, 120, 1)
-                                            : const Color.fromRGBO(242, 125, 125, 1);
-                                      }
-
-                                      // Calculate maxWidth for answer tiles
-                                      final maxTileWidth = (containerWidth - (question.correctAnswer.length) * 16) / 4;
-
-                                      return Padding(
-                                        padding: const EdgeInsets.only(left: 0),
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              constraints: BoxConstraints(maxWidth: maxTileWidth),
-                                              height: 74,
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                color: color,
-                                                borderRadius: BorderRadius.circular(12),
-                                              ),
-                                              child: Text(
-                                                letter,
-                                                style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-                                              ),
+                                SizedBox(
+                                          height: 74, // Beri tinggi tetap untuk area jawaban
+                                          child: Directionality(
+                                            textDirection: TextDirection.rtl, // Set arah ke kanan-ke-kiri
+                                            child: ListView.separated(
+                                              scrollDirection: Axis.horizontal,
+                                              // reverse: true, // Tidak lagi diperlukan
+                                              itemCount: question.correctAnswer.length,
+                                              separatorBuilder: (context, index) => const SizedBox(width: 12),
+                                              itemBuilder: (context, index) {
+                                                // Logika untuk menampilkan kotak jawaban
+                                                String letter = '';
+                                                if (index < controller.userAnswer.length) {
+                                                  // Logika dipermudah, cukup gunakan index
+                                                  letter = controller.userAnswer[index];
+                                                }
+                                                bool isCorrect = false;
+                                                if (index < controller.letterCorrectness.length) {
+                                                  isCorrect = controller.letterCorrectness[index];
+                                                }
+                                                Color color = const Color.fromRGBO(224, 224, 224, 1);
+                                                if (controller.isAnswerComplete && letter.isNotEmpty) {
+                                                  color = isCorrect
+                                                      ? const Color.fromRGBO(90, 193, 120, 1)
+                                                      : const Color.fromRGBO(242, 125, 125, 1);
+                                                }
+                                                return Container(
+                                                  width: 74, // Lebar tetap untuk setiap kotak jawaban
+                                                  alignment: Alignment.center,
+                                                  decoration: BoxDecoration(
+                                                    color: color,
+                                                    borderRadius: BorderRadius.circular(12),
+                                                  ),
+                                                  child: Text(
+                                                    letter,
+                                                    style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                                                  ),
+                                                );
+                                              },
                                             ),
-                                            if (index < question.correctAnswer.length - 1) const SizedBox(width: 12),
-                                          ],
+                                          ),
                                         ),
-                                      );
-                                    },
-                                  ),
-                                ),
                                 const SizedBox(height: 16),
                                 const Text(
                                   'Huruf Acak',
@@ -328,12 +348,6 @@ class SusunHurufGame2 extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _speak(String text, FlutterTts tts) async {
-    await tts.setLanguage("ar");
-    await tts.setPitch(1.0);
-    await tts.speak(text);
   }
 
   Widget _buildLetterOption(

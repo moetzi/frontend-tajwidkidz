@@ -12,8 +12,17 @@ class MiniGameWidget extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(170, 219, 233, 1),
       appBar: AppBar(
-        title: Text('Mini Game'),
+        title: const Text(
+          'Mini Game',
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
         backgroundColor: Color(0xFF037A16),
+        elevation: 0,
+        centerTitle: true,
       ),
       
       body: SafeArea(
