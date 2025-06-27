@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'aiu.dart';
-import 'tatitu.dart';
+import 'aiu.dart';  // Import AIU Widget for back navigation
+import 'tatitu.dart';  // Import next level widget for forward navigation
 import 'package:audioplayers/audioplayers.dart'; // Import audioplayers package
+import 'package:untitled/learning.dart';
 
 class LearningBaBiBuWidget extends StatefulWidget {
-  const  LearningBaBiBuWidget  ({super.key});
+  const LearningBaBiBuWidget({super.key});
 
   static String routeName = 'Learningbabibu';
   static String routePath = '/learningbabibu';
@@ -16,55 +17,34 @@ class LearningBaBiBuWidget extends StatefulWidget {
 }
 
 class _LearningBaBiBuWidgetState extends State<LearningBaBiBuWidget> {
-  final TextEditingController _textController = TextEditingController();
-  final FocusNode _textFieldFocusNode = FocusNode();
+  final AudioPlayer _audioPlayer = AudioPlayer(); // Audio player instance
+  bool _isPlaying = false; // Track audio playing state
+
+  // Function to handle play/pause audio
+  void _playPauseAudio() async {
+    if (_isPlaying) {
+      await _audioPlayer.pause(); // Pause the audio
+    } else {
+      await _audioPlayer.play(AssetSource('audios/modul3/Ba Bi Bu.mp4')); // Play the Ba Bi Bu sound
+    }
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
+  }
 
   int selectedIndex = 1; // Index for the BottomNavigationBar
-  final AudioPlayer _audioPlayer = AudioPlayer(); // Buat final karena tidak diubah
-  bool _isPlaying = false; // Track audio playing state
 
   // Function to handle bottom navigation
   void onTabTapped(int index) {
     setState(() {
       selectedIndex = index;
     });
-
-    // Navigate to the corresponding screen
-    switch (index) {
-      case 0:
-        Navigator.pushNamed(context, '/home');
-        break;
-      case 1:
-      // current screen
-        break;
-      case 2:
-        Navigator.pushNamed(context, '/progress');
-        break;
-      case 3:
-        Navigator.pushNamed(context, '/account');
-        break;
-    }
   }
 
   @override
   void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
+    _audioPlayer.dispose(); // Dispose audio player
     super.dispose();
-  }
-
-  // Function to play/pause audio
-  void _playPauseAudio() async {
-    if (_isPlaying) {
-      await _audioPlayer.pause();
-    } else {
-      // Perbaiki penggunaan volume icon dan play AssetSource dengan path relatif benar
-      await _audioPlayer.play(AssetSource('audios/alif_1.wav'));
-    }
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
   }
 
   @override
@@ -76,65 +56,61 @@ class _LearningBaBiBuWidgetState extends State<LearningBaBiBuWidget> {
       child: Scaffold(
         backgroundColor: const Color(0xFFFAFDCB),
         appBar: AppBar(
-          title: const Text('Level 3: Belajar mengenal \n Huruf Hijaiyah (Ba Bi Bu)'),
+          title: const Text(
+            'Level 3:Belajar Mengenal \n  Huruf Hijaiyah (Fonetik) ',
+            style: TextStyle(
+              color: Colors.white, // Ubah warna teks header jadi putih
+            ),
+          ),
           backgroundColor: const Color(0xFF037A16),
           elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_rounded, size: 30, color: Colors.white),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LearningWidget()),
+              );
+            },
+          ),
+          actions: [
+            IconButton(
+              icon: FaIcon(
+                _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff,
+                color: Colors.white,
+                size: 25,
+              ),
+              onPressed: _playPauseAudio,
+            ),
+          ],
         ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(15, 47, 15, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: const Icon(
-                          Icons.arrow_back_ios_rounded,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      IconButton(
-                        icon: FaIcon(
-                          _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff, // pakai volumeHigh bukan volumeUp
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        onPressed: _playPauseAudio,
-                      ),
-                    ],
-                  ),
-                ),
-
                 const SizedBox(height: 10),
-
                 Column(
                   children: [
                     Text(
-                      'Level 3: Belajar mengenal Huruf \n Hijaiyah dengan Metode Fonetik',
+                      'Belajar mengenal Huruf Hijaiyah (Ba Bi Bu)',
                       style: GoogleFonts.inter(
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 4),
                     Text(
                       'Ba',
                       style: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 35),
-
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(60, 0, 60, 0),
                   child: Row(
@@ -147,9 +123,11 @@ class _LearningBaBiBuWidgetState extends State<LearningBaBiBuWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => LearningAIUWidget()),
+                            MaterialPageRoute(
+                              builder: (context) => const LearningAIUWidget(),
+                            ),
                           );
                         },
                       ),
@@ -160,18 +138,18 @@ class _LearningBaBiBuWidgetState extends State<LearningBaBiBuWidget> {
                           size: 25,
                         ),
                         onPressed: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => LearningTaTituWidget()),
+                            MaterialPageRoute(
+                              builder: (context) => const LearningTaTituWidget(),
+                            ),
                           );
                         },
                       ),
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 20),
-
                 Container(
                   width: MediaQuery.sizeOf(context).width * 0.9,
                   height: 260,
@@ -186,76 +164,7 @@ class _LearningBaBiBuWidgetState extends State<LearningBaBiBuWidget> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 15),
-
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(60, 0, 60, 0),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.mic_sharp,
-                        color: Colors.black,
-                        size: 30,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        'Coba Ucapkan Huruf \n Harakat!',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 15),
-
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(50, 0, 50, 0),
-                  child: Row(
-                    children: [
-                      Text(
-                        'Feedback AI: ',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _textController,
-                          focusNode: _textFieldFocusNode,
-                          autofocus: false,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            hintText: '...............',
-                            hintStyle: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.transparent, width: 1),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.transparent, width: 1),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            filled: true,
-                            fillColor: const Color(0xFFFAFDCB),
-                          ),
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w600,
-                          ),
-                          cursorColor: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ],
             ),
           ),

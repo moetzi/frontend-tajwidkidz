@@ -40,11 +40,19 @@ class HelpSupportPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bantuan & Dukungan'),
+        title: const Text(
+          'Bantuan & Dukungan',
+          style: TextStyle(
+            color: Colors.white, // Judul putih
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        iconTheme: const IconThemeData(color: Colors.white), // Icon back juga putih
         backgroundColor: const Color(0xFF037A16),
+        elevation: 0,
       ),
       body: Container(
-        color: const Color(0xFFFAFDCB), // Set background color to #FAFDCB
+        color: const Color(0xFFFAFDCB),
         child: ListView.builder(
           padding: const EdgeInsets.all(16),
           itemCount: faqList.length,

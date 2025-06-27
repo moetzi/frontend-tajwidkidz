@@ -14,18 +14,8 @@ class GameTajwid2 extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color(0xFFAADBE9),
         appBar: AppBar(
-          title: const Text(
-            'Mini Game',
-            style: TextStyle(
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          // 3. Buat AppBar juga transparan dan hilangkan shadow
-          backgroundColor: Color(0xFF037A16),
-          elevation: 0,
-          centerTitle: true,
+          title: const Text('Mini Game'),
+          backgroundColor: const Color(0xFF037A16),
         ),
         body: SafeArea(
           child: Padding(

@@ -1,67 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:audioplayers/audioplayers.dart'; // Pastikan sudah ada di pubspec.yaml
-import 'khokhikhu.dart';
-import 'dzadzidzu.dart';
+import 'package:audioplayers/audioplayers.dart'; // Ensure this is added to your pubspec.yaml
+import 'khokhikhu.dart'; // Import the previous level widget
+import 'dzadzidzu.dart'; // Import the next level widget
+import 'package:untitled/learning.dart';
 
 class LearningDaDiDuWidget extends StatefulWidget {
-  const LearningDaDiDuWidget({super.key});
+  const LearningDaDiDuWidget ({super.key});
 
-  static String routeName = 'Learningdadidu';
+  static String routeName = 'Learningdadidi';
   static String routePath = '/learningdadidu';
 
   @override
   State<LearningDaDiDuWidget> createState() => _LearningDaDiDuWidgetState();
 }
 
-class _LearningDaDiDuWidgetState extends State<LearningDaDiDuWidget> {
-  final TextEditingController _textController = TextEditingController();
-  final FocusNode _textFieldFocusNode = FocusNode();
+class _LearningDaDiDuWidgetState extends State<LearningDaDiDuWidget > {
+  final AudioPlayer _audioPlayer = AudioPlayer(); // Audio player instance
+  bool _isPlaying = false; // Track audio playing state
 
-  int selectedIndex = 1; // BottomNavigationBar index
-
-  final AudioPlayer _audioPlayer = AudioPlayer();
-  bool _isPlaying = false;
-
-  void onTabTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-
-    // Navigasi BottomNavigationBar
-    switch (index) {
-      case 0:
-        Navigator.pushNamed(context, '/home');
-        break;
-      case 1:
-      // Current screen, tidak perlu aksi
-        break;
-      case 2:
-        Navigator.pushNamed(context, '/progress');
-        break;
-      case 3:
-        Navigator.pushNamed(context, '/account');
-        break;
-    }
-  }
-
+  // Function to handle play/pause audio
   Future<void> _playPauseAudio() async {
     if (_isPlaying) {
-      await _audioPlayer.pause();
+      await _audioPlayer.pause(); // Pause the audio
     } else {
-      await _audioPlayer.play(AssetSource('audios/dadidu_audio.mp3')); // Sesuaikan path audio kamu
+      await _audioPlayer.play(AssetSource('audios/modul3/Da Di Du.mp4')); // Play the Ja Ji Ju sound
     }
     setState(() {
       _isPlaying = !_isPlaying;
     });
   }
 
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+
+  // Function to handle bottom navigation
+  void onTabTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
   @override
   void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
+    _audioPlayer.dispose(); // Dispose audio player
     super.dispose();
   }
 
@@ -76,12 +58,41 @@ class _LearningDaDiDuWidgetState extends State<LearningDaDiDuWidget> {
       child: Scaffold(
         backgroundColor: const Color(0xFFFAFDCB),
         appBar: AppBar(
-          title: const Text('Level 3: Belajar mengenal \n Huruf Hijaiyah (Ba Bi Bu)'),
           backgroundColor: const Color(0xFF037A16),
           elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_rounded, size: 30, color: Colors.white),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LearningWidget()), // Fix the navigation
+              );
+            },
+          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  'Level 3: Belajar mengenal Huruf \n Hijaiyah (Fonetik)',
+                  style: const TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(width: 10),
+              IconButton(
+                icon: FaIcon(
+                  _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onPressed: _playPauseAudio, // Play or pause audio when pressed
+              ),
+            ],
+          ),
         ),
         body: SafeArea(
-          top: true,
           child: SingleChildScrollView(
             child: Container(
               width: double.infinity,
@@ -90,44 +101,27 @@ class _LearningDaDiDuWidgetState extends State<LearningDaDiDuWidget> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Baris tombol Back dan Speaker
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.black, size: 30),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                      IconButton(
-                        icon: FaIcon(
-                          _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        onPressed: _playPauseAudio,
-                      ),
-                    ],
-                  ),
 
                   const SizedBox(height: 10),
 
-                  // Judul utama dan subtitle
+                  // Title and subtitle
                   Column(
                     children: [
                       Text(
-                        'Level 3: Belajar mengenal Huruf \n Hijaiyah dengan Metode Fonetik',
+                        'Belajar mengenal \n Huruf Hijaiyah (Da Di Du) ',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inter(
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
+
                       ),
                       const SizedBox(height: 8),
                       Text(
                         'Dal',
                         style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
@@ -135,43 +129,40 @@ class _LearningDaDiDuWidgetState extends State<LearningDaDiDuWidget> {
 
                   const SizedBox(height: 20),
 
-                  // Tombol navigasi rewind dan forward
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 60),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.fast_rewind, color: Colors.black, size: 30),
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => const LearningKhoKhiKhuWidget()),
-                            );
-                          },
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.fast_forward, color: Colors.black, size: 30),
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => const LearningDzaDziDzuWidget()),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+                  // Navigation rewind and forward
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.fast_rewind, color: Colors.black, size: 30),
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => const LearningKhoKhiKhuWidget()),
+                          );
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.fast_forward, color: Colors.black, size: 30),
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => const LearningDzaDziDzuWidget()),
+                          );
+                        },
+                      ),
+                    ],
                   ),
 
                   const SizedBox(height: 10),
 
-                  // Gambar utama
+                  // Image
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
+                    width: MediaQuery.sizeOf(context).width * 0.9,
                     height: 320,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).secondaryHeaderColor,
                       borderRadius: BorderRadius.circular(8),
+                      color: Theme.of(context).secondaryHeaderColor,
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
@@ -179,71 +170,6 @@ class _LearningDaDiDuWidgetState extends State<LearningDaDiDuWidget> {
                         'assets/images/Dadidu.png',
                         fit: BoxFit.cover,
                       ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  // Mic dan instruksi ucapkan harakat
-                  Row(
-                    children: [
-                      const Icon(Icons.mic_sharp, color: Colors.black, size: 30),
-                      const SizedBox(width: 10),
-                      Text(
-                        'Coba Ucapkan Harakat!',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  // Feedback AI input
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(50, 0, 50, 0),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Feedback AI: ',
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _textController,
-                            focusNode: _textFieldFocusNode,
-                            autofocus: false,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              hintText: '...............',
-                              hintStyle: GoogleFonts.inter(
-                                fontWeight: FontWeight.w600,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.transparent, width: 1),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.transparent, width: 1),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              filled: true,
-                              fillColor: const Color(0xFFFAFDCB),
-                            ),
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                            ),
-                            cursorColor: Colors.black,
-                          ),
-                        ),
-                      ],
                     ),
                   ),
                 ],

@@ -157,9 +157,9 @@ class _LeaderboardScreenState extends State<LeaderboardScreen>
         title: const Text(
           'Leaderboard',
           style: TextStyle(
-            color: Colors.black, // Teks putih agar jelas
+            color: Colors.white, // Teks putih agar jelas
             fontWeight: FontWeight.bold,
-            fontSize: 22,
+            fontSize: 25,
           ),
         ),
         centerTitle: true,
