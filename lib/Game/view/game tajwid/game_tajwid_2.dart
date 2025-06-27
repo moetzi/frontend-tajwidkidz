@@ -3,29 +3,9 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/Game/view/result_screen.dart';
 import 'package:untitled/Game/viewmodel/game_tajwid/game_tajwid_viewmodel2.dart';
-import 'package:audioplayers/audioplayers.dart';
 
-class GameTajwid2 extends StatefulWidget {
+class GameTajwid2 extends StatelessWidget {
   const GameTajwid2({super.key});
-
-  @override
-  State<GameTajwid2> createState() => _GameTajwid2State();
-}
-
-class _GameTajwid2State extends State<GameTajwid2> {
-  final AudioPlayer _audioPlayer = AudioPlayer();
-
-  @override
-  void dispose() {
-    _audioPlayer.dispose();
-    super.dispose();
-  }
-
-  Future<void> _speak(String? fileName) async {
-    if (fileName == null || fileName.isEmpty) return;
-    await _audioPlayer.stop();
-    await _audioPlayer.play(AssetSource('audios/tajwid/level2/$fileName'));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +14,8 @@ class _GameTajwid2State extends State<GameTajwid2> {
       child: Scaffold(
         backgroundColor: const Color(0xFFAADBE9),
         appBar: AppBar(
-          title: const Text(
-            'Mini Game',
-            style: TextStyle(
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          // 3. Buat AppBar juga transparan dan hilangkan shadow
-          backgroundColor: Color(0xFF037A16),
-          elevation: 0,
-          centerTitle: true,
+          title: const Text('Mini Game'),
+          backgroundColor: const Color(0xFF037A16),
         ),
         body: SafeArea(
           child: Padding(
@@ -116,8 +86,9 @@ class _GameTajwid2State extends State<GameTajwid2> {
                               children: [
                                 _buildInteractionButton(
                                   iconPath: 'assets/images/icon_speaker.png',
-                                  onTap: () {
-                                    _speak(question.audioPath);
+                                  onTap: () async {
+                                    await flutterTts.setLanguage("ar");
+                                    await flutterTts.speak(question.verse);
                                   },
                                 ),
                                 const SizedBox(height: 24),
@@ -146,10 +117,9 @@ class _GameTajwid2State extends State<GameTajwid2> {
                               width: double.infinity,
                               height: 48,
                               child: ElevatedButton(
-                                // onPressed: controller.isQuestionAnswered // PERBAIKAN DI SINI
-                                //     ? () => controller.nextQuestion()
-                                //     : null,
-                                onPressed: () { controller.nextQuestion(); },
+                                onPressed: controller.isQuestionAnswered // PERBAIKAN DI SINI
+                                    ? () => controller.nextQuestion()
+                                    : null,
                                 child: const Text('Lanjut', style: TextStyle(fontSize: 16)),
                               ),
                             ),

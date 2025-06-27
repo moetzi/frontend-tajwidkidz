@@ -5,7 +5,6 @@ class HijaiyahQuestion {
   final List<String> options;
   final String? notes;
   final String? correctImagePath;
-  final String? audioPath;
 
   HijaiyahQuestion({
     required this.text,
@@ -14,7 +13,6 @@ class HijaiyahQuestion {
     required this.options,
     this.notes,
     this.correctImagePath,
-    this.audioPath,
   });
 }
 
@@ -40,22 +38,16 @@ class HijaiyahQuestion2 {
   final String? feedbackImagePath;
   final String? feedbackNotes;
 
-  final String? audioPath;
-  final List<String>? optionsAudioPath;
-
   HijaiyahQuestion2({
     required this.type,
     required this.text,
     required this.options,
     required this.correctAnswer,
-
     this.questionWord,
     this.questionImagePath,
     this.questionNotes,
     this.feedbackImagePath,
     this.feedbackNotes,
-    this.audioPath,
-    this.optionsAudioPath,
   });
 }
 
@@ -87,13 +79,11 @@ class TajwidQuestion {
   final String question;
   final String word;
   final String correctAnswer;
-  final String audioPath;
 
   TajwidQuestion({
     required this.question,
     required this.word,
     required this.correctAnswer,
-    required this.audioPath,
   });
 }
 
@@ -116,8 +106,6 @@ class TajwidLevel2Question {
   // Feedback jika ucapan pengguna salah
   final String correctiveFeedback;
 
-  final String audioPath;
-
   TajwidLevel2Question({
     required this.ruleName,
     required this.verse,
@@ -125,6 +113,5 @@ class TajwidLevel2Question {
     required this.correctAnswer,
     required this.positiveFeedback,
     required this.correctiveFeedback,
-    required this.audioPath,
   });
 }

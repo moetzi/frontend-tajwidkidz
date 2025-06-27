@@ -4,29 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:untitled/Game/data/game_tajwid_question.dart';
 import 'package:untitled/Game/view/result_screen.dart';
 import 'package:untitled/Game/viewmodel/game_tajwid/game_tajwid_viewmodel.dart';
-import 'package:audioplayers/audioplayers.dart';
 
-class GameTajwid extends StatefulWidget {
+class GameTajwid extends StatelessWidget {
   const GameTajwid({super.key});
-
-  @override
-  State<GameTajwid> createState() => _GameTajwidState();
-}
-
-class _GameTajwidState extends State<GameTajwid> {
-  final AudioPlayer _audioPlayer = AudioPlayer();
-
-  @override
-  void dispose() {
-    _audioPlayer.dispose();
-    super.dispose();
-  }
-
-  Future<void> _speak(String? fileName) async {
-    if (fileName == null || fileName.isEmpty) return;
-    await _audioPlayer.stop();
-    await _audioPlayer.play(AssetSource('audios/tajwid/level1/$fileName'));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,8 +116,9 @@ class _GameTajwidState extends State<GameTajwid> {
                                   const SizedBox(height: 24),
                                   
                                   GestureDetector(
-                                    onTap: () {
-                                      _speak(question.audioPath);
+                                    onTap: () async {
+                                      await flutterTts.setLanguage("ar");
+                                      await flutterTts.speak(question.correctAnswer);
                                     },
                                     child: Image.asset(
                                       'assets/images/icon_speaker.png',

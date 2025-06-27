@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'm1syin.dart';
 import 'm1dho.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:untitled/learning.dart';
 
 class LearningShodWidget extends StatefulWidget {
   const LearningShodWidget({super.key});
@@ -16,31 +17,9 @@ class LearningShodWidget extends StatefulWidget {
 }
 
 class _LearningShodWidgetState extends State<LearningShodWidget> {
-  final TextEditingController _textController = TextEditingController();
-  final FocusNode _textFieldFocusNode = FocusNode();
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  bool _isPlaying = false;
 
-  int selectedIndex = 1; // Index for the BottomNavigationBar
-  final AudioPlayer _audioPlayer = AudioPlayer(); // Buat final karena tidak diubah
-  bool _isPlaying = false; // Track audio playing state
-
-  // Function to handle bottom navigation
-  void onTabTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
-
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
-    super.dispose();
-  }
-
-  // Function to play/pause audio
   void _playPauseAudio() async {
     if (_isPlaying) {
       await _audioPlayer.pause();
@@ -52,6 +31,14 @@ class _LearningShodWidgetState extends State<LearningShodWidget> {
     });
   }
 
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -60,239 +47,161 @@ class _LearningShodWidgetState extends State<LearningShodWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Color(0xFFFAFDCB),
+        backgroundColor: const Color(0xFFFAFDCB),
         appBar: AppBar(
-          title: Text('Level 1 Belajar Huruf Hijaiyah'),
-          backgroundColor: Color(0xFF037A16),
+          backgroundColor: const Color(0xFF037A16),
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_rounded, size: 30, color: Colors.white),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LearningWidget()),
+              );
+            },
+          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'Level 1 Belajar Huruf \n Hijaiyah',
+                  style: const TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(width: 10),
+              IconButton(
+                icon: FaIcon(
+                  _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onPressed: _playPauseAudio,
+              ),
+            ],
+          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
+                const SizedBox(height: 10),
+                Text(
+                  'Pengenalan Huruf Hijaiyah',
+                  style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Shod (S)',
+                  style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 35),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(15, 47, 15, 0),
+                  padding: const EdgeInsets.symmetric(horizontal: 80),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        icon: Icon(
-                          Icons.arrow_back_ios_rounded,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context); // Go back to the previous screen
-                        },
-                      ),
-                      IconButton(
-                        icon: FaIcon(
-                          FontAwesomeIcons.volumeHigh,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        onPressed: _playPauseAudio,
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Level 1: Belajar Huruf Hijaiyah',
-                        style: GoogleFonts.inter(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                        child: Text(
-                          'Pengenalan Huruf Hijaiyah',
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(60, 35, 60, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.fast_rewind,
-                          color: Colors.black,
-                          size: 25,
-                        ),
+                        icon: const Icon(Icons.fast_rewind, color: Colors.black, size: 25),
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => LearningSyinWidget(),
-                            ),
+                            MaterialPageRoute(builder: (context) => const LearningSyinWidget()),
                           );
                         },
                       ),
                       IconButton(
-                        icon: Icon(
-                          Icons.fast_forward,
-                          color: Colors.black,
-                          size: 25,
-                        ),
+                        icon: const Icon(Icons.fast_forward, color: Colors.black, size: 25),
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => LearningDhoWidget(),
-                            ),
+                            MaterialPageRoute(builder: (context) => const LearningDhoWidget()),
                           );
                         },
                       ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width * 0.9,
-                    height: 183.67,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
+                const SizedBox(height: 20),
+                Container(
+                  width: MediaQuery.sizeOf(context).width * 0.9,
+                  height: 183.67,
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'assets/images/Card Shod.png',
+                      fit: BoxFit.cover,
                     ),
+                  ),
+                ),
+
+
+                // Gambar tenggorokan cara baca Ta (With the throat image)
+                const SizedBox(height: 30),
+                Center(
+                  child: SizedBox(
+                    width: MediaQuery.sizeOf(context).width * 0.9, // Restrict the width to screen size
+                    height: 200.0, // Fixed height to fit the layout better
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.asset(
-                        'assets/images/Card Shod.png',
-                        width: 333.9,
-                        height: 207.2,
-                        fit: BoxFit.cover,
+                        'assets/images/m1/m1shod.png', // Path to your image of the throat position for Ta
+                        fit: BoxFit.contain,  // Adjusts the image to fit within the box
                       ),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(60, 15, 60, 0),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.mic_sharp,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                        },
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                        child: Text(
-                          'Coba Ucapkan Huruf \n Hijaiyah!',
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+
+                const SizedBox(height: 15),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFDDEB9D),
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(),
+                        spreadRadius: 2,
+                        blurRadius: 5,
                       ),
                     ],
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(50, 15, 50, 0),
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Feedback AI:',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        'Penjelasan Huruf Shod (ص):',
+                        style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600),
                       ),
-                      Expanded(
-                        child: SizedBox(
-                          width: 200,
-                          child: TextFormField(
-                            controller: _textController,
-                            focusNode: _textFieldFocusNode,
-                            autofocus: false,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              isDense: true,
-                              hintText: '...............',
-                              hintStyle: GoogleFonts.inter(
-                                fontWeight: FontWeight.w600,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              filled: true,
-                              fillColor: Color(0xFFFAFDCB),
-                            ),
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                            ),
-                            cursorColor: Colors.black,
-                          ),
-                        ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Antara ujung lidah dan halaman dua gigi muka atas',
+                        style: GoogleFonts.inter(fontSize: 16),
                       ),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Sifat-Sifatnya:',
+                        style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(height: 10),
+                      Text('1. Berdesis lepas (Hams)', style: GoogleFonts.inter(fontSize: 16)),
+                      Text('2. Lunak dan suara tidak tertahan (Rakhawah)', style: GoogleFonts.inter(fontSize: 16)),
+                      Text('3. Pangkal lidah naik ke langit-langit (Isti\'la)', style: GoogleFonts.inter(fontSize: 16)),
+                      Text('4. Lidah bertemu/nempel dengan langit-langit (Ithbaq)', style: GoogleFonts.inter(fontSize: 16)),
+                      Text('5. Tidak lancar dan hati-hati (Ishmat)', style: GoogleFonts.inter(fontSize: 16)),
+                      Text('6. Suara berdesir (Shafir)', style: GoogleFonts.inter(fontSize: 16)),
                     ],
                   ),
                 ),
+                const SizedBox(height: 35),
               ],
             ),
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Color(0xFFFAFDCB),
-          type: BottomNavigationBarType.fixed,
-          currentIndex: selectedIndex,
-          onTap: onTabTapped,
-          selectedItemColor: Color(0xFF037A16),
-          unselectedItemColor: Colors.black,
-          selectedLabelStyle: TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          unselectedLabelStyle: TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-          items: const [
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.house, size: 30),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu_book, size: 30),
-              label: 'Learning',
-            ),
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.chartBar, size: 30),
-              label: 'Progress',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined, size: 30),
-              label: 'Account',
-            ),
-          ],
         ),
       ),
     );

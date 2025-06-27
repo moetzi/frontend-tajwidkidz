@@ -31,7 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   image_picker: ^0.8.5+3
-  audioplayers: ^6.5.0
+  audioplayers: ^6.4.0
   auto_size_text: 3.0.0
   cached_network_image: 3.4.1
   cached_network_image_platform_interface: 4.1.1
@@ -106,15 +106,13 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/m1/
     - assets/images/hijaiyah/
     - assets/audios/
-    - assets/audios/modul6/
     - assets/audios/modul1/
-    - assets/audios/susun_huruf/level1/
-    - assets/audios/susun_huruf/level2/
-    - assets/audios/susun_huruf/level3/
-    - assets/audios/tajwid/level1/
-    - assets/audios/tajwid/level2/
+    - assets/audios/modul2/
+    - assets/audios/modul3/
+    - assets/audios/modul6/
 #    - assets/videos/
 #    - assets/audios/
 #    - assets/rive_animations/

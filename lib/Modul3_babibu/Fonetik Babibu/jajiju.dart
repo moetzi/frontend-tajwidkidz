@@ -1,67 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:audioplayers/audioplayers.dart'; // Pastikan sudah ditambahkan di pubspec.yaml
-import 'tsatsitsu.dart';
-import 'hahihu.dart';
+import 'package:audioplayers/audioplayers.dart'; // Ensure this is added to your pubspec.yaml
+import 'tsatsitsu.dart'; // Import the previous level widget
+import 'hahihu.dart'; // Import the next level widget
+import 'package:untitled/learning.dart';
 
 class LearningJaJiJuWidget extends StatefulWidget {
   const LearningJaJiJuWidget({super.key});
 
-  static String routeName = 'Learningtatitu';
-  static String routePath = '/learningtatitu';
+  static String routeName = 'Learningjajiju';
+  static String routePath = '/learningjajiju';
 
   @override
   State<LearningJaJiJuWidget> createState() => _LearningJaJiJuWidgetState();
 }
 
 class _LearningJaJiJuWidgetState extends State<LearningJaJiJuWidget> {
-  final TextEditingController _textController = TextEditingController();
-  final FocusNode _textFieldFocusNode = FocusNode();
+  final AudioPlayer _audioPlayer = AudioPlayer(); // Audio player instance
+  bool _isPlaying = false; // Track audio playing state
 
-  int selectedIndex = 1;
-
-  final AudioPlayer _audioPlayer = AudioPlayer();
-  bool _isPlaying = false;
-
-  void onTabTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-
-    switch (index) {
-      case 0:
-        Navigator.pushNamed(context, '/home');
-        break;
-      case 1:
-      // Current screen, no action needed
-        break;
-      case 2:
-        Navigator.pushNamed(context, '/progress');
-        break;
-      case 3:
-        Navigator.pushNamed(context, '/account');
-        break;
-    }
-  }
-
+  // Function to handle play/pause audio
   Future<void> _playPauseAudio() async {
     if (_isPlaying) {
-      await _audioPlayer.pause();
+      await _audioPlayer.pause(); // Pause the audio
     } else {
-      // Ganti dengan path audio yang sesuai dengan file kamu
-      await _audioPlayer.play(AssetSource('audios/jajiju_audio.mp3'));
+      await _audioPlayer.play(AssetSource('audios/modul3/Ja Ji Ju.mp4')); // Play the Ja Ji Ju sound
     }
     setState(() {
       _isPlaying = !_isPlaying;
     });
   }
 
+  int selectedIndex = 1; // Index for the BottomNavigationBar
+
+  // Function to handle bottom navigation
+  void onTabTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
   @override
   void dispose() {
-    _textController.dispose();
-    _textFieldFocusNode.dispose();
-    _audioPlayer.dispose();
+    _audioPlayer.dispose(); // Dispose audio player
     super.dispose();
   }
 
@@ -76,9 +58,39 @@ class _LearningJaJiJuWidgetState extends State<LearningJaJiJuWidget> {
       child: Scaffold(
         backgroundColor: const Color(0xFFFAFDCB),
         appBar: AppBar(
-          title: const Text('Level 3: Belajar mengenal \n Huruf Hijaiyah (Ba Bi Bu)'),
           backgroundColor: const Color(0xFF037A16),
           elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_rounded, size: 30, color: Colors.white),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LearningWidget()), // Fix the navigation
+              );
+            },
+          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  'Level 3: Belajar mengenal \n Huruf Hijaiyah  (Fonetik)',
+                  style: const TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(width: 10),
+              IconButton(
+                icon: FaIcon(
+                  _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff,
+                  color: Colors.white,
+                  size: 25,
+                ),
+                onPressed: _playPauseAudio, // Play or pause audio when pressed
+              ),
+            ],
+          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -89,24 +101,6 @@ class _LearningJaJiJuWidgetState extends State<LearningJaJiJuWidget> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Back and volume buttons
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.black, size: 30),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                      IconButton(
-                        icon: FaIcon(
-                          _isPlaying ? FontAwesomeIcons.volumeHigh : FontAwesomeIcons.volumeOff,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        onPressed: _playPauseAudio,
-                      ),
-                    ],
-                  ),
 
                   const SizedBox(height: 10),
 
@@ -114,19 +108,20 @@ class _LearningJaJiJuWidgetState extends State<LearningJaJiJuWidget> {
                   Column(
                     children: [
                       Text(
-                        'Level 3: Belajar mengenal Huruf \n Hijaiyah dengan Metode Fonetik',
+                        'Belajar mengenal  Huruf Hijaiyah (Ja Ji Ju) ',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inter(
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
+
                       ),
                       const SizedBox(height: 8),
                       Text(
                         'Jim',
                         style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
@@ -176,61 +171,6 @@ class _LearningJaJiJuWidgetState extends State<LearningJaJiJuWidget> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  // Mic and instruction
-                  Row(
-                    children: [
-                      const Icon(Icons.mic_sharp, color: Colors.black, size: 30),
-                      const SizedBox(width: 10),
-                      Text(
-                        'Coba Ucapkan Harakat!',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  // Feedback AI input
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Feedback AI:',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _textController,
-                          focusNode: _textFieldFocusNode,
-                          autofocus: false,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            isDense: true,
-                            hintText: '...............',
-                            filled: true,
-                            fillColor: const Color(0xFFFAFDCB),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w600,
-                          ),
-                          cursorColor: Colors.black,
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),

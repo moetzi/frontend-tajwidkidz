@@ -1,36 +1,17 @@
 // tebak_huruf_game.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:untitled/Game/view/result_screen.dart'; // sesuaikan path
 import 'package:untitled/Game/viewmodel/tebak%20huruf/tebak_huruf_viewmodel.dart'; // sesuaikan path
-import 'package:audioplayers/audioplayers.dart';
 
 bool isArabic(String text) {
   final arabicRegex = RegExp(r'[\u0600-\u06FF]');
   return arabicRegex.hasMatch(text);
 }
 
-class TebakHurufGame extends StatefulWidget {
+class TebakHurufGame extends StatelessWidget {
   const TebakHurufGame({super.key});
-
-  @override
-  State<TebakHurufGame> createState() => _TebakHurufGameState();
-}
-
-class _TebakHurufGameState extends State<TebakHurufGame> {
-  final AudioPlayer _audioPlayer = AudioPlayer();
-
-  @override
-  void dispose() {
-    _audioPlayer.dispose();
-    super.dispose();
-  }
-
-  Future<void> _speak(String? fileName) async {
-    if (fileName == null || fileName.isEmpty) return;
-    await _audioPlayer.stop();
-    await _audioPlayer.play(AssetSource('audios/modul1/$fileName'));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,19 +23,9 @@ class _TebakHurufGameState extends State<TebakHurufGame> {
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(170, 219, 233, 1),
         appBar: AppBar(
-        title: const Text(
-          'Mini Game',
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          title: const Text('Mini Game'),
+          backgroundColor: const Color(0xFF037A16),
         ),
-        // 3. Buat AppBar juga transparan dan hilangkan shadow
-        backgroundColor: Color(0xFF037A16),
-        elevation: 0,
-        centerTitle: true,
-      ),
         body: SafeArea(
           child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints viewportConstraints) {
@@ -72,6 +43,7 @@ class _TebakHurufGameState extends State<TebakHurufGame> {
                             return const Center(child: CircularProgressIndicator());
                           }
                           final question = controller.currentQuestion;
+                          final FlutterTts flutterTts = FlutterTts();
 
                           controller.setOnGameFinished(() {
                             Navigator.pushReplacement(
@@ -250,7 +222,7 @@ class _TebakHurufGameState extends State<TebakHurufGame> {
                                                     child: IconButton(
                                                       icon: const Icon(Icons.volume_up, color: Colors.white, size: 28),
                                                       onPressed: () {
-                                                        _speak(question.audioPath);
+                                                        _speak(question.word, flutterTts);
                                                       },
                                                     ),
                                                   ),
@@ -361,6 +333,15 @@ class _TebakHurufGameState extends State<TebakHurufGame> {
     );
   }
 
+  Future<void> _speak(String text, FlutterTts tts) async {
+    String textToSpeak = text;
+    if (text.startsWith('"') && text.endsWith('"')) {
+        textToSpeak = text.substring(1, text.length -1);
+    }
+    await tts.setLanguage("ar");
+    await tts.setPitch(1.0);
+    await tts.speak(textToSpeak);
+  }
 
   Widget _buildOption(
     BuildContext context,

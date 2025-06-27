@@ -20,8 +20,6 @@ class QuestionAnswer {
 }
 
 class GameTajwidViewModel extends ChangeNotifier {
-  List<GameTajwidQuestion> _shuffledGameData = [];
-
   int _currentLevelIndex = 0;
   int _currentQuestionIndex = 0;
   int score = 0;
@@ -29,37 +27,11 @@ class GameTajwidViewModel extends ChangeNotifier {
   bool _isRecording = false;
   bool _isFinished = false;
   final stt.SpeechToText _speech = stt.SpeechToText();
-
+  
+  // Map untuk menyimpan jawaban setiap pertanyaan
   final Map<String, QuestionAnswer> _questionAnswers = {};
-  GameTajwidViewModel() {
-    _initializeAndShuffleQuestions();
-  }
 
-  void _initializeAndShuffleQuestions() {
-    // Buat list baru untuk menampung level-level yang sudah dimodifikasi
-  final newGameData = <GameTajwidQuestion>[];
-
-    // Iterasi melalui setiap level di data asli
-    for (final originalLevel in gameTajwidQuestions) {
-      // Buat salinan dari daftar soal di level ini, lalu acak urutannya
-      final shuffledQuestionsForLevel = List<TajwidQuestion>.from(originalLevel.questions)..shuffle();
-
-      // Buat objek level baru dengan daftar soal yang sudah diacak
-      final newShuffledLevel = GameTajwidQuestion(
-        level: originalLevel.level,
-        levelName: originalLevel.levelName,
-        questions: shuffledQuestionsForLevel, // Gunakan soal yang sudah diacak
-      );
-      // Tambahkan level yang baru ke data game kita
-      newGameData.add(newShuffledLevel);
-    }
-    // Simpan data game yang sudah diacak sepenuhnya ke state ViewModel
-    _shuffledGameData = newGameData;
-  }
-
-  // DIUBAH: Sekarang getter mengambil data dari _shuffledGameData, bukan data asli
-  GameTajwidQuestion get currentLevel => _shuffledGameData[_currentLevelIndex];
-
+  GameTajwidQuestion get currentLevel => gameTajwidQuestions[_currentLevelIndex];
   TajwidQuestion get currentQuestion => currentLevel.questions[_currentQuestionIndex];
   int get level => currentLevel.level;
   String get levelName => currentLevel.levelName;
